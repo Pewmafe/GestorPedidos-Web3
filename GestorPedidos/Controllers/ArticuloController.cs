@@ -8,28 +8,24 @@ namespace GestorPedidos.Controllers
 {
     public class ArticuloController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
 
-
+        [HttpGet]
         public IActionResult Articulos()
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult NuevoArticulo()
         {
             return View();
         }
 
-
+        [HttpGet]
         public IActionResult EditarArticulo()
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult VerArticulo()
         {
             return View();
