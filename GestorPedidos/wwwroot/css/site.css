@@ -1,4 +1,18 @@
-﻿/*******LOGIN*******/
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #515d63;
+}
+/*******Layout*******/
+.bg-header {
+    background-color: rgb(208 59 0 / 0,99) !important;
+}
+
+header {
+    border-bottom: 5px #ccc solid;
+}
+/*******LOGIN*******/
 #login .card-signin {
     border: 0;
     border-radius: 1rem;
@@ -22,7 +36,7 @@
     #login .form-signin .btn {
         font-size: 80%;
         border-radius: 5rem;
-        letter-spacing: .1rem;
+        letter-spacing: 0.1rem;
         font-weight: bold;
         padding: 1rem;
         transition: all 0.2s;
@@ -40,7 +54,7 @@
 
     #login .form-label-group > input,
     #login .form-label-group > label {
-        padding: var(- -input-padding-y) var(- -input-padding-x);
+        padding: var(--input-padding-y) var(--input-padding-x);
     }
 
 #login .btn-google {
