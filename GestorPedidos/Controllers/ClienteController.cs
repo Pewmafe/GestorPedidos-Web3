@@ -18,5 +18,15 @@ namespace GestorPedidos.Controllers
             
             return View();
         }
+
+        public IActionResult NuevoCliente()
+        {
+            return View();
+        }
+
+        public IActionResult EditarCliente()
+        {
+            return View();
+        }
     }
 }
