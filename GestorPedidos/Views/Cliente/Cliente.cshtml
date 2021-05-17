@@ -20,9 +20,9 @@
             </select>
         </form>
     </div>
-    <div>
-        <table class="table">
-            <thead>
+    <div class="table-responsive text-center">
+        <table class="table table-bordered table-dark">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">Nombre</th>
                     <th scope="col">Numero</th>
@@ -35,16 +35,26 @@
                     <td>Santi</td>
                     <td>1</td>
                     <td>MOTOROLA</td>
+                    <td class="dropdown dropleft text-center">
+                        <a class="btn btn-outline-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="dropdownMenuLink">
+                            <a class="btn btn-warning text-light" type="button">Editar</a>
+                            <a class="btn btn-danger text-light" type="button">Eliminar</a>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Brendaaaa</td>
                     <td>2</td>
                     <td>IPHONE X</td>
+                    <td><a href="#">ver</a></td>
                 </tr>
                 <tr>
                     <td>Mat Van Der</td>
                     <td>3</td>
                     <td>LG</td>
+                    <td><a href="#">ver</a></td>
                 </tr>
             </tbody>
         </table>
