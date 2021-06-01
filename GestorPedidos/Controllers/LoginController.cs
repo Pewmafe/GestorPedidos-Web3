@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace GestorPedidos.Controllers
 {
@@ -26,8 +27,22 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult Login(int aux)
         {
+
+            if (true)
+            {
+                HttpContext.Session.SetString("Usuario", "Admin");
+                return Redirect("/Home/Index");
+
+            }
             return View();
         }
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            return Redirect("/Home/Index");
+        }
+
+        
 
     }
 }
