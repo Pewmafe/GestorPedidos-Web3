@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestorPedidos", "GestorPedidos\GestorPedidos.csproj", "{436C7F7A-64ED-4F63-A5DF-3527F4A9630B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servicios", "Servicios\Servicios.csproj", "{5FF16CA3-C9AD-406D-89F9-276E4AEDAD27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicios", "Servicios\Servicios.csproj", "{5FF16CA3-C9AD-406D-89F9-276E4AEDAD27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{3DA6133F-36F5-456F-9B3B-F7B3EC1F599C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{3DA6133F-36F5-456F-9B3B-F7B3EC1F599C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

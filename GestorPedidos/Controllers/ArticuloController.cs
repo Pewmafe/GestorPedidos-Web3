@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Models;
+using Servicios;
 
 namespace GestorPedidos.Controllers
 {
@@ -19,19 +21,25 @@ namespace GestorPedidos.Controllers
         {
             return View();
         }
-
+       /* [HttpPost]
+        public IActionResult NuevoArticulo()
+        {
+            return View();
+        }
+       */
         [HttpGet]
         public IActionResult EditarArticulo()
         {
             return View();
         }
-        [HttpGet]
-        public IActionResult VerArticulo()
+
+        /*[HttpPost]
+        public IActionResult EditarArticulo()
         {
             return View();
         }
 
-
+        */
 
     }
 }
