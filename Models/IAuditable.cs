@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class IAuditable
+    public interface IAuditable
     {
         int CreatedBy { get; set; }
         DateTime CreatedDate { get; set; }
