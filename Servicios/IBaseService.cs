@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Servicios
+namespace Service
 {
     public interface IBaseService<TEntity>
     {
@@ -13,7 +13,7 @@ namespace Servicios
         void Create(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
-        void DeleteByid(int id, string who);
+        void DeleteByid(int id);
 
     }
 }
