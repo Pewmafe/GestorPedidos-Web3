@@ -14,6 +14,6 @@ namespace Models
         DateTime UpdateDate { get; set; }
         int DeletedBy { get; set; }
         DateTime DeletedDate { get; set; }
-        bool Delete { get; set; }
+        bool Deleted { get; set; }
     }
 }
