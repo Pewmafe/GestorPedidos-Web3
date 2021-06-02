@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Servicios
+namespace Service
 {
-    interface IArticuloService
+    public interface IItemService
     {
     }
 }
