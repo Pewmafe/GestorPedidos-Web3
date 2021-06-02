@@ -2,7 +2,7 @@
 
 namespace Models
 {
-    public class Usuario
+    public class User : IAuditable
     {
         public int Id { get; set; }
         public string Email { get; set; }

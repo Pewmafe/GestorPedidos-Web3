@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Cliente
+    public class Client : IAuditable
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,5 +15,7 @@ namespace Models
         public string Email { get; set; }
         public string Direccion { get; set; }
         public int Cuit { get; set; }
+
+       
     }
 }

@@ -2,11 +2,15 @@
 
 namespace Models
 {
-    public class Articulo
+    public class Item : IAuditable
     {
         public int Id { get; set; }
-        public int Codigo { get; set; }
+        public int Code { get; set; }
         public string Description { get; set; }
+
+
+
+
 
     }
 }
