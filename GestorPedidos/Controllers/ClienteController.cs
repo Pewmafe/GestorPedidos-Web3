@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace GestorPedidos.Controllers
             return View();
         }
 
-        public IActionResult Cliente()
+        public IActionResult Clientes()
         {
             
             return View();
@@ -22,6 +23,17 @@ namespace GestorPedidos.Controllers
         public IActionResult NuevoCliente()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult NuevoCliente(Client client)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(client);
+            }
+
+            return RedirectToAction("Clientes");
         }
 
         public IActionResult EditarCliente()
