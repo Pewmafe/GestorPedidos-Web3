@@ -1,11 +1,44 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Models.Client
 @{
     ViewData["Title"] = "Nuevo Cliente";
 }
-<div>
-    Nuevo Cliente
+<h1 class="text-center">Nuevo Cliente</h1>
+<div class="justify-content-center">
+    <form action="/Cliente/NuevoCliente" method="post">
+        <div class="col-md-4">
+            <label for="Name" class="form-label">Nombre:</label>
+            <input type="text" asp-for="Name" value="" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label for="Number" class="form-label">Numero:</label>
+            <input type="text" asp-for="Number" value="" class="form-control"/>
+            <span asp-validation-for="Number" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label for="PhoneNumber" class="form-label">Telefono:</label>
+            <input type="text" asp-for="PhoneNumber" value="" class="form-control"/>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label for="Email" class="form-label">Email:</label>
+            <input type="text" asp-for="Email" value="" class="form-control"/>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label for="Address" class="form-label">Direccion:</label>
+            <input type="text" asp-for="Address" value="" class="form-control"/>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label for="Cuit" class="form-label">CUIT:</label>
+            <input type="text" asp-for="Cuit" value="" class="form-control"/>
+            <span asp-validation-for="Cuit" class="text-danger"></span>
+        </div>
+        <div>
+            <input type="submit" class="btn btn-warning" value="Guardar" />
+            <input type="submit" class="btn btn-warning" value="Guardar y Crear otro" />
+            <a class="btn btn-warning" asp-controller="Cliente" asp-action="Clientes">Cancelar</a>
+        </div>
+    </form>
 </div>
-
-
