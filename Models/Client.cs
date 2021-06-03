@@ -27,7 +27,7 @@ namespace Models
 
         [EmailAddress(ErrorMessage = ValidationConstants.InvalidEmailFormat)]
         public string Email { get; set; }
-        public string Direccion { get; set; }
+        public string Address { get; set; }
 
         [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
         public int Cuit { get; set; }
