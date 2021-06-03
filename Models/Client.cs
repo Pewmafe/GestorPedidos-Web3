@@ -18,25 +18,25 @@ namespace Models
         public string Name { get; set; }
 
         [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
         [MinLength(8, ErrorMessage = ValidationConstants.MinLengthEightDigits)]
         [MaxLength(10, ErrorMessage = ValidationConstants.MaxLengthTenDigits)]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [EmailAddress(ErrorMessage = ValidationConstants.InvalidEmailFormat)]
         public string Email { get; set; }
         public string Address { get; set; }
 
         [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
-        public int Cuit { get; set; }
-        public int CreatedBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime CreatedDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int UpdateBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime UpdateDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int DeletedBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime DeletedDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool Deleted { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Cuit { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int UpdateBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public int DeletedBy { get; set; }
+        public DateTime DeletedDate { get; set; }
+        public bool Deleted { get; set; }
     }
 }
