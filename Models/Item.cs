@@ -1,4 +1,5 @@
 ﻿using Models.ValidationCustom;
+using Models.Constants;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,10 +9,10 @@ namespace Models
     {
         [Required]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Este campo es requerido")]
-        [CustomOnlyNumber(ErrorMessage = "Por favor ingrese solo numeros")]
+        [Required(ErrorMessage = ValidationConstants.RequiredField)]
+        [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
         public int Code { get; set; }
-        [Required(ErrorMessage = "Este campo es requerido")]
+        [Required(ErrorMessage = ValidationConstants.RequiredField)]
         public string Description { get; set; }
         public int CreatedBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public DateTime CreatedDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

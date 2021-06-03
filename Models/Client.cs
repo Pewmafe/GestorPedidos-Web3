@@ -1,4 +1,5 @@
 ﻿using Models.ValidationCustom;
+using Models.Constants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,23 +14,23 @@ namespace Models
         [Required]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido")]
-        [CustomOnlyString(ErrorMessage = "Por favor no ingrese caracteres especiales.")]
+        [Required(ErrorMessage = ValidationConstants.RequiredField)]
+        [CustomOnlyString(ErrorMessage = ValidationConstants.OnlyString)]
         public string Name { get; set; }
 
-        [CustomOnlyNumber(ErrorMessage ="Por favor ingrese solo numeros")]
+        [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
         public int Number { get; set; }
 
-        [CustomOnlyNumber(ErrorMessage = "Por favor ingrese solo numeros")]
-        [MinLength(8, ErrorMessage = "Por favor ingrese al menos 8 digitos")]
-        [MaxLength(10, ErrorMessage = "Por favor ingrese como mucho 10 digitos")]
+        [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
+        [MinLength(8, ErrorMessage = ValidationConstants.MinLengthEightDigits)]
+        [MaxLength(10, ErrorMessage = ValidationConstants.MaxLengthTenDigits)]
         public int PhoneNumber { get; set; }
 
-        [EmailAddress(ErrorMessage = "Por favor ingrese un formato de email valido.")]
+        [EmailAddress(ErrorMessage = ValidationConstants.InvalidEmailFormat)]
         public string Email { get; set; }
         public string Direccion { get; set; }
 
-        [CustomOnlyNumber(ErrorMessage = "Por favor ingrese solo numeros")]
+        [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
         public int Cuit { get; set; }
         public int CreatedBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public DateTime CreatedDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
