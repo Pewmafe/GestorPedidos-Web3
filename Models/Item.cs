@@ -7,7 +7,6 @@ namespace Models
 {
     public class Item : IAuditable
     {
-        [Required]
         public int Id { get; set; }
         [Required(ErrorMessage = ValidationConstants.RequiredField)]
         [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]

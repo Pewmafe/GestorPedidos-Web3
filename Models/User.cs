@@ -7,7 +7,6 @@ namespace Models
 {
     public class User : IAuditable
     {
-        [Required]
         public int Id { get; set; }
 
         [Required(ErrorMessage = ValidationConstants.RequiredField)]

@@ -11,7 +11,6 @@ namespace Models
 {
     public class Client : IAuditable
     {
-        [Required]
         public int Id { get; set; }
 
         [Required(ErrorMessage = ValidationConstants.RequiredField)]

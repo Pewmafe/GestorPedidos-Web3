@@ -9,7 +9,6 @@ namespace Models
 {
     public class Order : IAuditable
     {
-        [Required]
         public int Id { get; set; }
 
         public int IdClient { get; set; }
