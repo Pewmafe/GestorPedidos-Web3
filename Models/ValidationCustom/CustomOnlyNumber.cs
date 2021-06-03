@@ -12,6 +12,11 @@ namespace Models.ValidationCustom
     {
         public override bool IsValid(object value)
         {
+            if (value == null)
+            {
+                return false;
+            }
+
             string regexItem = "^[0-9 ]*$";
             string valor = (string)value;
 

@@ -11,6 +11,11 @@ namespace Models.ValidationCustom
     {
         public override bool IsValid(object value)
         {
+            if (value == null)
+            {
+                return false;
+            }
+
             DateTime fecha = (DateTime)value;
             if (fecha.Year >= DateTime.Now.Year) return false;
             return true;
