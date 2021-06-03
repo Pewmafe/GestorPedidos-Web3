@@ -14,7 +14,7 @@ namespace Models.ValidationCustom
         {
             if (value == null)
             {
-                return false;
+                return true;
             }
 
             string regexItem = "^[a-zA-Z0-9 ]*$";

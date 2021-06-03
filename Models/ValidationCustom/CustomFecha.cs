@@ -13,7 +13,7 @@ namespace Models.ValidationCustom
         {
             if (value == null)
             {
-                return false;
+                return true;
             }
 
             DateTime fecha = (DateTime)value;

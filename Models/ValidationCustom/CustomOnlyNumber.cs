@@ -14,11 +14,11 @@ namespace Models.ValidationCustom
         {
             if (value == null)
             {
-                return false;
+                return true;
             }
 
             string regexItem = "^[0-9 ]*$";
-            string valor = (string)value;
+            string valor = value.ToString(); 
 
             return Regex.IsMatch(valor, regexItem);
         }
