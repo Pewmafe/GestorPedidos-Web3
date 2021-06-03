@@ -29,13 +29,13 @@ namespace Models
         [CustomFecha(ErrorMessage = ValidationConstants.InvalidDate)]
         public DateTime FechaNacimiento { get; set; }
 
-        public int CreatedBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime CreatedDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int UpdateBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime UpdateDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int DeletedBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime DeletedDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool Deleted { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int UpdateBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public int DeletedBy { get; set; }
+        public DateTime DeletedDate { get; set; }
+        public bool Deleted { get; set; }
     }
    
 }
