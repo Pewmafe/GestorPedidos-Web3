@@ -1,0 +1,46 @@
+﻿@model Models.User;
+
+@{
+    ViewData["Title"] = "Nuevo Usuario";
+}
+
+<h1 class="text-center">Nuevo Usuario</h1>
+<div class="d-flex justify-content-center">
+    <form asp-action="NuevoUsuario" asp-controller="Usuario" method="post" >
+        <div class="col-md-12">
+            <label for="Email" class="form-label">Email:</label>
+            <input type="email" asp-for="Email" value="" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-12">
+            <label for="Password" class="form-label">Password:</label>
+            <input type="password" asp-for="Password" value="" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="col-md-12">
+            <label for="IsAdmin" class="form-label">Admin:</label>
+            <input type="checkbox" asp-for="IsAdmin" value="" class="form-control" />
+            <span asp-validation-for="IsAdmin" class="text-danger"></span>
+        </div>
+        <div class="col-md-12">
+            <label for="Name" class="form-label">Nombre:</label>
+            <input type="text" asp-for="Name" value="" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-12">
+            <label for="Surname" class="form-label">Apellido:</label>
+            <input type="text" asp-for="Surname" value="" class="form-control" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+        <div class="col-md-12">
+            <label for="FechaNacimiento" class="form-label">Fecha De Nacimiento:</label>
+            <input type="date" asp-for="FechaNacimiento" value="" class="form-control" />
+            <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+        </div>
+        <div>
+            <input type="submit" class="btn btn-success" value="Guardar" />
+            <input type="submit" class="btn btn-success" value="Guardar y Crear otro" />
+            <a class="btn btn-warning" asp-controller="Usuario" asp-action="Usuarios">Cancelar</a>
+        </div>
+    </form>
+</div>
