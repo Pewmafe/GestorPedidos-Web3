@@ -1,17 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Pedido";
+    ViewData["Title"] = "Crear Pedido";
 }
 <div>
     <div class="volver mb-3">
-        <a asp-controller="Pedido" asp-action="CrearPedido" class="mx-1">
-            <i class="fas fa-plus"></i> Crear Pedido
-        </a>  
-        <a asp-controller="Pedido" asp-action="BuscarPedido" class="mx-1">
-            <i class="fas fa-search"></i> Buscar Pedido
+        <a asp-controller="Pedido" asp-action="Pedido">
+            <i class="fas fa-long-arrow-alt-left"></i> Volver
         </a>
     </div>
     <div class="py-2">
-        <h3>Pedido</h3>
+        <h3>Crear pedido</h3>
     </div>
 
     <div class="row">
@@ -71,8 +68,38 @@
                     </tbody>
                 </table>
             </div>
+            <div>
+                <label for="exampleFormControlTextarea1" class="form-label">Comentarios</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="d-none row my-2 pedido-pc">
+                <div class="col-6">
+                    <div class="d-flex justify-content-start">
+                        <button class="btn btn-outline-success">Agregar</button>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-success">Agregar otro </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
+
+    <div class="row my-2 pedido-phone">
+        <div class="col-6 col-md-4">
+            <div class="d-flex justify-content-start">
+                <button class="btn btn-outline-success">Agregar</button>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-success">Agregar otro </button>
+            </div>
+        </div>
+    </div>
+
 
 </div>

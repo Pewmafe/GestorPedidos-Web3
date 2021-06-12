@@ -1,4 +1,6 @@
 ﻿@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
 
 body {
     font-family: "Poppins", sans-serif;
@@ -12,27 +14,28 @@ body {
 header {
     border-bottom: 5px #ccc solid;
 }*/
-/*===== GOOGLE FONTS =====*/
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+.volver a {
+    font-size: 0.8em !important;
+    color: #008080 !important;
+}
 
-/*===== VARIABLES CSS =====*/
+.volver:hover {
+    text-decoration: underline !important;
+}
+
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
-    /*===== Colors =====*/
     --first-color: #4723d9;
     --first-color-light: #afa5d9;
     --white-color: #f7f6fb;
     --gray-color: #ccc;
     --darkgray-color: #212529;
-    /*===== Font and typography =====*/
     --body-font: "Nunito", sans-serif;
     --normal-font-size: 1rem;
-    /*===== z index =====*/
     --z-fixed: 100;
 }
 
-/*===== BASE =====*/
 *,
 ::before,
 ::after {
@@ -52,7 +55,6 @@ a {
     text-decoration: none;
 }
 
-/*===== HEADER =====*/
 .header {
     width: 100%;
     height: var(--header-height);
@@ -87,7 +89,6 @@ a {
         width: 40px;
     }
 
-/*===== NAV =====*/
 .l-navbar {
     position: fixed;
     top: 0;
@@ -147,17 +148,14 @@ a {
     font-size: 1.25rem;
 }
 
-/*Show navbar movil*/
 .show {
     left: 0;
 }
 
-/*Add padding body movil*/
 .body-pd {
     padding-left: calc(var(--nav-width) + 1rem);
 }
 
-/*Active links*/
 .active {
     color: var(--white-color);
 }
@@ -171,7 +169,7 @@ a {
         background-color: var(--white-color);
     }
 
-/* ===== MEDIA QUERIES=====*/
+
 @media screen and (min-width: 768px) {
     body {
         margin: calc(var(--header-height) + 1rem) 0 0 0;
@@ -197,12 +195,10 @@ a {
         padding: 1rem 1rem 0 0;
     }
 
-    /*Show navbar desktop*/
     .show {
         width: calc(var(--nav-width) + 156px);
     }
 
-    /*Add padding body desktop*/
     .body-pd {
         padding-left: calc(var(--nav-width) + 188px);
     }
@@ -248,4 +244,23 @@ a {
     background-color: var(--darkgray-color);
     height: 40px;
     width: 90px;
+}
+/*******PEDIDO*******/
+.hr-pedido {
+    width: 70%;
+    margin: auto;
+}
+
+@media screen and (min-width: 768px) {
+    .hr-pedido {
+        display: none;
+    }
+
+    .pedido-phone {
+        display: none !important;
+    }
+
+    .pedido-pc {
+        display: flex !important;
+    }
 }

@@ -13,5 +13,11 @@ namespace GestorPedidos.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult CrearPedido()
+        {
+            return View();
+        }
     }
 }
