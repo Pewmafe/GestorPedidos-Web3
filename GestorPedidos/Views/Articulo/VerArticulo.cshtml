@@ -1,8 +1,27 @@
-﻿
+﻿@model Models.Models.Articulo; 
 @{
 
     ViewData["Title"] = "Ver Artículo";
 }
-<div>
-    Ver Articulos
+<div class="table-responsive text-center">
+    <table class="table table-bordered table-dark">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Descripción</th>
+                <th scope="col">Código</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Rosca con tuerca 1/2 bronce</td>
+                <td>1000/01</td>
+                <td><a href="#" class="btn btn-warning text-light">Editar</a></td>
+                <td> <a href="#" class="btn btn-danger text-light">Eliminar</a></td>
+
+            </tr>
+           
+        </tbody>
+    </table>
 </div>

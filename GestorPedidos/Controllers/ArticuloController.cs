@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Models;
+using Models.Models;
 using Service;
 
 namespace GestorPedidos.Controllers
@@ -21,12 +21,17 @@ namespace GestorPedidos.Controllers
         {
             return View();
         }
-       /* [HttpPost]
-        public IActionResult NuevoArticulo()
+      /*  [HttpPost]
+        public IActionResult NuevoArticulo(Articulo articulo)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(articulo);
+            }
+
             return View();
-        }
-       */
+        }*/
+       
         [HttpGet]
         public IActionResult EditarArticulo()
         {
@@ -40,6 +45,17 @@ namespace GestorPedidos.Controllers
         }
 
         */
-
+        [HttpGet]
+        public IActionResult VerArticulo()
+        {
+            //meter temp data
+            return View();
+        }
+        [HttpGet]
+        public IActionResult FiltrarArticulo()
+        {
+            //meter temp data
+            return RedirectToAction("Articulos");
+        }
     }
 }
