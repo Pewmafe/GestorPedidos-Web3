@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using Models.Models;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -8,11 +8,18 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class UsuarioServicio : IUsuarioServicio, IBaseServicio<Usuario>
+    public class UsuarioServicio : IUsuarioServicio
     {
+        private _20211CTPContext _dbContext;
+
+        public UsuarioServicio(_20211CTPContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         public void Crear(Usuario entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Usuarios.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Borrar(Usuario entity)
@@ -36,6 +43,11 @@ namespace Service
         }
 
         public void Modificar(Usuario entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Usuario> ListarNoEliminados()
         {
             throw new NotImplementedException();
         }

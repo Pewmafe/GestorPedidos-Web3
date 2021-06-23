@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class PedidoServicio : IPedidoServicio, IBaseServicio<Pedido>
+    public class PedidoServicio : IPedidoServicio
     {
         private _20211CTPContext _dbContext;
 
@@ -28,6 +28,7 @@ namespace Service
         public void DeleteByid(int id)
         {
             throw new NotImplementedException();
+
         }
 
         public List<Pedido> ListarTodos()
@@ -41,6 +42,11 @@ namespace Service
         }
 
         public void Modificar(Pedido entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Pedido> ListarNoEliminados()
         {
             throw new NotImplementedException();
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public interface IPedidoServicio
+    public interface IPedidoServicio : IBaseServicio<Pedido>
     {
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Models.Models;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace GestorPedidos
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<_20211CTPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("_20211CTPContext")));
+            services.AddDbContext<_20211CTPContext>(options => options.UseSqlServer(conex.CONEX_STRING_JSON));
 
             services.AddControllersWithViews();
         }

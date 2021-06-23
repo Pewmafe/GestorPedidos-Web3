@@ -10,10 +10,10 @@ namespace Service
     {
         TEntity ObtenerPorId(int id);
         List<TEntity> ListarTodos();
+        List<TEntity> ListarNoEliminados();
         void Crear(TEntity entity);
         void Modificar(TEntity entity);
         void Borrar(TEntity entity);
         void DeleteByid(int id);
-
     }
 }

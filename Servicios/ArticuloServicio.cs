@@ -1,18 +1,18 @@
-﻿using Models;
+﻿using Models.Models;
 using System;
 using System.Collections.Generic;
 
 
 namespace Service
 {
-    public class ArticuloServicio : IArticuloServicio, IBaseServicio<Articulo>
+    public class ArticuloServicio : IArticuloServicio
     {
-        public void Crear(Articulo entity)
+        public void Borrar(Articulo entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Borrar(Articulo entity)
+        public void Crear(Articulo entity)
         {
             throw new NotImplementedException();
         }
@@ -22,17 +22,22 @@ namespace Service
             throw new NotImplementedException();
         }
 
+        public List<Articulo> ListarNoEliminados()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Articulo> ListarTodos()
         {
             throw new NotImplementedException();
         }
 
-        public Articulo ObtenerPorId(int id)
+        public void Modificar(Articulo entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Modificar(Articulo entity)
+        public Articulo ObtenerPorId(int id)
         {
             throw new NotImplementedException();
         }
