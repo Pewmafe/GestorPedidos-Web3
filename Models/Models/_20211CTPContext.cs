@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Models.Models
 {
-    public partial class GestorPedidosContext : DbContext
+    public partial class _20211CTPContext : DbContext
     {
-        public GestorPedidosContext()
+        public _20211CTPContext()
         {
         }
 
-        public GestorPedidosContext(DbContextOptions<GestorPedidosContext> options)
+        public _20211CTPContext(DbContextOptions<_20211CTPContext> options)
             : base(options)
         {
         }
@@ -29,7 +29,7 @@ namespace Models.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-36HNDMN;Database=GestorPedidos;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-DB0G5LR;Database=2021-1C-TP;Trusted_Connection=True;");
             }
         }
 
@@ -224,6 +224,16 @@ namespace Models.Models
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasMaxLength(300);
+
+                entity.HasOne(d => d.BorradoPorNavigation)
+                    .WithMany(p => p.InverseBorradoPorNavigation)
+                    .HasForeignKey(d => d.BorradoPor)
+                    .HasConstraintName("FK_Usuario_Usuario2");
+
+                entity.HasOne(d => d.CreadoPorNavigation)
+                    .WithMany(p => p.InverseCreadoPorNavigation)
+                    .HasForeignKey(d => d.CreadoPor)
+                    .HasConstraintName("FK_Usuario_Usuario1");
 
                 entity.HasOne(d => d.ModificadoPorNavigation)
                     .WithMany(p => p.InverseModificadoPorNavigation)
