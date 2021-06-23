@@ -7,7 +7,7 @@ using Models;
 
 namespace GestorPedidos.Controllers
 {
-    public class UserController : Controller
+    public class UsuarioController : Controller
     {
         public IActionResult Index()
         {
@@ -20,7 +20,7 @@ namespace GestorPedidos.Controllers
             return View("Usuarios");
         }
 
-        public IActionResult NuevoUsuario(User user)
+        public IActionResult NuevoUsuario(Usuario user)
         {
 
             return View("NuevoUsuario");

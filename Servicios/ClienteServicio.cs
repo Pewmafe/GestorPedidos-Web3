@@ -1,5 +1,4 @@
 ﻿using Models;
-using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class UserService : IUserService, IBaseService<User>
+    public class ClienteServicio : IClienteServicio, IBaseServicio<Cliente>
     {
-        public void Create(User entity)
+        public void Crear(Cliente entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(User entity)
+        public void Borrar(Cliente entity)
         {
             throw new NotImplementedException();
         }
@@ -25,17 +24,17 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public List<User> GetAll()
+        public List<Cliente> ListarTodos()
         {
             throw new NotImplementedException();
         }
 
-        public User GetById(int id)
+        public Cliente ObtenerPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(User entity)
+        public void Modificar(Cliente entity)
         {
             throw new NotImplementedException();
         }

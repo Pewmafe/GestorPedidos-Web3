@@ -26,7 +26,7 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpPost]
-        public IActionResult NuevoCliente(Client client)
+        public IActionResult NuevoCliente(Cliente client)
         {
             if (!ModelState.IsValid)
             {

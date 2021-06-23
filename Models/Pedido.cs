@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Models.ValidationCustom;
+using Models.Constants;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Order : IAuditable
+    public class Pedido : IAuditable
     {
         public int Id { get; set; }
-
-        public int IdClient { get; set; }
-        public int IdOrderState { get; set; }
-        public int OrderNumber { get; set; }
-
-        public string Coments { get; set; }
+        [Required(ErrorMessage = ValidationConstants.RequiredField)]
+        [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
+        public int Code { get; set; }
+        [Required(ErrorMessage = ValidationConstants.RequiredField)]
+        public string Description { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public int UpdateBy { get; set; }

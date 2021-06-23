@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
-    public class User : IAuditable
+    public class Usuario : IAuditable
     {
         public int Id { get; set; }
 

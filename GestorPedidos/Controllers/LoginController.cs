@@ -27,13 +27,6 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult Login(int aux)
         {
-
-            if (true)
-            {
-                HttpContext.Session.SetString("Usuario", "Admin");
-                return Redirect("/Home/Index");
-
-            }
             return View();
         }
         [HttpGet]
@@ -41,8 +34,5 @@ namespace GestorPedidos.Controllers
         {
             return Redirect("/Home/Index");
         }
-
-        
-
     }
 }

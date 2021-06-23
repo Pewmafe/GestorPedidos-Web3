@@ -1,4 +1,4 @@
-﻿@model Models.User;
+﻿@model Models.Models.Usuario;
 
 @{
     ViewData["Title"] = "Nuevo Usuario";
@@ -6,7 +6,8 @@
 
 <h1 class="text-center">Nuevo Usuario</h1>
 <div class="d-flex justify-content-center">
-    <form asp-action="NuevoUsuario" asp-controller="Usuario" method="post" >
+
+    <form asp-action="EditarUsuaio" asp-controller="User" method="post">
         <div class="col-md-12">
             <label for="Email" class="form-label">Email:</label>
             <input type="email" asp-for="Email" value="" class="form-control" />
@@ -18,19 +19,19 @@
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div class="col-md-12">
-            <label for="IsAdmin" class="form-label">Admin:</label>
-            <input type="checkbox" asp-for="IsAdmin" value="" class="form-control" />
-            <span asp-validation-for="IsAdmin" class="text-danger"></span>
+            <label for="EsAdmin" class="form-label">Admin:</label>
+            <input type="checkbox" asp-for="EsAdmin" value="" class="form-control" />
+            <span asp-validation-for="EsAdmin" class="text-danger"></span>
         </div>
         <div class="col-md-12">
-            <label for="Name" class="form-label">Nombre:</label>
-            <input type="text" asp-for="Name" value="" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+            <label for="Nombre" class="form-label">Nombre:</label>
+            <input type="text" asp-for="Nombre" value="" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
         </div>
         <div class="col-md-12">
-            <label for="Surname" class="form-label">Apellido:</label>
-            <input type="text" asp-for="Surname" value="" class="form-control" />
-            <span asp-validation-for="Surname" class="text-danger"></span>
+            <label for="Apellido" class="form-label">Apellido:</label>
+            <input type="text" asp-for="Apellido" value="" class="form-control" />
+            <span asp-validation-for="Apellido" class="text-danger"></span>
         </div>
         <div class="col-md-12">
             <label for="FechaNacimiento" class="form-label">Fecha De Nacimiento:</label>
@@ -43,4 +44,5 @@
             <a class="btn btn-warning" asp-controller="Usuario" asp-action="Usuarios">Cancelar</a>
         </div>
     </form>
+
 </div>

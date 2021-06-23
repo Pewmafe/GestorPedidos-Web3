@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Client : IAuditable
+    public class Cliente : IAuditable
     {
         public int Id { get; set; }
 

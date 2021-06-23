@@ -1,18 +1,21 @@
 ﻿using Models;
+using Service;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Service
 {
-    public class OrderService : IOrderService, IBaseService<Order>
+    public class UsuarioServicio : IUsuarioServicio, IBaseServicio<Usuario>
     {
-        public void Create(Order entity)
+        public void Crear(Usuario entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Order entity)
+        public void Borrar(Usuario entity)
         {
             throw new NotImplementedException();
         }
@@ -22,17 +25,17 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public List<Order> GetAll()
+        public List<Usuario> ListarTodos()
         {
             throw new NotImplementedException();
         }
 
-        public Order GetById(int id)
+        public Usuario ObtenerPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Order entity)
+        public void Modificar(Usuario entity)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class ClientService : IClientService, IBaseService<Client>
+    public class PedidoServicio : IPedidoServicio, IBaseServicio<Pedido>
     {
-        public void Create(Client entity)
+        private _20211CTPContext _dbContext;
+
+        public PedidoServicio(_20211CTPContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+        public void Crear(Pedido entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Client entity)
+        public void Borrar(Pedido entity)
         {
             throw new NotImplementedException();
         }
@@ -24,17 +30,17 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public List<Client> GetAll()
+        public List<Pedido> ListarTodos()
         {
             throw new NotImplementedException();
         }
 
-        public Client GetById(int id)
+        public Pedido ObtenerPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Client entity)
+        public void Modificar(Pedido entity)
         {
             throw new NotImplementedException();
         }
