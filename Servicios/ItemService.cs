@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,20 @@ namespace Service
 {
     public class ItemService : IItemService, IBaseService<Item>
     {
+        private _20211CTPContext _dbContext;
+
+        public ItemService(_20211CTPContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         public void Create(Item entity)
         {
-            throw new NotImplementedException();
+
+        }
+        public void Created(Usuario usuario)
+        {
+            _dbContext.Usuarios.Add(usuario);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(Item entity)
