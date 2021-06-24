@@ -31,7 +31,7 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpPost]
-        public IActionResult NuevoCliente(Cliente cliente)
+        public IActionResult NuevoCliente(Cliente cliente, string guardar)
         {
             if (!ModelState.IsValid)
             {
@@ -40,7 +40,11 @@ namespace GestorPedidos.Controllers
 
             clienteServicio.Crear(cliente);
 
-            return RedirectToAction("Clientes");
+            if (guardar.ToLower().Equals("guardar"))
+            {
+                return RedirectToAction("Clientes");
+            }
+            return RedirectToAction("NuevoCliente");
         }
 
         public IActionResult EditarCliente()
