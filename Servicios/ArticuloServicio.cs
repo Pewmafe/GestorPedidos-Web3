@@ -17,7 +17,7 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public void DeleteByid(int id)
+        public void BorrarPorId(int id)
         {
             throw new NotImplementedException();
         }
