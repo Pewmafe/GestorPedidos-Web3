@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Models;
+using Models.Models;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,14 @@ namespace GestorPedidos.Controllers
 {
     public class ClienteController : Controller
     {
+        private IClienteServicio clienteServicio;
+        private _20211CTPContext dbContext;
+
+        public ClienteController(_20211CTPContext _dbContext)
+        {
+            this.dbContext = _dbContext;
+            this.clienteServicio = new ClienteServicio(dbContext);
+        }
 
         public IActionResult Clientes()
         {
