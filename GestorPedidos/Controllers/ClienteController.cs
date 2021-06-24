@@ -31,12 +31,14 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpPost]
-        public IActionResult NuevoCliente(Cliente client)
+        public IActionResult NuevoCliente(Cliente cliente)
         {
             if (!ModelState.IsValid)
             {
-                return View(client);
+                return View(cliente);
             }
+
+            clienteServicio.Crear(cliente);
 
             return RedirectToAction("Clientes");
         }
