@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-12">
             <label for="Descripcion" class="form-label">Descripción:</label>
-            <input type="password" asp-for="Descripcion" value="" class="form-control" />
+            <input type="text" asp-for="Descripcion" value="" class="form-control" />
             <span asp-validation-for="Descripcion" class="text-danger"></span>
         </div>
         <div>
@@ -24,3 +24,8 @@
         </div>
     </form>
 </div>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}
