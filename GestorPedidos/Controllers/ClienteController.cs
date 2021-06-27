@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Models;
+using Models.Models;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,13 @@ namespace GestorPedidos.Controllers
 {
     public class ClienteController : Controller
     {
-        public IActionResult Index()
+        private IClienteServicio clienteServicio;
+        private _20211CTPContext dbContext;
+
+        public ClienteController(_20211CTPContext _dbContext)
         {
-            return View();
+            this.dbContext = _dbContext;
+            this.clienteServicio = new ClienteServicio(dbContext);
         }
 
         public IActionResult Clientes()
@@ -26,14 +31,20 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpPost]
-        public IActionResult NuevoCliente(Cliente client)
+        public IActionResult NuevoCliente(Cliente cliente, string guardar)
         {
             if (!ModelState.IsValid)
             {
-                return View(client);
+                return View(cliente);
             }
 
-            return RedirectToAction("Clientes");
+            clienteServicio.Crear(cliente);
+
+            if (guardar.ToLower().Equals("guardar"))
+            {
+                return RedirectToAction("Clientes");
+            }
+            return RedirectToAction("NuevoCliente");
         }
 
         public IActionResult EditarCliente()

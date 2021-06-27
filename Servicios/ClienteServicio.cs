@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,18 @@ namespace Service
 {
     public class ClienteServicio : IClienteServicio
     {
+
+        private _20211CTPContext _dbContext;
+
+        public ClienteServicio(_20211CTPContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public void Crear(Cliente entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Clientes.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Borrar(Cliente entity)
@@ -39,32 +48,7 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        Models.Models.Cliente IBaseServicio<Models.Models.Cliente>.ObtenerPorId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Models.Models.Cliente> IBaseServicio<Models.Models.Cliente>.ListarTodos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Models.Models.Cliente> ListarNoEliminados()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Crear(Models.Models.Cliente entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Modificar(Models.Models.Cliente entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Borrar(Models.Models.Cliente entity)
+        public List<Cliente> ListarNoEliminados()
         {
             throw new NotImplementedException();
         }
