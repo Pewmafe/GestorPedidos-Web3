@@ -19,10 +19,11 @@ namespace GestorPedidos.Controllers
             this.clienteServicio = new ClienteServicio(dbContext);
         }
 
+        [HttpGet]
         public IActionResult Clientes()
         {
-            
-            return View();
+            List<Cliente> clientes = clienteServicio.ListarNoEliminados();
+            return View(clientes);
         }
 
         public IActionResult NuevoCliente()
@@ -46,6 +47,7 @@ namespace GestorPedidos.Controllers
             }
             return RedirectToAction("NuevoCliente");
         }
+
 
         public IActionResult EditarCliente()
         {
