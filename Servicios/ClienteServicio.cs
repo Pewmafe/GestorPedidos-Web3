@@ -35,7 +35,7 @@ namespace Service
 
         public List<Cliente> ListarTodos()
         {
-            throw new NotImplementedException();
+            return _dbContext.Clientes.ToList();
         }
 
         public Cliente ObtenerPorId(int id)
@@ -50,7 +50,11 @@ namespace Service
 
         public List<Cliente> ListarNoEliminados()
         {
-            throw new NotImplementedException();
+            var clientes = from a in _dbContext.Clientes
+                            where a.FechaBorrado == null && a.BorradoPor == null
+                            select a;
+
+            return clientes.ToList();
         }
     }
 }
