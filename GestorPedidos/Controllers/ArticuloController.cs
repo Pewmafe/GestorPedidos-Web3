@@ -35,6 +35,7 @@ namespace GestorPedidos.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult NuevoArticulo(Articulo articulo, string guardar)
         {

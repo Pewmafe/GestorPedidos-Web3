@@ -1,4 +1,5 @@
-﻿using Models.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,13 @@ namespace Service
 
         public void BorrarPorId(int id)
         {
-            throw new NotImplementedException();
+            var articulos = from a in dbContexto.Articulos where a.IdArticulo == id select a;
+
+            Articulo articulo = articulos.FirstOrDefault();
+            var fecha = DateTime.Now;
+            articulo.FechaBorrado = fecha;
+            //falta borrado por
+            dbContexto.SaveChanges();
         }
 
         public List<Articulo> ListarNoEliminados()
