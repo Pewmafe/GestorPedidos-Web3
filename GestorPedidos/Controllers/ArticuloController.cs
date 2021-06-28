@@ -21,9 +21,12 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpGet]
-        public IActionResult Articulos()
+        public IActionResult Articulos(string codigo,string descripcion,string noEliminados)
         {
-            return View();
+            
+            List<Articulo> articulos = articuloServicio.ListarTodos();
+
+            return View(articulos);
         }
 
 
@@ -41,6 +44,7 @@ namespace GestorPedidos.Controllers
             }
 
             articuloServicio.Crear(articulo);
+
             TempData["art"] = JsonConvert.SerializeObject(articulo);
 
             if (guardar != null && guardar.ToLower().Equals("guardar"))
@@ -52,24 +56,45 @@ namespace GestorPedidos.Controllers
         }
        
         [HttpGet]
-        public IActionResult EditarArticulo(int id)
+        public IActionResult EditarArticulo(int IdArticulo)
         {
-            return View();
+            Articulo articulo = articuloServicio.ObtenerPorId(IdArticulo);
+
+            return View(articulo);
         }
 
         [HttpPost]
         public IActionResult EditarArticulo(Articulo articulo)
         {
-            return View();
+
+            if (!ModelState.IsValid)
+            {
+                return View(articulo);
+            }
+
+            articuloServicio.Modificar(articulo);
+
+            return RedirectToAction(nameof(Articulos));
         }
 
       
         [HttpGet]
-        public IActionResult VerArticulo(int id)
+        public IActionResult VerArticulo(int IdArticulo)
         {
-            
-            return View();
+            Articulo articulo = articuloServicio.ObtenerPorId(IdArticulo);
+
+            return View(articulo);
+           
         }
-       
+        [HttpGet]
+        public IActionResult EliminarArticulo(int IdArticulo)
+        {
+            Articulo articulo = articuloServicio.ObtenerPorId(IdArticulo);
+            articuloServicio.Borrar(articulo);
+
+            return RedirectToAction(nameof(Articulos));
+        }
+
+
     }
 }

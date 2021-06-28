@@ -46,6 +46,33 @@ namespace Service
             return articulos.ToList();
         }
 
+        public List<Articulo> listarPorCodigo(string codigo)
+        {
+            var articulos = from a in dbContexto.Articulos
+                            where a.Codigo==codigo
+                            select a;
+
+            return articulos.ToList();
+        }
+
+        public List<Articulo> listarPorCodigoYDescripcion(string codigo, string descripcion)
+        {
+            var articulos = from a in dbContexto.Articulos
+                            where a.Codigo == codigo && a.Descripcion == descripcion
+                            select a;
+
+            return articulos.ToList();
+        }
+
+        public List<Articulo> listarPorDescripcion(string descripcion)
+        {
+            var articulos = from a in dbContexto.Articulos
+                            where a.Descripcion == descripcion
+                            select a;
+
+            return articulos.ToList();
+        }
+
         public List<Articulo> ListarTodos()
         {
             var articulos = from a in dbContexto.Articulos select a;
