@@ -13,7 +13,7 @@
         <h3>Editar pedido</h3>
     </div>
 
-    <div class="row">
+    <div class="row nuevo-pedido">
         <div class="col-12 col-md-6 mt-3">
             <div class="mb-3">
                 <label class="form-label-group text-uppercase">Cliente</label>
@@ -47,25 +47,31 @@
                 <table id="" class="table table-striped" style="width:100%">
                     <thead class="bg-dark text-light">
                         <tr>
-                            <th>Descripcion</th>
-                            <th>Codigo</th>
-                            <th>Cantidad</th>
-                            <th>Ver</th>
+                            <th class="text-center">Descripcion</th>
+                            <th class="text-center">Codigo</th>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-center">Ver</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Coca Cola</td>
-                            <td>A122</td>
-                            <td>1</td>
-                            <td><button class="btn btn-outline-dark"><i class="fas fa-info"></i></button></td>
+                            <td class="text-center">Coca Cola</td>
+                            <td class="text-center">A122</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">
+                                <span data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></span> |
+                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></span>
+                            </td>
 
                         </tr>
                         <tr>
-                            <td>Pepsi</td>
-                            <td>B2B1</td>
-                            <td>2</td>
-                            <td><button class="btn btn-outline-dark"><i class="fas fa-info"></i></button></td>
+                            <td class="text-center">Pepsi</td>
+                            <td class="text-center">B2B1</td>
+                            <td class="text-center">2</td>
+                            <td class="text-center">
+                                <span data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></span> |
+                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -75,13 +81,18 @@
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
             <div class="d-none row my-2 pedido-pc">
-                <div class="col-6">
+                <div class="col-4">
                     <div class="d-flex justify-content-start">
-                        <button class="btn btn-outline-success text-uppercase">Cancelar</button>
+                        <button class="btn btn-outline-secondary text-uppercase">Cancelar</button>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="d-flex justify-content-end"> 
+                <div class="col-4">
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-danger text-uppercase">Borrar</button>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="d-flex justify-content-end">
                         <button class="btn btn-outline-success text-uppercase">Modificar</button>
                     </div>
                 </div>
@@ -91,12 +102,17 @@
     </div>
 
     <div class="row my-2 pedido-phone">
-        <div class="col-6 col-md-4">
+        <div class="col-4 col-md-4">
             <div class="d-flex justify-content-start">
-                <button class="btn btn-outline-success text-uppercase">Cancelar</button>
+                <button class="btn btn-outline-secondary text-uppercase">Cancelar</button>
             </div>
         </div>
-        <div class="col-6 col-md-4">
+        <div class="col-4 col-md-4">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-danger text-uppercase">Borrar</button>
+            </div>
+        </div>
+        <div class="col-4 col-md-4">
             <div class="d-flex justify-content-end">
                 <button class="btn btn-outline-success text-uppercase">Modificar</button>
             </div>
