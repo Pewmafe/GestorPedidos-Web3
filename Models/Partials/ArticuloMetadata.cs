@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Models.Constants;
 
-namespace Models.Partials
+namespace Models.Models
 {
     class ArticuloMetadata
     {

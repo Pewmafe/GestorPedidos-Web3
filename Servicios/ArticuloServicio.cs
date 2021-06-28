@@ -32,7 +32,7 @@ namespace Service
 
         }
 
-        public void DeleteByid(int id)
+        public void BorrarPorId(int id)
         {
             throw new NotImplementedException();
         }

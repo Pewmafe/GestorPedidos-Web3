@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service
 {
@@ -17,38 +15,60 @@ namespace Service
         }
         public void Crear(Pedido entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Pedidos.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Borrar(Pedido entity)
         {
-            throw new NotImplementedException();
+            Pedido pedido = ObtenerPorId(entity.IdPedido);
+            //pedido.IdEstadoNavigation.IdEstadoPedido = cerrado;
+            //pedido.BorradoPor = "usuario";
+            //pedido.ModificadoPor = "usuario";
+            pedido.FechaModificacion = DateTime.Today;
+            pedido.FechaBorrado = DateTime.Today;
+
+            _dbContext.SaveChanges();
         }
 
-        public void DeleteByid(int id)
+        public void BorrarPorId(int id)
         {
-            throw new NotImplementedException();
+            Pedido pedido = ObtenerPorId(id);
+            //pedido.IdEstadoNavigation.IdEstadoPedido = cerrado;
+            //pedido.BorradoPor = "usuario";
+            //pedido.ModificadoPor = "usuario";
+            pedido.FechaModificacion = DateTime.Today;
+            pedido.FechaBorrado = DateTime.Today;
+
+            _dbContext.SaveChanges();
 
         }
 
         public List<Pedido> ListarTodos()
         {
-            throw new NotImplementedException();
+            return _dbContext.Pedidos.ToList();
         }
 
         public Pedido ObtenerPorId(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Pedidos.FirstOrDefault(o => o.IdPedido == id);
         }
 
         public void Modificar(Pedido entity)
         {
-            throw new NotImplementedException();
+            Pedido pedido = ObtenerPorId(entity.IdPedido);
+            pedido.IdCliente = entity.IdCliente;
+            pedido.IdEstado = entity.IdEstado;
+            //pedido.NroPedido= entity.NroPedido;  ¿numero de pedido se puede cambiar?
+            pedido.Comentarios = entity.Comentarios;
+            //pedido.ModificadoPor = "usuario";
+            pedido.FechaModificacion = DateTime.Today;
+            _dbContext.SaveChanges();
         }
 
         public List<Pedido> ListarNoEliminados()
         {
-            throw new NotImplementedException();
+            return _dbContext.Pedidos.Where(o => o.FechaBorrado != null).ToList();
         }
     }
 }
