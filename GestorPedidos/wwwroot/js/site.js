@@ -4,6 +4,7 @@ const showNavbar = (toggleId, navId, bodyId, headerId) => {
         nav = document.getElementById(navId),
         bodypd = document.getElementById(bodyId),
         headerpd = document.getElementById(headerId)
+           
 
     // Validate that all variables exist
     if (toggle && nav && bodypd && headerpd) {
@@ -36,3 +37,9 @@ linkColor.forEach(l => l.addEventListener('click', colorLink));
 $(document).ready(function () {
     $("#pedidos").DataTable();
 });
+
+/*===== DROPDOWN-TOGGLE =====*/
+$(document).ready(function () {
+    $('.dropdown-toggle').dropdown()
+});
+
