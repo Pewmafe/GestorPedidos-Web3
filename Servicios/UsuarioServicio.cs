@@ -2,6 +2,7 @@
 using Service;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,46 +11,80 @@ namespace Service
 {
     public class UsuarioServicio : IUsuarioServicio
     {
-        private _20211CTPContext _dbContext;
+        private _20211CTPContext _context;
 
-        public UsuarioServicio(_20211CTPContext dbContext)
+        public UsuarioServicio(_20211CTPContext context)
         {
-            _dbContext = dbContext;
+            _context = context;
         }
-        public void Crear(Usuario entity)
+        
+        public void Crear(Usuario usuario)
         {
-            _dbContext.Usuarios.Add(entity);
-            _dbContext.SaveChanges();
+
+            _context.Usuarios.Add(usuario);
+
+            _context.SaveChanges();
         }
 
         public void Borrar(Usuario entity)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void BorrarPorId(int id)
         {
-            throw new NotImplementedException();
+            Usuario usuario = _context.Usuarios.Find(id);
+
+            _context.Remove(usuario);
+
+            _context.SaveChanges();
         }
 
         public List<Usuario> ListarTodos()
         {
-            throw new NotImplementedException();
+
+            return _context.Usuarios.ToList();
         }
 
         public Usuario ObtenerPorId(int id)
         {
-            throw new NotImplementedException();
+            Usuario usuario = _context.Usuarios.Find(id);
+
+            return usuario;
         }
 
-        public void Modificar(Usuario entity)
+        public void Modificar(Usuario usuario)
         {
-            throw new NotImplementedException();
+           
+        }
+
+        public void Modificar(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)
+        {
+            Usuario usuario = ObtenerPorId(IdUsuario);
+
+            usuario.Email = Email;
+            usuario.Password = Password;
+            usuario.EsAdmin = EsAdmin;
+            usuario.Nombre = Nombre;
+            usuario.Apellido = Apellido;
+            usuario.FechaNacimiento = FechaNacimiento;
+            usuario.FechaModificacion = DateTime.Today;
+
+            _context.SaveChanges();
+
+
         }
 
         public List<Usuario> ListarNoEliminados()
         {
             throw new NotImplementedException();
+        }
+
+        public List<Usuario> FiltrarUsuariosPorNombre(String Nombre)
+        {
+            List<Usuario> usuarios = _context.Usuarios.ToList();
+
+            return usuarios.Where(u => u.Nombre == Nombre).ToList();
         }
     }
 }

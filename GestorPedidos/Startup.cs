@@ -27,7 +27,7 @@ namespace GestorPedidos
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<_20211CTPContext>(options => options.UseSqlServer(conex.CONEX_STRING_JSON));
+            services.AddDbContext<_20211CTPContext>(options => options.UseSqlServer(Conex.CONEX_STRING));
 
             services.AddControllersWithViews();
         }
