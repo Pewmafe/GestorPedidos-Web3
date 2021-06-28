@@ -5,6 +5,75 @@
     ViewData["Title"] = "Cliente";
 }
 <div>
+    <div class="volver mb-3 row">
+        <div class="col">
+            <a asp-controller="Cliente" asp-action="NuevoCliente" class="mx-1">
+                <i class="fas fa-plus"></i> Nuevo Cliente
+            </a>
+        </div>
+    </div>
+    <div class="py-2 titulos-paginas">
+        <h2>CLIENTES</h2>
+    </div>
+
+    <div class="row">
+
+        <div class="col-12 mt-3">
+            <h4 class="titulos-paginas">Lista de Clientes</h4>
+            <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
+            <div class="collapse" id="filtros">
+                <div class="mb-3">
+                    <select class="form-select" name="codigo">
+                        <option value="">Cliente</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <select class="form-select" name="descripcion">
+                        <option value="">Telefono</option>
+                    </select>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <p class="form-check-label" for="flexCheckChecked">
+                        Excluir eliminados
+                    </p>
+                </div>
+
+            </div>
+            <div class="table-responsive ">
+                <table id="" class="table table-striped" style="width:100%">
+                    <thead class="bg-dark text-light">
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th scope="col" class="text-center">Nombre</th>
+                            <th scope="col" class="text-center">Numero</th>
+                            <th scope="col" class="text-center">Telefono</th>
+                            <th scope="col" class="text-center">CUIT</th>
+                            <th scope="col" class="text-center">Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">1</td>
+                            <td class="text-center">Santi</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">MOTOROLA</td>
+                            <td class="text-center">11-3232323-0</td>
+                            <td class="text-center">
+                                <a href="/cliente/editarcliente" data-bs-toggle="tooltip" data-placement="top" title="Ver Cliente"><i class="fas fa-info btn"></i></a> |
+                                <a href="/cliente/borrarcliente" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cliente"> <i class="fas fa-times btn text-danger"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!--
+<div>
     <a class="btn btn-primary" asp-controller="Cliente" asp-action="NuevoCliente">Nuevo Cliente</a>
 </div>
 <section>
@@ -60,4 +129,4 @@
         </table>
     </div>
 </section>
-
+    -->

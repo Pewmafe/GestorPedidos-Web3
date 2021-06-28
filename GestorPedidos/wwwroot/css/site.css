@@ -281,6 +281,16 @@ a {
     border-bottom: 2px solid #ccc;
     background-color: #f7f4ef;
 }
-body{
+
+body {
     background-color: #f7f4ef;
+}
+
+input.input-validation-error {
+    border-bottom: 2px red solid !important;
+}
+
+span.field-validation-error {
+    font-style: italic !important;
+    text-transform: uppercase!important;
 }

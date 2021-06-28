@@ -2,35 +2,88 @@
 @{
     ViewData["Title"] = "Editar Cliente";
 }
-<h1 class="text-center">Editar Cliente</h1>
-<div class="d-flex justify-content-center">
-    <form action="#" method="post">
-        <div class="col-md-12">
+
+<div>
+    <div class="volver mb-3 row">
+        <div class="col">
+            <a asp-controller="Cliente" asp-action="Clientes" class="mx-1">
+                <i class="fas fa-long-arrow-alt-left"></i> Volver
+            </a>
+        </div>
+    </div>
+    <div class="py-2 titulos-paginas">
+        <h3>Editar cliente</h3>
+    </div>
+    <form class="nuevo-articulo row" action="/Cliente/EditarCliente" method="post">
+        <div class="mb-3 col-12 col-md-6">
             <label for="Nombre" class="form-label">Nombre:</label>
             <input type="text" asp-for="Nombre" value="" class="form-control" />
             <span asp-validation-for="Nombre" class="text-danger"></span>
         </div>
-        <div class="col-md-12">
+        <div class="mb-3 col-12 col-md-6">
             <label for="Numero" class="form-label">Numero:</label>
             <input type="text" asp-for="Numero" value="" class="form-control" />
             <span asp-validation-for="Numero" class="text-danger"></span>
         </div>
-        <div class="col-md-12">
+        <div class="mb-3 col-12 col-md-6">
             <label for="Telefono" class="form-label">Telefono:</label>
             <input type="text" asp-for="Telefono" value="" class="form-control" />
             <span asp-validation-for="Telefono" class="text-danger"></span>
         </div>
-        <div class="col-md-12">
+        <div class="mb-3 col-12 col-md-6">
             <label for="Email" class="form-label">Email:</label>
             <input type="text" asp-for="Email" value="" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-        <div class="col-md-12">
+        <div class="mb-3 col-12 col-md-6">
             <label for="Direccion" class="form-label">Direccion:</label>
             <input type="text" asp-for="Direccion" value="" class="form-control" />
             <span asp-validation-for="Direccion" class="text-danger"></span>
         </div>
-        <div class="col-md-12">
+        <div class="mb-3 col-12 col-md-6">
+            <label for="Cuit" class="form-label">CUIT:</label>
+            <input type="text" asp-for="Cuit" value="" class="form-control" />
+            <span asp-validation-for="Cuit" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-12">
+            <input type="submit" class="btn btn-outline-success text-uppercase" value="Modificar" name="guardar" />
+            <input type="submit" class="btn btn-outline-success text-uppercase" value="Modificar y Crear otro" name="guardar" />
+            <a class="btn btn-outline-warning text-uppercase" asp-controller="Cliente" asp-action="Clientes">Cancelar</a>
+        </div>
+    </form>
+
+</div>
+
+<!--
+<h1 class="text-center">Editar Cliente</h1>
+<div class="d-flex justify-content-center">
+    <form action="#" method="post">
+        <div class="col-12">
+            <label for="Nombre" class="form-label">Nombre:</label>
+            <input type="text" asp-for="Nombre" value="" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <label for="Numero" class="form-label">Numero:</label>
+            <input type="text" asp-for="Numero" value="" class="form-control" />
+            <span asp-validation-for="Numero" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <label for="Telefono" class="form-label">Telefono:</label>
+            <input type="text" asp-for="Telefono" value="" class="form-control" />
+            <span asp-validation-for="Telefono" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <label for="Email" class="form-label">Email:</label>
+            <input type="text" asp-for="Email" value="" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <label for="Direccion" class="form-label">Direccion:</label>
+            <input type="text" asp-for="Direccion" value="" class="form-control" />
+            <span asp-validation-for="Direccion" class="text-danger"></span>
+        </div>
+        <div class="col-12">
             <label for="Cuit" class="form-label">CUIT:</label>
             <input type="text" asp-for="Cuit" value="" class="form-control" />
             <span asp-validation-for="Cuit" class="text-danger"></span>
@@ -42,3 +95,4 @@
     </form>
 </div>
 
+    -->
