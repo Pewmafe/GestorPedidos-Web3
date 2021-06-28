@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Models.Models.Cliente>
 @{
     ViewData["Title"] = "Cliente";
 }
@@ -40,33 +38,69 @@
                 </div>
 
             </div>
-            <div class="table-responsive ">
-                <table id="" class="table table-striped" style="width:100%">
-                    <thead class="bg-dark text-light">
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th scope="col" class="text-center">Nombre</th>
-                            <th scope="col" class="text-center">Numero</th>
-                            <th scope="col" class="text-center">Telefono</th>
-                            <th scope="col" class="text-center">CUIT</th>
-                            <th scope="col" class="text-center">Ver</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Santi</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">MOTOROLA</td>
-                            <td class="text-center">11-3232323-0</td>
-                            <td class="text-center">
-                                <a href="/cliente/editarcliente" data-bs-toggle="tooltip" data-placement="top" title="Ver Cliente"><i class="fas fa-info btn"></i></a> |
-                                <a href="/cliente/borrarcliente" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cliente"> <i class="fas fa-times btn text-danger"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            @if (Model.Count == 0)
+            {
+                <div>No hay clientes</div>
+            }
+            else
+            {
+                <div class="table-responsive ">
+                    <table id="" class="table table-striped" style="width:100%">
+                        <thead class="bg-dark text-light">
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th scope="col" class="text-center">Nombre</th>
+                                <th scope="col" class="text-center">Numero</th>
+                                <th scope="col" class="text-center">Email</th>
+                                <th scope="col" class="text-center">Telefono</th>
+                                <th scope="col" class="text-center">CUIT</th>
+                                <th scope="col" class="text-center">Ver</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cliente in Model)
+                            {
+                            <tr>
+                                <td class="text-center">@cliente.IdCliente</td>
+                                <td class="text-center">@cliente.Nombre</td>
+                                <td class="text-center">@cliente.Numero</td>
+                                @if (@cliente.Email != null)
+                                {
+                                    <td class="text-center">@cliente.Email</td>
+                                }
+                                else
+                                {
+                                    <td class="text-center">-</td>
+                                }
+                                @if (@cliente.Telefono != null)
+                                {
+                                    <td class="text-center">@cliente.Telefono</td>
+                                }
+                                else
+                                {
+                                    <td class="text-center">-</td>
+                                }
+
+                                @if (@cliente.Cuit != null)
+                                {
+                                    <td class="text-center">@cliente.Cuit</td>
+                                }
+                                else
+                                {
+                                    <td class="text-center">-</td>
+                                }
+                                <td class="text-center">
+                                    <a href="/cliente/editarcliente" data-bs-toggle="tooltip" data-placement="top" title="Ver Cliente"><i class="fas fa-info btn"></i></a> |
+                                    <a href="/cliente/borrarcliente" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cliente"> <i class="fas fa-times btn text-danger"></i></a>
+                                </td>
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            }
+
         </div>
 
     </div>
