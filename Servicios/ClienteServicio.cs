@@ -51,7 +51,7 @@ namespace Service
         public List<Cliente> ListarNoEliminados()
         {
             var clientes = from a in _dbContext.Clientes
-                            where a.FechaBorrado == null && a.BorradoPor == null
+                            where a.FechaBorrado == null
                             select a;
 
             return clientes.ToList();
