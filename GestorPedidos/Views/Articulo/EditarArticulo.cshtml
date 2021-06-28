@@ -2,14 +2,44 @@
 @{
     ViewData["Title"] = "Editar Artículo";
 }
+<div>
+    <div class="volver mb-3 row">
+        <div class="col">
+            <a asp-controller="Articulo" asp-action="Articulos" class="mx-1">
+                <i class="fas fa-long-arrow-alt-left"></i> Volver
+            </a>
+        </div>
+    </div>
+    <div class="py-2 titulos-paginas">
+        <h3>Editar articulo</h3>
+    </div>
+    <form class="nuevo-articulo" asp-action="EditarArticulo" asp-controller="Articulo" method="post">
+        <input type="hidden" asp-for="IdArticulo" value="@Model.IdArticulo" />
+        <div class="mb-3">
+            <label for="Codigo" class="form-label text-uppercase">Código:</label>
+            <input type="text" asp-for="Codigo" value="@Model.Codigo" class="form-control" />
+            <span asp-validation-for="Codigo" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="Descripcion" class="form-label text-uppercase">Descripción:</label>
+            <input type="text" asp-for="Descripcion" value="@Model.Descripcion" class="form-control" />
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <input type="submit" class="btn btn-outline-success text-uppercase" value="Editar" />
+            <a class="btn btn-outline-danger text-uppercase" href="/Articulo/EliminarArticulo?IdArticulo=@Model.IdArticulo">Eliminar</a>
+            <a class="btn btn-outline-warning text-uppercase" asp-controller="Articulo" asp-action="Articulos">Cancelar</a>
+        </div>
+    </form>
 
-
+</div>
+<!--
 <h1 class="text-center">Editar Artículo</h1>
 <div class="d-flex justify-content-center">
     <form asp-action="EditarArticulo" asp-controller="Articulo" method="post">
-        
-            <input type="hidden" asp-for="IdArticulo" value="@Model.IdArticulo" />
-            
+
+        <input type="hidden" asp-for="IdArticulo" value="@Model.IdArticulo" />
+
         <div class="col-md-12">
             <label for="Codigo" class="form-label">Código:</label>
             <input type="text" asp-for="Codigo" value="@Model.Codigo" class="form-control" />
@@ -22,12 +52,12 @@
         </div>
         <div>
             <input type="submit" class="btn btn-success" value="Editar" />
-            <a class="btn btn-danger" href="/Articulo/EliminarArticulo?IdArticulo=@Model.IdArticulo" >Eliminar</a>
+            <a class="btn btn-danger" href="/Articulo/EliminarArticulo?IdArticulo=@Model.IdArticulo">Eliminar</a>
             <a class="btn btn-warning" asp-controller="Articulo" asp-action="Articulos">Cancelar</a>
         </div>
     </form>
 </div>
-
+    -->
 @section Scripts{
 
     <partial name="_ValidationScriptsPartial.cshtml" />
