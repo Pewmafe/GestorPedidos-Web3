@@ -39,5 +39,13 @@ namespace GestorPedidos.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult EditarPedido()
+        {
+
+            return View();
+
+        }
     }
 }
