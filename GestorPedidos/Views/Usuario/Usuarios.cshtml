@@ -23,63 +23,78 @@
 
     <div class="row">
 
-        <div class="col-12 mt-3">
-            <h4 class="titulos-paginas">Lista de Usuarios</h4>
-            <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
-            <div class="collapse" id="filtros">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                    <p class="form-check-label" for="flexCheckChecked">
-                        Excluir eliminados
-                    </p>
+        <form asp-controller="Usuario" asp-action="FiltrarUsuarioPorNombre">
+
+            <div class="col-3 mt-3">
+                <div class="input-group rounded">
+                    <input type="search" asp-for="@nombre" class="form-control rounded" placeholder="Buscar Usuario" aria-label="Search"
+                           aria-describedby="search-addon" />
+                    <button class="input-group-text border-0"  type="submit" id="search-addon">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
-                <div class="mb-3">
-                    <select class="form-select" name="codigo">
-                        <option>Nombre Usuario</option>
-                        <option>-</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <select class="form-select" name="codigo">
-                        <option>Email</option>
-                    </select>
-                </div>
+
             </div>
-            <div class="table-responsive ">
-                <table id="" class="table table-striped" style="width:100%">
-                    <thead class="bg-dark text-light">
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center" scope="col">Nombre</th>
-                            <th class="text-center" scope="col">Email</th>
-                            <th class="text-center" scope="col">Fecha Nacimiento</th>
-                            <th class="text-center" scope="col">Ver</th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
+        </form>
 
-                        @foreach (var usuario in @Model)
-                        {
+            <div class="col-12 mt-3">
+                <h4 class="titulos-paginas">Lista de Usuarios</h4>
+                <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
+                <div class="collapse" id="filtros">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                        <p class="form-check-label" for="flexCheckChecked">
+                            Excluir eliminados
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" name="codigo">
+                            <option>Nombre Usuario</option>
+                            <option>-</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" name="codigo">
+                            <option>Email</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-responsive ">
+                    <table id="" class="table table-striped" style="width:100%">
+                        <thead class="bg-dark text-light">
                             <tr>
-                                <td class="text-center">@usuario.IdUsuario</td>
-                                <td class="text-center">@usuario.Nombre @usuario.Apellido</td>
-                                <td class="text-center">@usuario.Email</td>
-                                <td class="text-center">@usuario.FechaNacimiento.Value.ToShortDateString()</td>
-                                <td class="text-center">
-                                    <a asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-placement="top" title="Ver Usuario"><i class="fas fa-info btn"></i></a> |
-                                    <a asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario"> <i class="fas fa-times btn text-danger"></i></a>
-                                </td>
+                                <th class="text-center">#</th>
+                                <th class="text-center" scope="col">Nombre</th>
+                                <th class="text-center" scope="col">Email</th>
+                                <th class="text-center" scope="col">Fecha Nacimiento</th>
+                                <th class="text-center" scope="col">Ver</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (var usuario in @Model)
+                            {
+                <tr>
+                    <td class="text-center">@usuario.IdUsuario</td>
+                    <td class="text-center">@usuario.Nombre @usuario.Apellido</td>
+                    <td class="text-center">@usuario.Email</td>
+                    <td class="text-center">@usuario.FechaNacimiento.Value.ToShortDateString()</td>
+                    <td class="text-center">
+                        <a asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-placement="top" title="Ver Usuario"><i class="fas fa-info btn"></i></a> |
+                        <a asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario"> <i class="fas fa-times btn text-danger"></i></a>
+                    </td>
+                </tr>
+}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
 
     </div>
-
-</div>
 
 <!--
 <h1>Usuarios</h1>
