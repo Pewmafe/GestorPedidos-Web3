@@ -50,6 +50,7 @@
                             <th scope="col" class="text-center">Direccion</th>
                             <th scope="col" class="text-center">CUIT</th>
                             <th scope="col" class="text-center">Ver</th>
+                            <th scope="col" class="text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,10 +100,22 @@
                                     {
                                         <td class="text-center">-</td>
                                     }
-                                    <td class="text-center">
-                                        <a href="/cliente/Editarcliente?idCliente=@cliente.IdCliente" data-bs-toggle="tooltip" data-placement="top" title="Ver Cliente"><i class="fas fa-info btn"></i></a> |
-                                        <a href="/cliente/Borrarcliente?idCliente=@cliente.IdCliente" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cliente"> <i class="fas fa-times btn text-danger"></i></a>
-                                    </td>
+                                    <td class="text-center"> <a href="/cliente/Editarcliente?idCliente=@cliente.IdCliente" data-bs-toggle="tooltip" data-placement="top" title="Ver Cliente"><i class="fas fa-info btn"></i></a></td>
+                                    @if (@cliente.FechaBorrado != null)
+                                    {
+                                        <td class="text-center">
+
+                                            <a href="/cliente/Borrarcliente?idCliente=@cliente.IdCliente" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cliente"> <i class="fas fa-times btn text-danger"></i></a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center fst-italic">
+
+                                            <p>Eliminado</p>
+                                        </td>
+                                    }
+
                                 </tr>
                             }
                         }

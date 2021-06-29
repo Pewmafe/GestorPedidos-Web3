@@ -19,7 +19,7 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Clientes()
         {
-            List<Cliente> clientes = clienteServicio.ListarNoEliminados();
+            List<Cliente> clientes = clienteServicio.ListarTodos();
             return View(clientes);
         }
 
