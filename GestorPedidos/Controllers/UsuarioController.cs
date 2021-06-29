@@ -65,7 +65,7 @@ namespace GestorPedidos.Controllers
 
         public IActionResult BajaUsuario(int id)
         {
-            _usuarioServicio.DeleteByid(id);
+            _usuarioServicio.BorrarPorId(id);
 
             return RedirectToAction(nameof(Usuarios));
         }
