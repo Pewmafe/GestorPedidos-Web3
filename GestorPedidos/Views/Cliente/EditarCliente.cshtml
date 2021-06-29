@@ -15,39 +15,39 @@
         <h3>Editar cliente</h3>
     </div>
     <form class="nuevo-articulo row" action="/Cliente/EditarCliente" method="post">
+        <input type="hidden" name="IdCliente" value="@Model.IdCliente" />
         <div class="mb-3 col-12 col-md-6">
             <label for="Nombre" class="form-label">Nombre:</label>
-            <input type="text" asp-for="Nombre" value="" class="form-control" />
+            <input type="text" asp-for="Nombre" value="@Model.Nombre" class="form-control" />
             <span asp-validation-for="Nombre" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="Numero" class="form-label">Numero:</label>
-            <input type="text" asp-for="Numero" value="" class="form-control" />
+            <input type="text" asp-for="Numero" value="@Model.Numero" class="form-control" />
             <span asp-validation-for="Numero" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="Telefono" class="form-label">Telefono:</label>
-            <input type="text" asp-for="Telefono" value="" class="form-control" />
+            <input type="text" asp-for="Telefono" value="@Model.Telefono" class="form-control" />
             <span asp-validation-for="Telefono" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="Email" class="form-label">Email:</label>
-            <input type="text" asp-for="Email" value="" class="form-control" />
+            <input type="text" asp-for="Email" value="@Model.Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="Direccion" class="form-label">Direccion:</label>
-            <input type="text" asp-for="Direccion" value="" class="form-control" />
+            <input type="text" asp-for="Direccion" value="@Model.Direccion" class="form-control" />
             <span asp-validation-for="Direccion" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="Cuit" class="form-label">CUIT:</label>
-            <input type="text" asp-for="Cuit" value="" class="form-control" />
+            <input type="text" asp-for="Cuit" value="@Model.Cuit" class="form-control" />
             <span asp-validation-for="Cuit" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12">
             <input type="submit" class="btn btn-outline-success text-uppercase" value="Modificar" name="guardar" />
-            <input type="submit" class="btn btn-outline-success text-uppercase" value="Modificar y Crear otro" name="guardar" />
             <a class="btn btn-outline-warning text-uppercase" asp-controller="Cliente" asp-action="Clientes">Cancelar</a>
         </div>
     </form>
