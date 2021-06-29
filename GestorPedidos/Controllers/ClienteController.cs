@@ -66,6 +66,13 @@ namespace GestorPedidos.Controllers
 
             return RedirectToAction("Clientes");
         }
-        
+
+        [HttpGet]
+        public IActionResult Borrarcliente(int idCliente)
+        {
+            clienteServicio.BorrarPorId(idCliente);
+            return RedirectToAction("Clientes");
+        }
+
     }
 }
