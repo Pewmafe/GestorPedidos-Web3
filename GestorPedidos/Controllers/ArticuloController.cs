@@ -21,7 +21,7 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpGet]
-        public IActionResult Articulos(string codigo,string descripcion,string noEliminados)
+        public IActionResult Articulos()
         {
             
             List<Articulo> articulos = articuloServicio.ListarTodos();
@@ -79,14 +79,6 @@ namespace GestorPedidos.Controllers
         }
 
       
-        [HttpGet]
-        public IActionResult VerArticulo(int IdArticulo)
-        {
-            Articulo articulo = articuloServicio.ObtenerPorId(IdArticulo);
-
-            return View(articulo);
-           
-        }
         [HttpGet]
         public IActionResult EliminarArticulo(int IdArticulo)
         {

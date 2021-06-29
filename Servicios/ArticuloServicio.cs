@@ -18,36 +18,44 @@ namespace Service
         public void Borrar(Articulo entity)
         {
             var fecha = DateTime.Now;
+            if (entity != null) { 
             entity.FechaBorrado = fecha;
             //falta borrado por
             dbContexto.SaveChanges();
+            }
         }
 
         public void Crear(Articulo entity)
         {
             var fecha = DateTime.Now;
+            if (entity != null) { 
             entity.FechaCreacion = fecha;
             //falta el creado por
             dbContexto.Articulos.Add(entity);
             dbContexto.SaveChanges();
-
+            }
         }
 
         public void BorrarPorId(int id)
         {
+           
             var articulos = from a in dbContexto.Articulos where a.IdArticulo == id select a;
-
+            
             Articulo articulo = articulos.FirstOrDefault();
             var fecha = DateTime.Now;
+
+            if (articulo != null) { 
             articulo.FechaBorrado = fecha;
             //falta borrado por
             dbContexto.SaveChanges();
+            }
         }
 
         public List<Articulo> ListarNoEliminados()
         {
             var articulos = from a in dbContexto.Articulos
-                            where a.FechaBorrado==null && a.BorradoPor == null
+                            where a.FechaBorrado==null
+                            orderby a.Codigo ascending
                             select a;
 
             return articulos.ToList();
@@ -57,6 +65,7 @@ namespace Service
         {
             var articulos = from a in dbContexto.Articulos
                             where a.Codigo==codigo
+                            orderby a.Codigo ascending
                             select a;
 
             return articulos.ToList();
@@ -66,6 +75,7 @@ namespace Service
         {
             var articulos = from a in dbContexto.Articulos
                             where a.Codigo == codigo && a.Descripcion == descripcion
+                            orderby a.Codigo ascending
                             select a;
 
             return articulos.ToList();
@@ -75,6 +85,7 @@ namespace Service
         {
             var articulos = from a in dbContexto.Articulos
                             where a.Descripcion == descripcion
+                            orderby a.Codigo ascending
                             select a;
 
             return articulos.ToList();
@@ -82,7 +93,7 @@ namespace Service
 
         public List<Articulo> ListarTodos()
         {
-            var articulos = from a in dbContexto.Articulos select a;
+            var articulos = from a in dbContexto.Articulos orderby a.Codigo ascending select a;
 
             return articulos.ToList();
         }
@@ -90,13 +101,17 @@ namespace Service
         public void Modificar(Articulo entity)
         {
             var fecha = DateTime.Now;
-            Articulo articulo = ObtenerPorId(entity.IdArticulo);
-            articulo.Codigo = entity.Codigo;
-            articulo.Descripcion = entity.Descripcion;
-            articulo.FechaModificacion = fecha;
-            //falta modificado por
+           
+                Articulo articulo = ObtenerPorId(entity.IdArticulo);
+            if (articulo != null)
+            {
+                articulo.Codigo = entity.Codigo;
+                articulo.Descripcion = entity.Descripcion;
+                articulo.FechaModificacion = fecha;
+                //falta modificado por
 
-            dbContexto.SaveChanges();
+                dbContexto.SaveChanges();
+            }
         }
 
         public Articulo ObtenerPorId(int id)
@@ -104,8 +119,9 @@ namespace Service
             var articulos = from a in dbContexto.Articulos where a.IdArticulo == id select a;
 
             Articulo articulo = articulos.FirstOrDefault();
+            if (articulo != null) return articulo;
 
-            return articulo;
+            return null;
         }
     }
 }
