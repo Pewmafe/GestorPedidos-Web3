@@ -31,12 +31,12 @@
         <div class="mb-3">
             <label for="Codigo" class="form-label text-uppercase">Código:</label>
             <input type="text" asp-for="Codigo" value="" class="form-control" />
-            <span asp-validation-for="Codigo" class="text-danger"></span>
+            <span asp-validation-for="Codigo" class="text-danger fst-italic text-uppercase"></span>
         </div>
         <div class="mb-3">
             <label for="Descripcion" class="form-label text-uppercase">Descripción:</label>
             <input type="text" asp-for="Descripcion" value="" class="form-control" />
-            <span asp-validation-for="Descripcion" class="text-danger"></span>
+            <span asp-validation-for="Descripcion" class="text-danger fst-italic text-uppercase"></span>
         </div>
         <div class="mb-3">
             <input type="submit" class="btn btn-outline-success text-uppercase" value="Guardar" name="guardar" />
@@ -47,29 +47,6 @@
 
 </div>
 
-<!--
-<h1 class="text-center">Nuevo Artículo</h1>
-
-<div class="d-flex justify-content-center">
-    <form asp-action="NuevoArticulo" asp-controller="Articulo" method="post">
-        <div class="col-md-12">
-            <label for="Codigo" class="form-label">Código:</label>
-            <input type="text" asp-for="Codigo" value="" class="form-control" />
-            <span asp-validation-for="Codigo" class="text-danger"></span>
-        </div>
-        <div class="col-md-12">
-            <label for="Descripcion" class="form-label">Descripción:</label>
-            <input type="text" asp-for="Descripcion" value="" class="form-control" />
-            <span asp-validation-for="Descripcion" class="text-danger"></span>
-        </div>
-        <div>
-            <input type="submit" class="btn btn-success" value="Guardar" name="guardar" />
-            <input type="submit" class="btn btn-success" value="Guardar y Crear otro" name="guardarotro" />
-            <a class="btn btn-warning" asp-controller="Articulo" asp-action="Articulos">Cancelar</a>
-        </div>
-    </form>
-</div>
--->
 @section Scripts{
     <partial name="_ValidationScriptsPartial.cshtml" />
 }
