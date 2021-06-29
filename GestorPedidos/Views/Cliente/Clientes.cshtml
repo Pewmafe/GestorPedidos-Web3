@@ -53,6 +53,7 @@
                                 <th scope="col" class="text-center">Numero</th>
                                 <th scope="col" class="text-center">Email</th>
                                 <th scope="col" class="text-center">Telefono</th>
+                                <th scope="col" class="text-center">Direccion</th>
                                 <th scope="col" class="text-center">CUIT</th>
                                 <th scope="col" class="text-center">Ver</th>
                             </tr>
@@ -75,6 +76,15 @@
                                 @if (@cliente.Telefono != null)
                                 {
                                     <td class="text-center">@cliente.Telefono</td>
+                                }
+                                else
+                                {
+                                    <td class="text-center">-</td>
+                                }
+
+                                @if (@cliente.Direccion != null)
+                                {
+                                    <td class="text-center">@cliente.Direccion</td>
                                 }
                                 else
                                 {
