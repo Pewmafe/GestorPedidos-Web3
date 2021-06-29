@@ -4,7 +4,7 @@ const showNavbar = (toggleId, navId, bodyId, headerId) => {
         nav = document.getElementById(navId),
         bodypd = document.getElementById(bodyId),
         headerpd = document.getElementById(headerId)
-           
+
 
     // Validate that all variables exist
     if (toggle && nav && bodypd && headerpd) {
@@ -38,8 +38,16 @@ $(document).ready(function () {
     $("#pedidos").DataTable();
 });
 
+/*===== ACTIVAR TOOLTIPS  =====*/
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+
 /*===== DROPDOWN-TOGGLE =====*/
 $(document).ready(function () {
     $('.dropdown-toggle').dropdown()
 });
+
 

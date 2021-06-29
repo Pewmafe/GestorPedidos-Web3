@@ -14,6 +14,6 @@ namespace Service
         void Crear(TEntity entity);
         void Modificar(TEntity entity);
         void Borrar(TEntity entity);
-        void DeleteByid(int id);
+        void BorrarPorId(int id);
     }
 }

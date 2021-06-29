@@ -28,29 +28,47 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public void DeleteByid(int id)
+        public void BorrarPorId(int id)
         {
-            throw new NotImplementedException();
+            Cliente objActual = ObtenerPorId(id);
+            objActual.FechaBorrado = DateTime.Now;
+
+            _dbContext.SaveChanges();
         }
 
         public List<Cliente> ListarTodos()
         {
-            throw new NotImplementedException();
+            return _dbContext.Clientes.ToList();
         }
 
         public Cliente ObtenerPorId(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Clientes
+                .FirstOrDefault(o => o.IdCliente == id);
         }
 
         public void Modificar(Cliente entity)
         {
-            throw new NotImplementedException();
+            Cliente objActual = ObtenerPorId(entity.IdCliente);
+            
+            objActual.Nombre = entity.Nombre;
+            objActual.Numero = entity.Numero;
+            objActual.Telefono = entity.Telefono;
+            objActual.Cuit = entity.Cuit;
+            objActual.Email = entity.Email;
+            objActual.Direccion = entity.Direccion;
+            objActual.FechaModificacion = DateTime.Now;
+
+            _dbContext.SaveChanges();
         }
 
         public List<Cliente> ListarNoEliminados()
         {
-            throw new NotImplementedException();
+            var clientes = from a in _dbContext.Clientes
+                            where a.FechaBorrado == null
+                            select a;
+
+            return clientes.ToList();
         }
     }
 }

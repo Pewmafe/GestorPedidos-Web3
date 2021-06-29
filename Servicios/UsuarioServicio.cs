@@ -31,7 +31,7 @@ namespace Service
             
         }
 
-        public void DeleteByid(int id)
+        public void BorrarPorId(int id)
         {
             Usuario usuario = _context.Usuarios.Find(id);
 

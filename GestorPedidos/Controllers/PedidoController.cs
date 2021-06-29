@@ -27,17 +27,18 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpGet]
-        public IActionResult CrearPedido()
+        public IActionResult NuevoPedido()
         {
-            Usuario usuario = new Usuario();
-            usuario.Apellido = "sanches";
-            usuario.Nombre = "matias";
-            usuario.Password = "1234";
-            usuario.Email = "Santiago@email.com";
-            usuario.EsAdmin = true;
-            usuarioServicio.Crear(usuario);
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult EditarPedido()
+        {
+
+            return View();
+
         }
     }
 }

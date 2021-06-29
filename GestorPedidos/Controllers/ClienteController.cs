@@ -19,10 +19,11 @@ namespace GestorPedidos.Controllers
             this.clienteServicio = new ClienteServicio(dbContext);
         }
 
+        [HttpGet]
         public IActionResult Clientes()
         {
-            
-            return View();
+            List<Cliente> clientes = clienteServicio.ListarNoEliminados();
+            return View(clientes);
         }
 
         public IActionResult NuevoCliente()
@@ -47,9 +48,31 @@ namespace GestorPedidos.Controllers
             return RedirectToAction("NuevoCliente");
         }
 
-        public IActionResult EditarCliente()
+        [HttpGet]
+        public IActionResult EditarCliente(int idCliente)
         {
-            return View();
+            Cliente cliente = clienteServicio.ObtenerPorId(idCliente);
+            return View(cliente);
         }
+
+        [HttpPost]
+        public IActionResult EditarCliente(Cliente Cliente)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(Cliente);
+            }
+            clienteServicio.Modificar(Cliente);
+
+            return RedirectToAction("Clientes");
+        }
+
+        [HttpGet]
+        public IActionResult Borrarcliente(int idCliente)
+        {
+            clienteServicio.BorrarPorId(idCliente);
+            return RedirectToAction("Clientes");
+        }
+
     }
 }
