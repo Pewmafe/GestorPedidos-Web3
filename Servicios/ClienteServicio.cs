@@ -40,12 +40,22 @@ namespace Service
 
         public Cliente ObtenerPorId(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Clientes
+                .FirstOrDefault(o => o.IdCliente == id);
         }
 
         public void Modificar(Cliente entity)
         {
-            throw new NotImplementedException();
+            Cliente objActual = ObtenerPorId(entity.IdCliente);
+            
+            objActual.Nombre = entity.Nombre;
+            objActual.Numero = entity.Numero;
+            objActual.Telefono = entity.Telefono;
+            objActual.Cuit = entity.Cuit;
+            objActual.Email = entity.Email;
+            objActual.Direccion = entity.Direccion;
+
+            _dbContext.SaveChanges();
         }
 
         public List<Cliente> ListarNoEliminados()
