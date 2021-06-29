@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<Models.Models.Usuario>
 
+
 @{
+
+    String nombre = "nombre";
+
     ViewData["Title"] = "Usuarios";
+
 
 }
 
@@ -12,20 +17,25 @@
 </div>
 <section>
     <div>
-        <form asp-action="FiltrarUsuario" asp-controller="Usuario" asp-route-nombre="" method="get">
-            <select>
-                <option>Nombre Usuario</option>
-                <option>-</option>
-            </select>
-            <select>
-                <option>Email</option>
-            </select>
-            <div>
-                <label> Excluir Eliminados:</label>
-                <input type="checkbox" value="false" />
-            </div>
+
+
+
+
+        <form asp-controller="Usuario" asp-action="FiltrarUsuarioPorNombre" method="get">
+
+            <label class="form-label" for="form1" asp-for="@nombre">Nombre</label>
+            <input type="text" id="form1" class="form-control" asp-for="@nombre" />
+
+
+            <input class="btn btn-primary" type="submit" />
+            <i class="fas fa-search"></i>
+
+
         </form>
+
     </div>
+
+
     <div class="table-responsive text-center">
         <table class="table table-bordered table-dark">
             <thead class="thead-dark">
@@ -40,19 +50,19 @@
 
                 @foreach (var usuario in @Model)
                 {
-                <tr>
-                    <td>@usuario.Nombre @usuario.Apellido</td>
-                    <td>@usuario.Email</td>
-                    <td>@usuario.FechaNacimiento.Value.ToShortDateString()</td>
-                    <td class="dropdown dropleft text-center">
-                        <a class="btn btn-outline-info dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="dropdownMenuLink">
-                            <a class="btn btn-warning text-light" type="button" asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario">Editar</a>
-                            <a class="btn btn-danger text-light" asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" type="button">Eliminar</a>
-                        </div>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@usuario.Nombre @usuario.Apellido</td>
+                        <td>@usuario.Email</td>
+                        <td>@usuario.FechaNacimiento.Value.ToShortDateString()</td>
+                        <td class="dropdown dropleft text-center">
+                            <a class="btn btn-outline-info dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="dropdownMenuLink">
+                                <a class="btn btn-warning text-light" type="button" asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario">Editar</a>
+                                <a class="btn btn-danger text-light" asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" type="button">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
 
                 }
 
