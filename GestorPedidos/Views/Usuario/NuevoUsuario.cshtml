@@ -3,7 +3,58 @@
 @{
     ViewData["Title"] = "Nuevo Usuario";
 }
+<div>
+    <div class="volver mb-3 row">
+        <div class="col">
+            <a asp-controller="Usuario" asp-action="Usuarios" class="mx-1">
+                <i class="fas fa-long-arrow-alt-left"></i> Volver
+            </a>
+        </div>
+    </div>
+    <div class="py-2 titulos-paginas">
+        <h3>Nuevo Usuario</h3>
+    </div>
+    <form class="nuevo-articulo row" asp-action="AltaUsuario" asp-controller="Usuario" method="post">
+        <div class="mb-3 col-12 col-md-6">
+            <label for="Email" class="form-label">Email:</label>
+            <input type="email" asp-for="Email" value="" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-12 col-md-6">
+            <label for="Password" class="form-label">Password:</label>
+            <input type="password" asp-for="Password" value="" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
 
+        <div class="mb-3 col-12 col-md-6">
+            <label for="Nombre" class="form-label">Nombre:</label>
+            <input type="text" asp-for="Nombre" value="" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-12 col-md-6">
+            <label for="Apellido" class="form-label">Apellido:</label>
+            <input type="text" asp-for="Apellido" value="" class="form-control" />
+            <span asp-validation-for="Apellido" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-12 col-md-6">
+            <label for="EsAdmin" class="form-label">Admin:</label>
+            <input type="checkbox" asp-for="EsAdmin" value="" class="form-check-input form-check " />
+            <span asp-validation-for="EsAdmin" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-12 col-md-6">
+            <label for="FechaNacimiento" class="form-label">Fecha De Nacimiento:</label>
+            <input type="date" asp-for="FechaNacimiento" value="" class="form-control" />
+            <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-12">
+            <input type="submit" class="btn btn-outline-success text-uppercase" value="Guardar" name="guardar" />
+            <input type="submit" class="btn btn-outline-success text-uppercase" value="Guardar y Crear otro" name="guardar" />
+            <a class="btn btn-outline-warning text-uppercase" asp-controller="Usuario" asp-action="Usuarios">Cancelar</a>
+        </div>
+    </form>
+
+</div>
+<!--
 <h1 class="text-center">Nuevo Usuario</h1>
 <div class="d-flex justify-content-center">
 
@@ -46,3 +97,4 @@
     </form>
 
 </div>
+    -->
