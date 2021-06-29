@@ -11,7 +11,7 @@
             </a>
         </div>
     </div>
-    
+
     <div class="py-2 titulos-paginas">
         @if (!readOnly)
         {
@@ -35,12 +35,13 @@
             <input type="text" disabled="@readOnly" asp-for="Descripcion" value="@Model.Descripcion" class="form-control" />
             <span asp-validation-for="Descripcion" class="text-danger fst-italic text-uppercase "></span>
         </div>
-        @if (!readOnly) { 
-        <div class="mb-3">
-            <input type="submit" class="btn btn-outline-success text-uppercase" value="Editar" />
-            <a class="btn btn-outline-danger text-uppercase" href="/Articulo/EliminarArticulo?IdArticulo=@Model.IdArticulo">Eliminar</a>
-            <a class="btn btn-outline-warning text-uppercase" asp-controller="Articulo" asp-action="Articulos">Cancelar</a>
-        </div>
+        @if (!readOnly)
+        {
+            <div class="mb-3">
+                <input type="submit" class="btn btn-outline-success text-uppercase" value="Editar" />
+                <a class="btn btn-outline-danger text-uppercase" href="/Articulo/EliminarArticulo?IdArticulo=@Model.IdArticulo">Eliminar</a>
+                <a class="btn btn-outline-warning text-uppercase" asp-controller="Articulo" asp-action="Articulos">Cancelar</a>
+            </div>
         }
     </form>
 

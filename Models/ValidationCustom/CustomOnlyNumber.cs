@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Models.ValidationCustom
 {
@@ -18,7 +13,7 @@ namespace Models.ValidationCustom
             }
 
             string regexItem = "^[0-9 ]*$";
-            string valor = value.ToString(); 
+            string valor = value.ToString();
 
             return Regex.IsMatch(valor, regexItem);
         }

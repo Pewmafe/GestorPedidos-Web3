@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service
 {
@@ -50,7 +48,7 @@ namespace Service
         public void Modificar(Cliente entity)
         {
             Cliente objActual = ObtenerPorId(entity.IdCliente);
-            
+
             objActual.Nombre = entity.Nombre;
             objActual.Numero = entity.Numero;
             objActual.Telefono = entity.Telefono;
@@ -65,8 +63,8 @@ namespace Service
         public List<Cliente> ListarNoEliminados()
         {
             var clientes = from a in _dbContext.Clientes
-                            where a.FechaBorrado == null
-                            select a;
+                           where a.FechaBorrado == null
+                           select a;
 
             return clientes.ToList();
         }

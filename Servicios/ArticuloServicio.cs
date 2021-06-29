@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Models.Models;
+﻿using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,43 +17,46 @@ namespace Service
         public void Borrar(Articulo entity)
         {
             var fecha = DateTime.Now;
-            if (entity != null) { 
-            entity.FechaBorrado = fecha;
-            //falta borrado por
-            dbContexto.SaveChanges();
+            if (entity != null)
+            {
+                entity.FechaBorrado = fecha;
+                //falta borrado por
+                dbContexto.SaveChanges();
             }
         }
 
         public void Crear(Articulo entity)
         {
             var fecha = DateTime.Now;
-            if (entity != null) { 
-            entity.FechaCreacion = fecha;
-            //falta el creado por
-            dbContexto.Articulos.Add(entity);
-            dbContexto.SaveChanges();
+            if (entity != null)
+            {
+                entity.FechaCreacion = fecha;
+                //falta el creado por
+                dbContexto.Articulos.Add(entity);
+                dbContexto.SaveChanges();
             }
         }
 
         public void BorrarPorId(int id)
         {
-           
+
             var articulos = from a in dbContexto.Articulos where a.IdArticulo == id select a;
-            
+
             Articulo articulo = articulos.FirstOrDefault();
             var fecha = DateTime.Now;
 
-            if (articulo != null) { 
-            articulo.FechaBorrado = fecha;
-            //falta borrado por
-            dbContexto.SaveChanges();
+            if (articulo != null)
+            {
+                articulo.FechaBorrado = fecha;
+                //falta borrado por
+                dbContexto.SaveChanges();
             }
         }
 
         public List<Articulo> ListarNoEliminados()
         {
             var articulos = from a in dbContexto.Articulos
-                            where a.FechaBorrado==null
+                            where a.FechaBorrado == null
                             orderby a.Codigo ascending
                             select a;
 
@@ -64,7 +66,7 @@ namespace Service
         public List<Articulo> listarPorCodigo(string codigo)
         {
             var articulos = from a in dbContexto.Articulos
-                            where a.Codigo==codigo
+                            where a.Codigo == codigo
                             orderby a.Codigo ascending
                             select a;
 
@@ -101,8 +103,8 @@ namespace Service
         public void Modificar(Articulo entity)
         {
             var fecha = DateTime.Now;
-           
-                Articulo articulo = ObtenerPorId(entity.IdArticulo);
+
+            Articulo articulo = ObtenerPorId(entity.IdArticulo);
             if (articulo != null)
             {
                 articulo.Codigo = entity.Codigo;

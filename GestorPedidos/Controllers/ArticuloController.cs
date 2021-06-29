@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Models.Models;
 using Service;
 using Newtonsoft.Json;
@@ -11,7 +8,7 @@ namespace GestorPedidos.Controllers
 {
     public class ArticuloController : Controller
     {
-        private IArticuloServicio articuloServicio; 
+        private IArticuloServicio articuloServicio;
         private _20211CTPContext dbContext;
 
         public ArticuloController(_20211CTPContext ctx)
@@ -23,7 +20,7 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Articulos()
         {
-            
+
             List<Articulo> articulos = articuloServicio.ListarTodos();
 
             return View(articulos);
@@ -55,7 +52,7 @@ namespace GestorPedidos.Controllers
 
             return RedirectToAction(nameof(NuevoArticulo));
         }
-       
+
         [HttpGet]
         public IActionResult EditarArticulo(int IdArticulo)
         {
@@ -78,7 +75,7 @@ namespace GestorPedidos.Controllers
             return RedirectToAction(nameof(Articulos));
         }
 
-      
+
         [HttpGet]
         public IActionResult EliminarArticulo(int IdArticulo)
         {

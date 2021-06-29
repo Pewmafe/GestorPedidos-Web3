@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models.ValidationCustom
 {
-   public  class CustomOnlyString : ValidationAttribute
+    public class CustomOnlyString : ValidationAttribute
     {
         public override bool IsValid(object value)
         {

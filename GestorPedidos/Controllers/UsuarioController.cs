@@ -27,11 +27,11 @@ namespace GestorPedidos.Controllers
 
         public IActionResult Usuarios()
         {
-           
+
             return View("Usuarios", _usuarioServicio.ListarTodos());
         }
 
-       
+
         public IActionResult NuevoUsuario()
         {
 
@@ -47,7 +47,7 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult AltaUsuario(Usuario usuario)
         {
-        
+
             _usuarioServicio.Crear(usuario);
 
             return RedirectToAction(nameof(Usuarios));
@@ -55,7 +55,7 @@ namespace GestorPedidos.Controllers
 
 
         [HttpPost]
-        public IActionResult ModificarUsuario(int IdUsuario ,String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)
+        public IActionResult ModificarUsuario(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)
         {
 
             _usuarioServicio.Modificar(IdUsuario, Email, Password, EsAdmin, Nombre, Apellido, FechaNacimiento);

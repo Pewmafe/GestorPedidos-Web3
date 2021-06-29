@@ -17,7 +17,7 @@ namespace Service
         {
             _context = context;
         }
-        
+
         public void Crear(Usuario usuario)
         {
 
@@ -28,7 +28,7 @@ namespace Service
 
         public void Borrar(Usuario entity)
         {
-            
+
         }
 
         public void BorrarPorId(int id)
@@ -55,7 +55,7 @@ namespace Service
 
         public void Modificar(Usuario usuario)
         {
-           
+
         }
 
         public void Modificar(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)

@@ -1,13 +1,13 @@
-﻿using Models.ValidationCustom;
-using Models.Constants;
+﻿using Models.Constants;
+using Models.ValidationCustom;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Models
+
+namespace Models.Models
 {
-    public class Usuario : IAuditable
+    public class UsuarioMetadata
     {
-        public int Id { get; set; }
 
         [Required(ErrorMessage = ValidationConstants.RequiredField)]
         [EmailAddress(ErrorMessage = ValidationConstants.InvalidEmailFormat)]
@@ -28,14 +28,5 @@ namespace Models
 
         [CustomFecha(ErrorMessage = ValidationConstants.InvalidDate)]
         public DateTime FechaNacimiento { get; set; }
-
-        public int CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int UpdateBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public int DeletedBy { get; set; }
-        public DateTime DeletedDate { get; set; }
-        public bool Deleted { get; set; }
     }
-   
 }

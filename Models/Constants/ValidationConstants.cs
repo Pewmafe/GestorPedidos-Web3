@@ -8,7 +8,7 @@ namespace Models.Constants
 {
     class ValidationConstants
     {
-        public const string RequiredField= "Este campo es requerido";
+        public const string RequiredField = "Este campo es requerido";
         public const string OnlyString = "Por favor no ingrese caracteres especiales.";
         public const string OnlyNumber = "Por favor ingrese solo numeros";
         public const string MinLengthEightDigits = "Por favor ingrese al menos 8 digitos";
