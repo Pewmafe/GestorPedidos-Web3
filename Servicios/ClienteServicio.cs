@@ -30,7 +30,10 @@ namespace Service
 
         public void BorrarPorId(int id)
         {
-            throw new NotImplementedException();
+            Cliente objActual = ObtenerPorId(id);
+            objActual.FechaBorrado = DateTime.Now;
+
+            _dbContext.SaveChanges();
         }
 
         public List<Cliente> ListarTodos()
