@@ -260,6 +260,20 @@ a {
     margin: auto;
 }
 
+.nuevo-pedido select {
+    border: 0;
+    border-radius: 0;
+    border-bottom: 2px solid #ccc;
+    background-color: #f7f4ef;
+}
+
+.nuevo-pedido textarea {
+    border: 0;
+    border-radius: 0;
+    border-bottom: 2px solid #ccc;
+    background-color: #f7f4ef;
+}
+
 @media screen and (min-width: 768px) {
     .hr-pedido {
         display: none;
@@ -292,5 +306,5 @@ input.input-validation-error {
 
 span.field-validation-error {
     font-style: italic !important;
-    text-transform: uppercase!important;
+    text-transform: uppercase !important;
 }
