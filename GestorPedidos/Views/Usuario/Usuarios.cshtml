@@ -49,6 +49,7 @@
                             <th class="text-center" scope="col">Email</th>
                             <th class="text-center" scope="col">Fecha Nacimiento</th>
                             <th class="text-center" scope="col">Ver</th>
+                            <th class="text-center" scope="col">Eliminados</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,11 +61,29 @@
                                 <td class="text-center">@usuario.IdUsuario</td>
                                 <td class="text-center">@usuario.Nombre @usuario.Apellido</td>
                                 <td class="text-center">@usuario.Email</td>
-                                <td class="text-center">@usuario.FechaNacimiento.Value.ToShortDateString()</td>
+                                @if (usuario.FechaNacimiento != null)
+                                {
+                                    <td class="text-center">@usuario.FechaNacimiento.Value.ToShortDateString()</td>
+                                }
+                                else
+                                {
+                                    <td class="text-center">-</td>
+                                }
+
                                 <td class="text-center">
-                                    <a asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-placement="top" title="Ver Usuario"><i class="fas fa-info btn"></i></a> |
-                                    <a asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario"> <i class="fas fa-times btn text-danger"></i></a>
+                                    <a asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-placement="top" title="Ver Usuario"><i class="fas fa-info btn"></i></a>
                                 </td>
+                                @if (usuario.FechaBorrado == null)
+                                {
+                                    <td class="text-center">
+                                        <a asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario"> <i class="fas fa-times btn text-danger"></i></a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="text-center fst-italic"><p>Eliminado</p></td>
+                                }
+
                             </tr>
                         }
                     </tbody>
@@ -75,59 +94,3 @@
     </div>
 
 </div>
-
-<!--
-<h1>Usuarios</h1>
-
-<div>
-    <a class="btn btn-primary" asp-controller="Usuario" asp-action="NuevoUsuario">Nuevo Cliente</a>
-</div>
-<section>
-    <div>
-        <form asp-action="FiltrarUsuario" asp-controller="Usuario" asp-route-nombre="" method="get">
-            <select>
-                <option>Nombre Usuario</option>
-                <option>-</option>
-            </select>
-            <select>
-                <option>Email</option>
-            </select>
-            <div>
-                <label> Excluir Eliminados:</label>
-                <input type="checkbox" value="false" />
-            </div>
-        </form>
-    </div>
-    <div class="table-responsive text-center">
-        <table class="table table-bordered table-dark">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Fecha Nacimiento</th>
-                    <th scope="col">Ver</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach (var usuario in @Model)
-                {
-                    <tr>
-                        <td>@usuario.Nombre @usuario.Apellido</td>
-                        <td>@usuario.Email</td>
-                        <td>@usuario.FechaNacimiento.Value.ToShortDateString()</td>
-                        <td class="dropdown dropleft text-center">
-                            <a class="btn btn-outline-info dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="dropdownMenuLink">
-                                <a class="btn btn-warning text-light" type="button" asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario">Editar</a>
-                                <a class="btn btn-danger text-light" asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" type="button">Eliminar</a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</section>
--->

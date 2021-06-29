@@ -1,6 +1,8 @@
 ﻿@model Models.Models.Usuario;
 
 @{
+    Boolean readOnly = Model.FechaBorrado != null ? true : false;
+
     ViewData["Title"] = "EditarUsuario";
 }
 <div>
@@ -12,100 +14,57 @@
         </div>
     </div>
     <div class="py-2 titulos-paginas">
-        <h3>Editar Usuario</h3>
+        @if (!readOnly)
+        {
+            <h3>Editar Usuario</h3>
+        }
+        else
+        {
+    <h3>Usuario</h3>
+        }
     </div>
-    <form class="nuevo-articulo row" asp-action="ModificarUsuario" asp-controller="Usuario" method="post">
+    <form class="nuevo-articulo row" asp-action="EditarUsuario" asp-controller="Usuario" method="post">
         <input type="hidden" asp-for="IdUsuario" value="@Model.IdUsuario" />
         <div class="mb-3 col-12 col-md-6">
             <label for="Email" class="form-label">Email:</label>
-            <input type="email" asp-for="Email" value="@Model.Email" class="form-control" />
+            <input type="email" asp-for="Email" disabled="@readOnly" value="@Model.Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="Password" class="form-label">Password:</label>
-            <input type="password" asp-for="Password" value="@Model.Password" class="form-control" />
+            <input type="password" asp-for="Password" disabled="@readOnly" value="@Model.Password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
 
         <div class="mb-3 col-12 col-md-6">
             <label for="Nombre" class="form-label">Nombre:</label>
-            <input type="text" asp-for="Nombre" value="@Model.Nombre" class="form-control" />
+            <input type="text" asp-for="Nombre" disabled="@readOnly" value="@Model.Nombre" class="form-control" />
             <span asp-validation-for="Nombre" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="Apellido" class="form-label">Apellido:</label>
-            <input type="text" asp-for="Apellido" value="@Model.Apellido" class="form-control" />
+            <input type="text" asp-for="Apellido" disabled="@readOnly" value="@Model.Apellido" class="form-control" />
             <span asp-validation-for="Apellido" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="EsAdmin" class="form-label">Admin:</label>
-            <input type="checkbox" asp-for="EsAdmin" checked="@Model.EsAdmin" value="@Model.EsAdmin" class="form-check-input form-check " />
+            <input type="checkbox" asp-for="EsAdmin" disabled="@readOnly" value="@Model.EsAdmin" class="form-check-input form-check " />
             <span asp-validation-for="EsAdmin" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="FechaNacimiento" class="form-label">Fecha De Nacimiento:</label>
-            <input type="date" asp-for="FechaNacimiento" value="@Model.FechaNacimiento" class="form-control" />
+            <input asp-format="{0:dd/MM/yyyy}" type="date" asp-for="FechaNacimiento" disabled="@readOnly" value="@Model.FechaNacimiento" class="form-control" />
             <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
         </div>
-        <div class="mb-3 col-12">
-            <input type="submit" class="btn btn-outline-success text-uppercase" value="Guardar" name="guardar" />
-            <input type="submit" class="btn btn-outline-success text-uppercase" value="Guardar y Crear otro" name="guardar" />
-            <a class="btn btn-outline-warning text-uppercase" asp-controller="Usuario" asp-action="Usuarios">Cancelar</a>
-        </div>
+
+        @if (!readOnly)
+        {
+            <div class="mb-3 col-12">
+                <input type="submit" class="btn btn-outline-success text-uppercase" value="Guardar" name="guardar" />
+                <input type="submit" class="btn btn-outline-success text-uppercase" value="Guardar y Crear otro" name="guardar" />
+                <a class="btn btn-outline-warning text-uppercase" asp-controller="Usuario" asp-action="Usuarios">Cancelar</a>
+            </div>
+        }
     </form>
 
 </div>
-<!--
-<h1>EditarUsuario</h1>
-
-<h1 class="text-center">Editar Usuario</h1>
-<div class="d-flex justify-content-center">
-
-    <form asp-action="ModificarUsuario" asp-controller="Usuario" method="post">
-
-        <div class="col-md-12">
-
-            <input type="hidden" asp-for="IdUsuario" value="@Model.IdUsuario" />
-
-        </div>
-
-
-        <div class="col-md-12">
-            <label for="Email" class="form-label">Email:</label>
-            <input type="email" asp-for="Email" value="@Model.Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="col-md-12">
-            <label for="Password" class="form-label">Password:</label>
-            <input type="password" asp-for="Password" value="@Model.Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div class="col-md-12">
-            <label for="EsAdmin" class="form-label">Admin:</label>
-            <input type="checkbox" asp-for="EsAdmin" value="" class="form-control" />
-            <span asp-validation-for="EsAdmin" class="text-danger"></span>
-        </div>
-        <div class="col-md-12">
-            <label for="Nombre" class="form-label">Nombre:</label>
-            <input type="text" asp-for="Nombre" value="@Model.Nombre" class="form-control" />
-            <span asp-validation-for="Nombre" class="text-danger"></span>
-        </div>
-        <div class="col-md-12">
-            <label for="Apellido" class="form-label">Apellido:</label>
-            <input type="text" asp-for="Apellido" value="@Model.Apellido" class="form-control" />
-            <span asp-validation-for="Apellido" class="text-danger"></span>
-        </div>
-        <div class="col-md-12">
-            <label for="FechaNacimiento" class="form-label">Fecha De Nacimiento:</label>
-            <input type="date" asp-for="FechaNacimiento" value="@Model.FechaNacimiento" class="form-control" />
-            <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
-        </div>
-        <div>
-            <input type="submit" class="btn btn-success" value="Guardar" />
-            <input type="submit" class="btn btn-success" value="Guardar y Editar otro" />
-            <a class="btn btn-warning" asp-controller="Usuario" asp-action="Usuarios">Cancelar</a>
-        </div>
-    </form>
-
-</div>
-    -->

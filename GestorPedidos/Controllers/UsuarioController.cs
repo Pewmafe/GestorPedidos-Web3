@@ -24,20 +24,33 @@ namespace GestorPedidos.Controllers
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult Usuarios()
         {
 
             return View("Usuarios", _usuarioServicio.ListarTodos());
         }
 
-
+        [HttpGet]
         public IActionResult NuevoUsuario()
         {
 
             return View("NuevoUsuario");
         }
 
+        [HttpPost]
+        public IActionResult NuevoUsuario(Usuario usuario)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(usuario);
+            }
+            _usuarioServicio.Crear(usuario);
+
+            return RedirectToAction(nameof(Usuarios));
+        }
+
+        [HttpGet]
         public IActionResult EditarUsuario(int id)
         {
             return View("EditarUsuario", _usuarioServicio.ObtenerPorId(id));
@@ -45,19 +58,8 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpPost]
-        public IActionResult AltaUsuario(Usuario usuario)
+        public IActionResult EditarUsuario(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)
         {
-
-            _usuarioServicio.Crear(usuario);
-
-            return RedirectToAction(nameof(Usuarios));
-        }
-
-
-        [HttpPost]
-        public IActionResult ModificarUsuario(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)
-        {
-
             _usuarioServicio.Modificar(IdUsuario, Email, Password, EsAdmin, Nombre, Apellido, FechaNacimiento);
 
             return RedirectToAction(nameof(Usuarios));

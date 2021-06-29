@@ -35,7 +35,8 @@ namespace Service
         {
             Usuario usuario = _context.Usuarios.Find(id);
 
-            _context.Remove(usuario);
+            usuario.FechaModificacion = DateTime.Now;
+            usuario.FechaBorrado = DateTime.Now;
 
             _context.SaveChanges();
         }
