@@ -48,10 +48,24 @@ namespace GestorPedidos.Controllers
             return RedirectToAction("NuevoCliente");
         }
 
-
-        public IActionResult EditarCliente()
+        [HttpGet]
+        public IActionResult EditarCliente(int idCliente)
         {
-            return View();
+            Cliente cliente = clienteServicio.ObtenerPorId(idCliente);
+            return View(cliente);
         }
+
+        [HttpPost]
+        public IActionResult EditarCliente(Cliente Cliente)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(Cliente);
+            }
+            clienteServicio.Modificar(Cliente);
+
+            return RedirectToAction("Clientes");
+        }
+        
     }
 }
