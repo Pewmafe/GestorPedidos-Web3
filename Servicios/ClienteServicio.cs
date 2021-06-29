@@ -54,6 +54,7 @@ namespace Service
             objActual.Cuit = entity.Cuit;
             objActual.Email = entity.Email;
             objActual.Direccion = entity.Direccion;
+            objActual.FechaModificacion = DateTime.Now;
 
             _dbContext.SaveChanges();
         }
