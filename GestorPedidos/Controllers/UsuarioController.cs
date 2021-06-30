@@ -71,11 +71,6 @@ namespace GestorPedidos.Controllers
             return RedirectToAction(nameof(Usuarios));
         }
 
-        [Route("Usuario/FiltrarUsuarioPorNombre/{nombre?}")]
-        public IActionResult FiltrarUsuarioPorNombre(String nombre)
-        {
-
-            return View("Usuarios", _usuarioServicio.FiltrarUsuariosPorNombre(nombre));
-        }
+       
     }
 }

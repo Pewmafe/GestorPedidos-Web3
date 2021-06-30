@@ -2,12 +2,7 @@
 
 
 @{
-
-    String nombre = "nombre";
-
     ViewData["Title"] = "Usuarios";
-
-
 }
 <div>
     <div class="volver mb-3 row">
@@ -22,21 +17,6 @@
     </div>
 
     <div class="row">
-
-        <form asp-controller="Usuario" asp-action="FiltrarUsuarioPorNombre">
-
-            <div class="col-3 mt-3">
-                <div class="input-group rounded">
-                    <input type="search" asp-for="@nombre" class="form-control rounded" placeholder="Buscar Usuario" aria-label="Search"
-                           aria-describedby="search-addon" />
-                    <button class="input-group-text border-0"  type="submit" id="search-addon">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-
-            </div>
-
-        </form>
 
             <div class="col-12 mt-3">
                 <h4 class="titulos-paginas">Lista de Usuarios</h4>

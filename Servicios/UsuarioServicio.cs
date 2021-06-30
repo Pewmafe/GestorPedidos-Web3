@@ -80,11 +80,5 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public List<Usuario> FiltrarUsuariosPorNombre(String Nombre)
-        {
-            List<Usuario> usuarios = _context.Usuarios.ToList();
-
-            return usuarios.Where(u => u.Nombre == Nombre).ToList();
-        }
     }
 }
