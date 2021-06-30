@@ -1,4 +1,5 @@
-﻿using Models.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,6 @@ namespace Service
         {
             Cliente objActual = ObtenerPorId(id);
             objActual.FechaBorrado = DateTime.Now;
-
             _dbContext.SaveChanges();
         }
 
@@ -67,6 +67,27 @@ namespace Service
                            select a;
 
             return clientes.ToList();
+        }
+
+        public List<Cliente> listarClientesSinPedidosActivos()
+        {
+            /*var clientes = from c in _dbContext.Clientes.Include(c => c.Pedidos).Include("Pedidos.IdEstadoPedido")
+                           select c;
+
+            List<Cliente> cliente = clientes.ToList();
+
+            return cliente.ForEach(c =>
+             {
+                 _dbContext.Pedidos
+                 .Include(p => p.IdClienteNavigation)
+                 .Where(p => p.IdClienteNavigation.IdCliente == c.IdCliente && c.FechaBorrado != null)
+                 .Where(p => p.IdEstado.Equals(1)).FirstOrDefault();
+             }
+             ).ToList();
+
+            cliente.*/
+            return null;
+
         }
     }
 }
