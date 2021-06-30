@@ -1,4 +1,8 @@
-﻿<!doctype html>
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    string? nombre = (Context.Session.GetString("NombreUsuario")) != null ? (Context.Session.GetString("NombreUsuario")) : "";
+}
+<!doctype html>
 <html lang="es">
 <head>
     <meta charset="utf-8">
@@ -20,7 +24,10 @@
         </div>
         <div class="d-flex">
             <div class="m-auto mx-1">
-                <h5 class="text-uppercase">User</h5>
+                @if (nombre != null)
+                {
+                    <h5 class="text-uppercase">@nombre</h5>
+            }
             </div>
             <div class="header__img border border-dark">
 
