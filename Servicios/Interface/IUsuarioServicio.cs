@@ -11,7 +11,6 @@ namespace Service
     {
         public void Modificar(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento);
 
-        public List<Usuario> FiltrarUsuariosPorNombre(String Nombre);
     }
 
 }

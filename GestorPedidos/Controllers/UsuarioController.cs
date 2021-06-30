@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Models.Models;
 using System.Globalization;
 
+
 namespace GestorPedidos.Controllers
 {
     public class UsuarioController : Controller
@@ -61,7 +62,6 @@ namespace GestorPedidos.Controllers
         public IActionResult EditarUsuario(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)
         {
             _usuarioServicio.Modificar(IdUsuario, Email, Password, EsAdmin, Nombre, Apellido, FechaNacimiento);
-
             return RedirectToAction(nameof(Usuarios));
         }
 
@@ -72,10 +72,6 @@ namespace GestorPedidos.Controllers
             return RedirectToAction(nameof(Usuarios));
         }
 
-        public IActionResult FiltrarUsuarioPorNombre(String nombre)
-        {
-
-            return View("Usuarios", _usuarioServicio.FiltrarUsuariosPorNombre(nombre));
-        }
+       
     }
 }
