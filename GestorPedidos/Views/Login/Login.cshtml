@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Models.Models.Usuario;
+@{
     ViewData["Title"] = "Login";
 }
 
@@ -10,12 +11,13 @@
                     <h5 class="card-title text-center">
                         Iniciar sesi&oacute;n
                     </h5>
-                    <form class="form-signin">
+                    <form class="form-signin" asp-action="Login" asp-controller="login">
                         <div class="form-label-group">
-                            <input path="email" id="email" type="email" class="form-control p-1" placeholder="Correo electronico" />
+                            <input asp-for="Email" id="email" type="email" class="form-control p-1" placeholder="Correo electronico" />
+                            <span asp-validation-for="Email " class="text-danger"></span>
                         </div>
                         <div class="form-label-group">
-                            <input path="password" type="password" id="password" class="form-control p-1" placeholder="Contrasenia" />
+                            <input type="password" id="password" asp-for="Password" class="form-control p-1" placeholder="Contrasenia" />
                         </div>
                         <div class="text-center">
                             <button class="btn btn-primary text-uppercase" type="submit">

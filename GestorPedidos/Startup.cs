@@ -30,6 +30,11 @@ namespace GestorPedidos
             services.AddDbContext<_20211CTPContext>(options => options.UseSqlServer(Conex.CONEX_STRING));
 
             services.AddControllersWithViews();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".MiAPP.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(60);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +56,7 @@ namespace GestorPedidos
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
