@@ -118,12 +118,12 @@ namespace Service
 
         public Articulo ObtenerPorId(int id)
         {
-            var articulos = from a in dbContexto.Articulos where a.IdArticulo == id select a;
+            /*var articulos = from a in dbContexto.Articulos where a.IdArticulo == id select a;
 
             Articulo articulo = articulos.FirstOrDefault();
-            if (articulo != null) return articulo;
+            return articulo;*/
 
-            return null;
+            return dbContexto.Articulos.FirstOrDefault(a => a.IdArticulo == id);
         }
     }
 }

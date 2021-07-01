@@ -261,10 +261,16 @@ a {
 }
 
 .nuevo-pedido select {
-    border: 0;
-    border-radius: 0;
-    border-bottom: 2px solid #ccc;
-    background-color: #f7f4ef;
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 2px solid #ccc !important;
+    background-color: #f7f4ef!important;
+}
+.nuevo-pedido .select2-container--default .select2-selection--single {
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 2px solid #ccc !important;
+    background-color: #f7f4ef !important;
 }
 
 .nuevo-pedido textarea {
