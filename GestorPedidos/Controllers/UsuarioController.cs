@@ -28,8 +28,16 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Usuarios()
         {
-
             return View("Usuarios", _usuarioServicio.ListarTodos());
+        }
+        [HttpGet]
+        public IActionResult UsuariosNoEliminados()
+        {
+
+            List<Usuario> usuariosNoEliminados = _usuarioServicio.ListarNoEliminados();
+
+            return Json(usuariosNoEliminados); 
+
         }
 
         [HttpGet]
@@ -59,9 +67,9 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditarUsuario(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)
+        public IActionResult EditarUsuario(Usuario usuario)
         {
-            _usuarioServicio.Modificar(IdUsuario, Email, Password, EsAdmin, Nombre, Apellido, FechaNacimiento);
+            _usuarioServicio.Modificar(usuario);
             return RedirectToAction(nameof(Usuarios));
         }
 

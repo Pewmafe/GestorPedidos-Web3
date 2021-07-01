@@ -56,20 +56,14 @@ namespace Service
 
         public void Modificar(Usuario usuario)
         {
+            Usuario usuarioActualizado = ObtenerPorId(usuario.IdUsuario);
 
-        }
-
-        public void Modificar(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)
-        {
-            Usuario usuario = ObtenerPorId(IdUsuario);
-
-            usuario.Email = Email;
-            usuario.Password = Password;
-            usuario.EsAdmin = EsAdmin;
-            usuario.Nombre = Nombre;
-            usuario.Apellido = Apellido;
-            usuario.FechaNacimiento = FechaNacimiento;
-            usuario.FechaModificacion = DateTime.Today;
+            usuarioActualizado.Nombre = usuario.Nombre;
+            usuarioActualizado.Apellido = usuario.Apellido;
+            usuarioActualizado.Email = usuario.Email;
+            usuarioActualizado.Password = usuario.Password;
+            usuarioActualizado.FechaNacimiento = usuario.FechaNacimiento;
+            usuarioActualizado.FechaModificacion = DateTime.Today;
 
             _context.SaveChanges();
 
@@ -78,7 +72,16 @@ namespace Service
 
         public List<Usuario> ListarNoEliminados()
         {
-            throw new NotImplementedException();
+            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u=> u.FechaBorrado == null).ToList();
+
+            //foreach (var item in usuariosNoEliminados)
+            //{
+            //    String fecha = item.FechaNacimiento.Value.ToShortDateString();
+            //    item.FechaNacimiento = DateTime.ParseExact(fecha, "d/M/yyyy", null);
+            //}
+
+            return usuariosNoEliminados;
+
         }
 
     }

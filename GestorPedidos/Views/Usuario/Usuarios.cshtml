@@ -22,12 +22,14 @@
             <h4 class="titulos-paginas">Lista de Usuarios</h4>
             <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
             <div class="collapse" id="filtros">
+
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                     <p class="form-check-label" for="flexCheckChecked">
                         Excluir eliminados
                     </p>
                 </div>
+                
                 <div class="mb-3">
                     <select class="form-select" name="codigo">
                         <option>Nombre Usuario</option>
@@ -40,8 +42,10 @@
                     </select>
                 </div>
             </div>
+
+
             <div class="table-responsive ">
-                <table id="" class="table table-striped" style="width:100%">
+                <table id="tblUsuario"class="table table-striped" style="width:100%">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th class="text-center">#</th>
@@ -94,3 +98,59 @@
     </div>
 
 </div>
+
+@section Scripts
+{
+    
+    <script type="text/javascript">
+
+    $(function () {
+
+        $("#flexCheckChecked").on('change', function () {
+
+            if ($(this).is(':checked')) {
+
+                LoadData();
+            }
+
+            else {
+
+                location.reload();
+            }
+
+        });
+
+    });
+
+        function LoadData() {
+            $("#tblUsuario tbody tr td").remove();
+            $.ajax({
+                type: 'GET',
+                url: 'UsuariosNoEliminados',
+                dataType: 'json',
+                success: function (data) {
+                    var items = '';
+                    $.each(data, function (i, usuario) {
+                        console.log(usuario)
+                        var rows = "<tr>"
+                            + "<td class='text-center'>"+ usuario.idUsuario +"</td>"
+                            + "<td class='text-center'>"+ usuario.nombre +" "+ usuario.apellido +"</td>"
+                            + "<td class='text-center'>"+ usuario.email +"</td>"
+                            + "<td class='text-center'>"+ usuario.fechaNacimiento +"</td>"
+                            + "<td class='text-center'> <a href='EditarUsuario/"+ usuario.idUsuario +"' data-bs-toggle='tooltip' data-bs-placement='top' title='Ver Usuario'> <i class='fas fa-info btn'></i></a> </td>"
+                            + "<td class='text-center'> <a href='BajaUsuario/"+ usuario.idUsuario +"' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar Usuario'> <i class='fas fa-times btn text-danger'></i> </a> </td>"
+                            + "</tr>";
+                        $('#tblUsuario tbody').append(rows);
+                    });
+                },
+                error: function (ex) {
+
+                    alert("Message: error ");
+
+                }
+            });
+            return false;
+        }
+
+    </script>  
+}
