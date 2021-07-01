@@ -2,6 +2,7 @@
 using Models.Models;
 using Service;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace GestorPedidos.Controllers
 {
@@ -19,12 +20,22 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Clientes()
         {
-            List<Cliente> clientes = clienteServicio.ListarTodos();
+           string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+           List <Cliente> clientes = clienteServicio.ListarTodos();
             return View(clientes);
         }
 
         public IActionResult NuevoCliente()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             return View();
         }
 
@@ -48,6 +59,11 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult EditarCliente(int idCliente)
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             Cliente cliente = clienteServicio.ObtenerPorId(idCliente);
             return View(cliente);
         }

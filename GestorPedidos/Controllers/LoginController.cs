@@ -42,7 +42,7 @@ namespace GestorPedidos.Controllers
         public IActionResult Logout()
         {
             loginServicio.LogOut(HttpContext);
-            return Redirect("/Home/Index");
+            return RedirectToAction("Login");
         }
 
         private void GuardarInformacionSesion(Usuario usuario)
