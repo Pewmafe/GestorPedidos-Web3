@@ -14,23 +14,54 @@ namespace Service
         {
             dbContexto = ctx;
         }
-       
-        public void Borrar(Articulo entity)
+        public void Crear(Articulo entity, int idUsuario)
         {
-           
+
+            if (entity != null)
+            {
+                entity.FechaCreacion = DateTime.Now;
+                if (idUsuario != 0) entity.CreadoPor = idUsuario;
+                dbContexto.Articulos.Add(entity);
+                dbContexto.SaveChanges();
+            }
         }
-        public void Crear(Articulo entity)
+
+        public void Modificar(Articulo entity, int idUsuario)
         {
 
-
-        }    
-        public void BorrarPorId(int idArticulo)
-        {
-
+            Articulo articulo = ObtenerPorId(entity.IdArticulo);
+            if (articulo != null)
+            {
+                articulo.Codigo = entity.Codigo;
+                articulo.Descripcion = entity.Descripcion;
+                articulo.FechaModificacion = DateTime.Now;
+                if (idUsuario != 0) articulo.ModificadoPor = idUsuario;
+                dbContexto.SaveChanges();
+            }
         }
-        public void Modificar(Articulo entity)
+        public void Borrar(Articulo entity, int idUsuario)
+        {
+            var fecha = DateTime.Now;
+            if (entity != null)
+            {
+                entity.FechaBorrado = fecha;
+                if (idUsuario != 0) entity.BorradoPor = idUsuario;
+                dbContexto.SaveChanges();
+            }
+        }
+        public void BorrarPorId(int idArticulo, int idUsuario)
         {
 
+            var articulos = from a in dbContexto.Articulos where a.IdArticulo == idArticulo select a;
+
+            Articulo articulo = articulos.FirstOrDefault();
+
+            if (articulo != null)
+            {
+                articulo.FechaBorrado = DateTime.Now;
+                if (idUsuario != 0) articulo.BorradoPor = idUsuario;
+                dbContexto.SaveChanges();
+            }
         }
         public List<Articulo> listarPorCodigo(string codigo)
         {
@@ -88,55 +119,7 @@ namespace Service
 
             return articulos.ToList();
         }
-        public void Crear(Articulo entity, int idUsuario)
-        {
-
-            if (entity != null)
-            {
-                entity.FechaCreacion = DateTime.Now;
-                if (idUsuario != 0) entity.CreadoPor = idUsuario;
-                dbContexto.Articulos.Add(entity);
-                dbContexto.SaveChanges();
-            }
-        }
-      
-        public void Modificar(Articulo entity, int idUsuario)
-        {
-
-            Articulo articulo = ObtenerPorId(entity.IdArticulo);
-            if (articulo != null)
-            {
-                articulo.Codigo = entity.Codigo;
-                articulo.Descripcion = entity.Descripcion;
-                articulo.FechaModificacion = DateTime.Now;
-                if (idUsuario != 0) articulo.ModificadoPor = idUsuario;
-                dbContexto.SaveChanges();
-            }
-        }
-        public void Borrar(Articulo entity, int idUsuario)
-        {
-            var fecha = DateTime.Now;
-            if (entity != null)
-            {
-                entity.FechaBorrado = fecha;
-                if (idUsuario != 0) entity.BorradoPor = idUsuario;
-                dbContexto.SaveChanges();
-            }
-        }
-        public void BorrarPorId(int idArticulo, int idUsuario)
-        {
-
-            var articulos = from a in dbContexto.Articulos where a.IdArticulo == idArticulo select a;
-
-            Articulo articulo = articulos.FirstOrDefault();
-
-            if (articulo != null)
-            {
-                articulo.FechaBorrado = DateTime.Now;
-                if (idUsuario != 0) articulo.BorradoPor = idUsuario;
-                dbContexto.SaveChanges();
-            }
-        }
+       
     }
   
 

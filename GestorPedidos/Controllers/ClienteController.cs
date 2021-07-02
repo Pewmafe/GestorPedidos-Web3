@@ -32,6 +32,7 @@ namespace GestorPedidos.Controllers
         public IActionResult NuevoCliente()
         {
             string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+           
             if (idUsuario == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -46,8 +47,8 @@ namespace GestorPedidos.Controllers
             {
                 return View(cliente);
             }
-
-            clienteServicio.Crear(cliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            clienteServicio.Crear(cliente, idUsuario);
 
             if (guardar.ToLower().Equals("guardar"))
             {
@@ -75,7 +76,8 @@ namespace GestorPedidos.Controllers
             {
                 return View(Cliente);
             }
-            clienteServicio.Modificar(Cliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            clienteServicio.Modificar(Cliente,idUsuario);
 
             return RedirectToAction("Clientes");
         }
@@ -83,7 +85,8 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Borrarcliente(int idCliente)
         {
-            clienteServicio.BorrarPorId(idCliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            clienteServicio.BorrarPorId(idCliente,idUsuario);
             return RedirectToAction("Clientes");
         }
 

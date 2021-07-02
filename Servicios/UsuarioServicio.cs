@@ -18,7 +18,7 @@ namespace Service
             _context = context;
         }
 
-        public void Crear(Usuario usuario)
+        public void Crear(Usuario usuario, int idUsuario)
         {
 
             _context.Usuarios.Add(usuario);
@@ -26,12 +26,12 @@ namespace Service
             _context.SaveChanges();
         }
 
-        public void Borrar(Usuario entity)
+        public void Borrar(Usuario entity, int idUsuario)
         {
 
         }
 
-        public void BorrarPorId(int id)
+        public void BorrarPorId(int id, int idUsuario)
         {
             Usuario usuario = _context.Usuarios.Find(id);
 
@@ -54,7 +54,7 @@ namespace Service
             return usuario;
         }
 
-        public void Modificar(Usuario usuario)
+        public void Modificar(Usuario usuario, int idUsuario)
         {
             Usuario usuarioActualizado = ObtenerPorId(usuario.IdUsuario);
 

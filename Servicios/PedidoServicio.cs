@@ -13,13 +13,13 @@ namespace Service
         {
             _dbContext = dbContext;
         }
-        public void Crear(Pedido entity)
+        public void Crear(Pedido entity, int idUsuario)
         {
             _dbContext.Pedidos.Add(entity);
             _dbContext.SaveChanges();
         }
 
-        public void Borrar(Pedido entity)
+        public void Borrar(Pedido entity, int idUsuario)
         {
             Pedido pedido = ObtenerPorId(entity.IdPedido);
             //pedido.IdEstadoNavigation.IdEstadoPedido = cerrado;
@@ -31,7 +31,7 @@ namespace Service
             _dbContext.SaveChanges();
         }
 
-        public void BorrarPorId(int id)
+        public void BorrarPorId(int id,int idUsuario)
         {
             Pedido pedido = ObtenerPorId(id);
             //pedido.IdEstadoNavigation.IdEstadoPedido = cerrado;
@@ -54,7 +54,7 @@ namespace Service
             return _dbContext.Pedidos.FirstOrDefault(o => o.IdPedido == id);
         }
 
-        public void Modificar(Pedido entity)
+        public void Modificar(Pedido entity,int idUsuario)
         {
             Pedido pedido = ObtenerPorId(entity.IdPedido);
             pedido.IdCliente = entity.IdCliente;
