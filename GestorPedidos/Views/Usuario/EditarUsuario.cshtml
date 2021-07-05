@@ -1,6 +1,7 @@
 ﻿@model Models.Models.Usuario;
 
 @{
+    Layout = "_UsuarioLayout";
     Boolean readOnly = Model.FechaBorrado != null ? true : false;
 
     ViewData["Title"] = "EditarUsuario";

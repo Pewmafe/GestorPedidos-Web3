@@ -1,6 +1,9 @@
 ﻿@model Models.Models.Usuario;
 @{
+    Layout = "_BaseLayout";
+
     ViewData["Title"] = "Login";
+
 }
 
 <div id="login">
@@ -30,3 +33,6 @@
         </div>
     </div>
 </div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

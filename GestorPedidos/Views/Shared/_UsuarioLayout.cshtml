@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    Layout = "_BaseLayout";
+    string? nombre = (Context.Session.GetString("NombreUsuario")) != null ? (Context.Session.GetString("NombreUsuario")) : null;
+}
+
+@section menu{
+
+    <header class="header" id="header">
+        <div class="header__toggle">
+            <i class="fas fa-bars" id="header-toggle"></i>
+        </div>
+        <div class="d-flex">
+            <div class="m-auto mx-1">
+                @if (nombre != null)
+                {
+                    <h6 class="text-uppercase">hola @nombre</h6>
+                }
+            </div>
+            <div class="header__img border border-dark">
+
+                <img src="https://amp.lainformacion.com/files/article_default_content/uploads/imagenes/2017/09/14/59bd7c2f6c1f7.jpeg" alt="Imagen de perfil">
+            </div>
+        </div>
+    </header>
+    <div class="sidebar-main">
+        <div class="l-navbar" id="nav-bar">
+            <nav class="nav">
+                <div>
+
+                    <a asp-controller="Home" asp-action="Index" class="nav__logo">
+                        <i class="fas fa-home"></i>
+                        <span class="nav__logo-name">Inicio</span>
+                    </a>
+
+                    <div class="nav__list">
+                        <a asp-controller="Usuario" asp-action="Usuarios" class="nav__link">
+                            <i class="fas fa-user"></i>
+                            <span class="nav__name">Usuarios</span>
+                        </a>
+
+                        <a asp-controller="Pedido" asp-action="Pedido" class="nav__link">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="nav__name">Pedidos</span>
+                        </a>
+
+                        <a asp-controller="Cliente" asp-action="Clientes" class="nav__link">
+                            <i class="fas fa-id-card"></i>
+                            <span class="nav__name">Clientes</span>
+                        </a>
+
+                        <a asp-controller="Articulo" asp-action="Articulos" class="nav__link">
+                            <i class="fas fa-tags"></i>
+                            <span class="nav__name">Artículos</span>
+                        </a>
+
+                        <a asp-controller="Login" asp-action="Login" class="nav__link">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span class="nav__name">Login</span>
+                        </a>
+                    </div>
+                </div>
+
+                <a asp-controller="Login" asp-action="Logout" class="nav__link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav__name">Log Out</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+}
+
+<main role="main" class="pb-3">
+    <div class="container py-4">
+        @RenderBody()
+    </div>
+</main>
+@await RenderSectionAsync("Scripts", required: false)

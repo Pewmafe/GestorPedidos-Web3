@@ -1,5 +1,6 @@
 ﻿@model Models.Models.Cliente;
 @{
+    Layout = "_UsuarioLayout";
     ViewData["Title"] = "Editar Cliente";
     Boolean readOnly = Model.FechaBorrado == null ? true : false;
 }
