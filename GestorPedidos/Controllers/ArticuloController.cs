@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Models.Models;
 using Service;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace GestorPedidos.Controllers
 {
@@ -40,8 +41,8 @@ namespace GestorPedidos.Controllers
             {
                 return View(articulo);
             }
-
-            articuloServicio.Crear(articulo);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            articuloServicio.Crear(articulo, idUsuario);
 
             TempData["art"] = JsonConvert.SerializeObject(articulo);
 
@@ -69,8 +70,8 @@ namespace GestorPedidos.Controllers
             {
                 return View(articulo);
             }
-
-            articuloServicio.Modificar(articulo);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            articuloServicio.Modificar(articulo,idUsuario);
 
             return RedirectToAction(nameof(Articulos));
         }
@@ -79,8 +80,8 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult EliminarArticulo(int IdArticulo)
         {
-            Articulo articulo = articuloServicio.ObtenerPorId(IdArticulo);
-            articuloServicio.Borrar(articulo);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            articuloServicio.BorrarPorId(IdArticulo,idUsuario);
 
             return RedirectToAction(nameof(Articulos));
         }

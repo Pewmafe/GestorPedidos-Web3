@@ -42,7 +42,7 @@ namespace GestorPedidos.Controllers
         public IActionResult Logout()
         {
             loginServicio.LogOut(HttpContext);
-            return Redirect("/Home/Index");
+            return RedirectToAction("Login");
         }
 
         private void GuardarInformacionSesion(Usuario usuario)
@@ -51,6 +51,7 @@ namespace GestorPedidos.Controllers
             HttpContext.Session.SetString("NombreUsuario", usuario.Nombre.ToString());
             HttpContext.Session.SetString("ApellidoUsuario", usuario.Apellido.ToString());
             HttpContext.Session.SetString("usuarioAdmin", usuario.EsAdmin.ToString());
+            HttpContext.Session.SetInt32("IdUser", usuario.IdUsuario);
         }
     }
 }

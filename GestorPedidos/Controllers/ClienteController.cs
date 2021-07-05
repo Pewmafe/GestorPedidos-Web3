@@ -2,6 +2,7 @@
 using Models.Models;
 using Service;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace GestorPedidos.Controllers
 {
@@ -19,12 +20,23 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Clientes()
         {
-            List<Cliente> clientes = clienteServicio.ListarTodos();
+           string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+           List <Cliente> clientes = clienteServicio.ListarTodos();
             return View(clientes);
         }
 
         public IActionResult NuevoCliente()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+           
+            if (idUsuario == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             return View();
         }
 
@@ -35,8 +47,8 @@ namespace GestorPedidos.Controllers
             {
                 return View(cliente);
             }
-
-            clienteServicio.Crear(cliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            clienteServicio.Crear(cliente, idUsuario);
 
             if (guardar.ToLower().Equals("guardar"))
             {
@@ -48,6 +60,11 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult EditarCliente(int idCliente)
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             Cliente cliente = clienteServicio.ObtenerPorId(idCliente);
             return View(cliente);
         }
@@ -59,7 +76,8 @@ namespace GestorPedidos.Controllers
             {
                 return View(Cliente);
             }
-            clienteServicio.Modificar(Cliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            clienteServicio.Modificar(Cliente,idUsuario);
 
             return RedirectToAction("Clientes");
         }
@@ -67,7 +85,8 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Borrarcliente(int idCliente)
         {
-            clienteServicio.BorrarPorId(idCliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            clienteServicio.BorrarPorId(idCliente,idUsuario);
             return RedirectToAction("Clientes");
         }
 

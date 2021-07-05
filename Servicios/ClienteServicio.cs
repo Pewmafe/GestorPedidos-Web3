@@ -16,18 +16,18 @@ namespace Service
             _dbContext = dbContext;
         }
 
-        public void Crear(Cliente entity)
+        public void Crear(Cliente entity, int idUsuario)
         {
             _dbContext.Clientes.Add(entity);
             _dbContext.SaveChanges();
         }
 
-        public void Borrar(Cliente entity)
+        public void Borrar(Cliente entity,int idUsuario)
         {
             throw new NotImplementedException();
         }
 
-        public void BorrarPorId(int id)
+        public void BorrarPorId(int id, int idUsuario)
         {
             Cliente objActual = ObtenerPorId(id);
             objActual.FechaBorrado = DateTime.Now;
@@ -45,7 +45,7 @@ namespace Service
                 .FirstOrDefault(o => o.IdCliente == id);
         }
 
-        public void Modificar(Cliente entity)
+        public void Modificar(Cliente entity, int idUsuario)
         {
             Cliente objActual = ObtenerPorId(entity.IdCliente);
 
