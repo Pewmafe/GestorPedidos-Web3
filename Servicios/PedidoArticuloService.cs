@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
+
     public class PedidoArticuloService : IPedidoArticuloService
     {
         private _20211CTPContext _dbContext;
@@ -16,20 +17,24 @@ namespace Service
 
             _dbContext = dbContext;
         }
-        public void Borrar(PedidoArticulo entity)
+
+        public void Borrar(PedidoArticulo entity, int idUsuario)
         {
             throw new NotImplementedException();
         }
 
-        public void BorrarPorId(int id)
+        public void BorrarPorId(int id, int idUsuario)
         {
             throw new NotImplementedException();
         }
 
-        public void Crear(PedidoArticulo entity)
+        public void Crear(PedidoArticulo entity, int idUsuario)
         {
+
             _dbContext.PedidoArticulos.Add(entity);
+
             _dbContext.SaveChanges();
+
         }
 
         public List<PedidoArticulo> ListarNoEliminados()
@@ -42,7 +47,7 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public void Modificar(PedidoArticulo entity)
+        public void Modificar(PedidoArticulo entity, int idUsuario)
         {
             throw new NotImplementedException();
         }

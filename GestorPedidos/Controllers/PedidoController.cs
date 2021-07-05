@@ -1,4 +1,5 @@
 ﻿using GestorPedidos.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Models;
 using Service;
@@ -28,6 +29,7 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Pedido()
         {
+            ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
             return View();
         }
 
@@ -43,7 +45,10 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult NuevoPedido(Pedido pedido, int idCliente)
         {
-            this.pedidoServicio.Crear(pedido, idCliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            Cliente cliente = this.clienteServicio.ObtenerPorId(idCliente);
+            this.pedidoServicio.Crear(pedido, idUsuario);
+
             return RedirectToAction("Pedido");
         }
         [HttpGet]
