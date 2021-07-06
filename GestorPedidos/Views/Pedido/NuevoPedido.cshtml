@@ -7,7 +7,9 @@
     List<Articulo> articulos = (List<Articulo>)ViewData["Articulos"];
     List<Articulo> carrito = (List<Articulo>)ViewData["Carrito"];
 
+
 }
+
 <form asp-controller="Pedido" asp-action="NuevoPedido" method="post">
     <div>
         <div class="volver mb-3 row">
@@ -126,6 +128,8 @@
         </div>
     </div>
 </form>
-@section Scripts{
+
+<!--section Scripts{
     <script src="~/js/pedidoScript.js"></script>
-} 
+}
+  -->
