@@ -1,4 +1,5 @@
-﻿using Models.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,7 @@ namespace Service
             }
             entity.IdEstado = 1;
             /*Guardamos el pedido sin todavia agregar los articulos*/
+            if (idUsuario != 0) entity.CreadoPor = idUsuario;
             _dbContext.Pedidos.Add(entity);
             _dbContext.SaveChanges();
             /**/
@@ -39,28 +41,29 @@ namespace Service
             CrearArticuloPedidoPorIdPedidoConListaActual(ultimoIdPedidoCreadoRecien);
             VaciarCarrito();
         }
-        public void Crear(Pedido entity, int IdCliente)
-        {
-            if (ListarTodos().Count == 0)
-            {
-                entity.NroPedido = 0;
-            }
-            else
-            {
-                /*Obtengo el ultimo id de pedido creado, para setearle un numero de pedido por default*/
-                int ultimoIdPedido = ListarTodos().LastOrDefault().IdPedido + 1;
-                entity.NroPedido = ultimoIdPedido * 10;
-            }
-            entity.IdEstado = 1;
-            entity.IdCliente = IdCliente;
-            /*Guardamos el pedido sin todavia agregar los articulos*/
-            _dbContext.Pedidos.Add(entity);
-            _dbContext.SaveChanges();
-            /**/
-            int ultimoIdPedidoCreadoRecien = ListarTodos().LastOrDefault().IdPedido;
-            CrearArticuloPedidoPorIdPedidoConListaActual(ultimoIdPedidoCreadoRecien);
-            VaciarCarrito();
-        }
+
+        //public void Crear(Pedido entity, int IdCliente)
+        //{
+        //    if (ListarTodos().Count == 0)
+        //    {
+        //        entity.NroPedido = 0;
+        //    }
+        //    else
+        //    {
+        //        /*Obtengo el ultimo id de pedido creado, para setearle un numero de pedido por default*/
+        //        int ultimoIdPedido = ListarTodos().LastOrDefault().IdPedido + 1;
+        //        entity.NroPedido = ultimoIdPedido * 10;
+        //    }
+        //    entity.IdEstado = 1;
+        //    entity.IdCliente = IdCliente;
+        //    /*Guardamos el pedido sin todavia agregar los articulos*/
+        //    _dbContext.Pedidos.Add(entity);
+        //    _dbContext.SaveChanges();
+        //    /**/
+        //    int ultimoIdPedidoCreadoRecien = ListarTodos().LastOrDefault().IdPedido;
+        //    CrearArticuloPedidoPorIdPedidoConListaActual(ultimoIdPedidoCreadoRecien);
+        //    VaciarCarrito();
+        //}
 
         public void Borrar(Pedido entity, int idUsuario)
         {
@@ -74,7 +77,7 @@ namespace Service
             _dbContext.SaveChanges();
         }
 
-        public void BorrarPorId(int id,int idUsuario)
+        public void BorrarPorId(int id, int idUsuario)
         {
             Pedido pedido = ObtenerPorId(id);
             //pedido.IdEstadoNavigation.IdEstadoPedido = cerrado;
@@ -89,7 +92,11 @@ namespace Service
 
         public List<Pedido> ListarTodos()
         {
-            return _dbContext.Pedidos.ToList();
+            return _dbContext.Pedidos
+                .Include(p => p.PedidoArticulos)
+                .Include(p => p.IdClienteNavigation)
+                .Include(p => p.IdEstadoNavigation)
+                .ToList();
         }
 
         public Pedido ObtenerPorId(int id)
@@ -97,7 +104,7 @@ namespace Service
             return _dbContext.Pedidos.FirstOrDefault(o => o.IdPedido == id);
         }
 
-        public void Modificar(Pedido entity,int idUsuario)
+        public void Modificar(Pedido entity, int idUsuario)
         {
             Pedido pedido = ObtenerPorId(entity.IdPedido);
             pedido.IdCliente = entity.IdCliente;
@@ -134,7 +141,7 @@ namespace Service
         {
             carrito.ForEach(a => this.pedidoArticuloService
                 .Crear(new PedidoArticulo
-                { IdPedido = idPedido, IdArticulo = a.IdArticulo }
+                { IdPedido = idPedido, IdArticulo = a.IdArticulo }, 0
             ));
         }
     }
