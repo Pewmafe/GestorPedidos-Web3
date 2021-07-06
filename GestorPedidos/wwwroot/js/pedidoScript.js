@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $('#articulos-select').select2();
-    $('#articulos-select').select2();
+    $('#articulos-select2').select2();
 
 
     $(function () {
