@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Models;
 using Service;
+using System;
 using System.Collections.Generic;
 
 
@@ -14,7 +15,7 @@ namespace GestorPedidos.Controllers
         private IUsuarioServicio usuarioServicio;
         private IClienteServicio clienteServicio;
         private IArticuloServicio articuloServicio;
-        private IPedidoArticuloServicio pedidoarticuloServicio;
+
         private _20211CTPContext dbContext;
 
 
@@ -25,7 +26,7 @@ namespace GestorPedidos.Controllers
             this.clienteServicio = new ClienteServicio(dbContext);
             this.usuarioServicio = new UsuarioServicio(dbContext);
             this.articuloServicio = new ArticuloServicio(dbContext);
-            this.pedidoarticuloServicio = new PedidoArticuloServicio(dbContext);
+
 
         }
         [HttpGet]
@@ -47,21 +48,48 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult NuevoPedido(Pedido pedido, PedidoArticulo pedidoArticulo)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View();
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                pedidoArticulo.IdPedido = this.pedidoServicio.CrearPedido(pedido);
+                this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
+                return RedirectToAction("Pedido");
             }
-            pedidoArticulo.IdPedido = this.pedidoServicio.CrearPedido(pedido);
-            this.pedidoarticuloServicio.Crear(pedidoArticulo, 0);
-            return RedirectToAction("Pedido");
+            catch (Exception e)
+            {
+                return RedirectToAction("Pedido");
+            }
+
         }
         [HttpGet]
-        public IActionResult EditarPedido()
+        public IActionResult EditarPedido(int id)
         {
-            return View();
+            Pedido pedido = this.pedidoServicio.ObtenerPorId(id);
+            EditarPedidoViewModel editarPedidoViewModel = new() { Pedido = pedido };
+            editarPedidoViewModel.ArticulosYCantidadesDelPedido = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(id);
+            return View(editarPedidoViewModel);
+        }
+
+        /* public IActionResult BorrarArticuloDePedido(int idPedido, int idArticulo)
+         {
+             PedidoArticulo pedidoArticulo = this.pedidoServicio.BuscarPedidoArticuloPorIdPedidoYIdArticulo(idPedido, idArticulo);
+             int idPedido2 = pedidoArticulo.IdPedido;
+             this.pedidoServicio.EliminarArticuloAlPedido(pedidoArticulo);
+             Dictionary<Articulo, int> carrito = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(idPedido2);
+             return RedirectToAction("EditarPedido?idpedido=" + idPedido2);
+         }*/
+        public IActionResult BorrarArticuloDePedido(PedidoArticulo pedidoArticulo)
+        {
+            int idPedido2 = pedidoArticulo.IdPedido;
+            this.pedidoServicio.EliminarArticuloAlPedido(pedidoArticulo);
+            Dictionary<Articulo, int> carrito = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(idPedido2);
+            return RedirectToAction("EditarPedido", new { id = idPedido2 });
         }
         [HttpGet]
-        public IActionResult AgregarArticuloAlCarrito(int idArticulo)
+        public IActionResult AgregarArticuloAlCarrito(int idArticulo)///TODO hacerlo sin ajax el agregar
         {
             this.pedidoServicio.AgregarArticuloAlCarritoPorIdArticulo(idArticulo);
             List<Articulo> carrito = this.pedidoServicio.DevolverCarrito();

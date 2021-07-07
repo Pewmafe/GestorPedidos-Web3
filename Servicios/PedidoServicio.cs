@@ -12,12 +12,11 @@ namespace Service
         private static List<Articulo> carrito = new List<Articulo>();
         private _20211CTPContext _dbContext;
         private IArticuloServicio articuloServicio;
-        private IPedidoArticuloServicio pedidoArticuloService;
+
 
         public PedidoServicio(_20211CTPContext dbContext)
         {
             this.articuloServicio = new ArticuloServicio(dbContext);
-            this.pedidoArticuloService = new PedidoArticuloServicio(dbContext);
             _dbContext = dbContext;
         }
         public void Crear(Pedido entity, int idUsuario)
@@ -102,7 +101,7 @@ namespace Service
 
         public Pedido ObtenerPorId(int id)
         {
-            return _dbContext.Pedidos.FirstOrDefault(o => o.IdPedido == id);
+            return _dbContext.Pedidos.Include(p => p.IdClienteNavigation).FirstOrDefault(o => o.IdPedido == id);
         }
 
         public void Modificar(Pedido entity, int idUsuario)
@@ -140,10 +139,7 @@ namespace Service
 
         public void CrearArticuloPedidoPorIdPedidoConListaActual(int idPedido)
         {
-            carrito.ForEach(a => this.pedidoArticuloService
-                .Crear(new PedidoArticulo
-                { IdPedido = idPedido, IdArticulo = a.IdArticulo }, 0
-            ));
+
         }
 
         public int CrearPedido(Pedido pedido)
@@ -164,6 +160,47 @@ namespace Service
         public bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente)
         {
             return _dbContext.Pedidos.Where(p => p.IdCliente == idCliente && p.IdEstado == 1 && p.FechaBorrado == null).Count() > 0;
+        }
+
+        public void CrearPedidoArticulo(PedidoArticulo entity)
+        {
+            if (entity.Cantidad <= 0) entity.Cantidad = 0;
+            _dbContext.Add(entity);
+            _dbContext.SaveChanges();
+        }
+
+        public List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido)
+        {
+            return _dbContext.PedidoArticulos.Include(a => a.IdArticuloNavigation).Include(a=> a.IdPedidoNavigation).Where(pa => pa.IdPedido == idPedido).ToList();
+        }
+
+        public Dictionary<Articulo, int> listarArticulosConCantidadesDeUnPedidoPorPedidoId(int idPedido)
+        {
+            Dictionary<Articulo, int> diccionario = new();
+
+            listarPedidoArticuloPorIdPedido(idPedido).ForEach(a => diccionario.Add(a.IdArticuloNavigation, a.Cantidad));
+
+            return diccionario;
+        }
+
+        public void EliminarArticuloAlPedido(PedidoArticulo pedidoArticulo)
+        {
+            PedidoArticulo articuloEliminado = BuscarPedidoArticuloPorIdPedidoYIdArticulo(pedidoArticulo.IdPedido, pedidoArticulo.IdArticulo);
+            _dbContext.PedidoArticulos.Remove(articuloEliminado);
+            _dbContext.SaveChanges();
+        }
+
+        public PedidoArticulo BuscarPedidoArticuloPorIdPedidoYIdArticulo(int idPedido, int idArticulo)
+        {
+            try
+            {
+                return _dbContext.PedidoArticulos.Where(p => p.IdPedido == idPedido && p.IdArticulo == idArticulo).FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                throw new Exception("No existe un PedidoArticulo con los idPedido " + idPedido + " y el idArticulo " + idArticulo);
+            }
+
         }
     }
 }

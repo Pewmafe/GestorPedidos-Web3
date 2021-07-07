@@ -10,6 +10,17 @@ namespace Service
         void AgregarArticuloAlCarritoPorIdArticulo(int idArticulo);
         List<Articulo> DevolverCarrito();
         void CrearArticuloPedidoPorIdPedidoConListaActual(int idPedido);
+
+
+
         bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente);
+
+        void CrearPedidoArticulo(PedidoArticulo entity);
+        List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido);
+
+        Dictionary<Articulo, int> listarArticulosConCantidadesDeUnPedidoPorPedidoId(int idPedido);
+
+        void EliminarArticuloAlPedido(PedidoArticulo pedidoArticulo);
+        PedidoArticulo BuscarPedidoArticuloPorIdPedidoYIdArticulo(int idPedido, int idArticulo);
     }
 }
