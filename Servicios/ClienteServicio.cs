@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Models.DTO;
 using Models.Models;
 using System;
 using System.Collections.Generic;
@@ -88,6 +89,24 @@ namespace Service
             cliente.*/
             return null;
 
+        }
+
+        public List<ClienteDTO> mapearListaClienteAListaClienteDTO(List<Cliente> clientes)
+        {
+            List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
+            foreach (Cliente cliente in clientes)
+            {
+                ClienteDTO clienteDTO = new ClienteDTO();
+
+                clienteDTO.IdCliente = cliente.IdCliente;
+                clienteDTO.Nombre = cliente.Nombre;
+                clienteDTO.Numero = cliente.Numero;
+                clienteDTO.Telefono = cliente.Telefono;
+                clienteDTO.Direccion = cliente.Direccion;
+
+                clientesDTO.Add(clienteDTO);
+            }
+            return clientesDTO;
         }
     }
 }
