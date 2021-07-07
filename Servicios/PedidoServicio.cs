@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Models.Enum;
 using Models.Models;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,12 @@ namespace Service
         private static List<Articulo> carrito = new List<Articulo>();
         private _20211CTPContext _dbContext;
         private IArticuloServicio articuloServicio;
-        private IPedidoArticuloService pedidoArticuloService;
+        private IPedidoArticuloServicio pedidoArticuloService;
 
         public PedidoServicio(_20211CTPContext dbContext)
         {
             this.articuloServicio = new ArticuloServicio(dbContext);
-            this.pedidoArticuloService = new PedidoArticuloService(dbContext);
+            this.pedidoArticuloService = new PedidoArticuloServicio(dbContext);
             _dbContext = dbContext;
         }
         public void Crear(Pedido entity, int idUsuario)
@@ -143,6 +144,26 @@ namespace Service
                 .Crear(new PedidoArticulo
                 { IdPedido = idPedido, IdArticulo = a.IdArticulo }, 0
             ));
+        }
+
+        public int CrearPedido(Pedido pedido)
+        {
+            if (!validarSiExistePedidoAbiertoDeUnClientePorIdCliente(pedido.IdCliente))
+            {
+                pedido.IdEstado = (int)EstadoPedidoEnum.ABIERTO;
+                int ultimoIdPedido = ListarTodos().LastOrDefault().IdPedido + 1;
+                pedido.NroPedido = ultimoIdPedido * 10;
+
+                _dbContext.Pedidos.Add(pedido);
+                _dbContext.SaveChanges();
+                return pedido.IdPedido;
+            }
+            throw new Exception("Ya existe un pedido abierto para ese cliente");
+        }
+
+        public bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente)
+        {
+            return _dbContext.Pedidos.Where(p => p.IdCliente == idCliente && p.IdEstado == 1 && p.FechaBorrado == null).Count() > 0;
         }
     }
 }

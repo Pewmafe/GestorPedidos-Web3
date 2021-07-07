@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace Service
 {
 
-    public class PedidoArticuloService : IPedidoArticuloService
+    public class PedidoArticuloServicio : IPedidoArticuloServicio
     {
         private _20211CTPContext _dbContext;
 
-        public PedidoArticuloService(_20211CTPContext dbContext)
+        public PedidoArticuloServicio(_20211CTPContext dbContext)
         {
 
             _dbContext = dbContext;
@@ -30,11 +30,9 @@ namespace Service
 
         public void Crear(PedidoArticulo entity, int idUsuario)
         {
-
-            _dbContext.PedidoArticulos.Add(entity);
-
+            if (entity.Cantidad <= 0) entity.Cantidad = 0;
+            _dbContext.Add(entity);
             _dbContext.SaveChanges();
-
         }
 
         public List<PedidoArticulo> ListarNoEliminados()
