@@ -14,6 +14,7 @@ namespace GestorPedidos.Controllers
         private IUsuarioServicio usuarioServicio;
         private IClienteServicio clienteServicio;
         private IArticuloServicio articuloServicio;
+        private IPedidoArticuloServicio pedidoarticuloServicio;
         private _20211CTPContext dbContext;
 
 
@@ -24,6 +25,7 @@ namespace GestorPedidos.Controllers
             this.clienteServicio = new ClienteServicio(dbContext);
             this.usuarioServicio = new UsuarioServicio(dbContext);
             this.articuloServicio = new ArticuloServicio(dbContext);
+            this.pedidoarticuloServicio = new PedidoArticuloServicio(dbContext);
 
         }
         [HttpGet]
@@ -43,12 +45,14 @@ namespace GestorPedidos.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult NuevoPedido(Pedido pedido, int idCliente)
+        public IActionResult NuevoPedido(Pedido pedido, PedidoArticulo pedidoArticulo)
         {
-            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
-            Cliente cliente = this.clienteServicio.ObtenerPorId(idCliente);
-            this.pedidoServicio.Crear(pedido, idUsuario);
-
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            pedidoArticulo.IdPedido = this.pedidoServicio.CrearPedido(pedido);
+            this.pedidoarticuloServicio.Crear(pedidoArticulo, 0);
             return RedirectToAction("Pedido");
         }
         [HttpGet]
