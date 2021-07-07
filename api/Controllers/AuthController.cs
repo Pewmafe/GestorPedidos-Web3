@@ -54,11 +54,16 @@ namespace api.Controllers
             });
         }
 
-        /* [HttpPost]
-         [Route("/logout")]
+         [HttpPost]
+         [Route("logout")]
          public object Logout()
          {
-
-         }*/
+                
+         return new
+         {
+            mensaje = "Ha cerrado sesión exitosamente"
+         };
+            
+        }   
     }
 }
