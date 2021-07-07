@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models.DTO;
 using Models.Models;
 using Service;
 using System;
@@ -24,11 +25,21 @@ namespace api.Controllers
 
         [HttpGet]
         [Authorize]
-        public IEnumerable<Cliente> GetAll()
+        public ActionResult<object> GetAll()
         {
             List<Cliente> clientes = clienteServicio.ListarTodos();
+            List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
+            if (clientes.Count != 0)
+            {
+                clientesDTO = clienteServicio.mapearListaClienteAListaClienteDTO(clientes);
+            }
+             
 
-            return clientes;
+            return Ok(new
+            {
+                Count= clientesDTO.Count,
+                Items= clientesDTO
+            });
         }
     }
 }
