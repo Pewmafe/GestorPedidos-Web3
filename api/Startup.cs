@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,12 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Models;
 using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace api
@@ -35,6 +38,25 @@ namespace api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
             });
+
+            string secretKey = this.Configuration.GetValue<string>("Secret");
+            services.AddAuthentication(
+                auth => {
+                    auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    }).AddJwtBearer(jwt =>
+                    {
+                        jwt.RequireHttpsMetadata = false;
+                        jwt.SaveToken = true;
+                        jwt.TokenValidationParameters = new TokenValidationParameters();
+
+                        jwt.TokenValidationParameters.ValidateIssuerSigningKey = true;
+                        jwt.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+                        jwt.TokenValidationParameters.ValidateIssuer = false;
+                        jwt.TokenValidationParameters.ValidateAudience = false;
+
+
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +72,8 @@ namespace api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
