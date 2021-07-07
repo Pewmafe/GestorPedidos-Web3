@@ -13,5 +13,6 @@ namespace GestorPedidos.Models
         public PedidoArticulo PedidoArticulo { get; set; }
 
         public Dictionary<Articulo, int> ArticulosYCantidadesDelPedido { get; set; }
+        public List<Articulo> ArticulosNoSeleccionados { get; set; }
     }
 }

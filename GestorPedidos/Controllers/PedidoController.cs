@@ -39,10 +39,8 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult NuevoPedido()
         {
-            this.pedidoServicio.VaciarCarrito();
             ViewData["Clientes"] = this.clienteServicio.ListarNoEliminados();
             ViewData["Articulos"] = this.articuloServicio.ListarNoEliminados();
-            ViewData["Carrito"] = this.pedidoServicio.DevolverCarrito();
             return View();
         }
         [HttpPost]
@@ -70,6 +68,7 @@ namespace GestorPedidos.Controllers
             Pedido pedido = this.pedidoServicio.ObtenerPorId(id);
             EditarPedidoViewModel editarPedidoViewModel = new() { Pedido = pedido };
             editarPedidoViewModel.ArticulosYCantidadesDelPedido = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(id);
+            editarPedidoViewModel.ArticulosNoSeleccionados = this.pedidoServicio.listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(id);
             return View(editarPedidoViewModel);
         }
 
@@ -88,14 +87,13 @@ namespace GestorPedidos.Controllers
             Dictionary<Articulo, int> carrito = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(idPedido2);
             return RedirectToAction("EditarPedido", new { id = idPedido2 });
         }
-        [HttpGet]
-        public IActionResult AgregarArticuloAlCarrito(int idArticulo)///TODO hacerlo sin ajax el agregar
-        {
-            this.pedidoServicio.AgregarArticuloAlCarritoPorIdArticulo(idArticulo);
-            List<Articulo> carrito = this.pedidoServicio.DevolverCarrito();
-            return Json(carrito);
-            //return Json("");
-        }
 
+        [HttpPost]
+        public IActionResult AgregarArticuloAUnPedido(PedidoArticulo pedidoArticulo)
+        {
+            int idPedido2 = pedidoArticulo.IdPedido;
+            this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
+            return RedirectToAction("EditarPedido", new { id = idPedido2 });
+        }
     }
 }

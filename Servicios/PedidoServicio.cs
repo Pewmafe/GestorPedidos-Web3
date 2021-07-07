@@ -38,8 +38,8 @@ namespace Service
             _dbContext.SaveChanges();
             /**/
             int ultimoIdPedidoCreadoRecien = ListarTodos().LastOrDefault().IdPedido;
-            CrearArticuloPedidoPorIdPedidoConListaActual(ultimoIdPedidoCreadoRecien);
-            VaciarCarrito();
+            // CrearArticuloPedidoPorIdPedidoConListaActual(ultimoIdPedidoCreadoRecien);
+            //VaciarCarrito();
         }
 
         //public void Crear(Pedido entity, int IdCliente)
@@ -127,20 +127,8 @@ namespace Service
             carrito.Add(articulo);
         }
 
-        public List<Articulo> DevolverCarrito()
-        {
-            return carrito;
-        }
 
-        public void VaciarCarrito()
-        {
-            carrito.Clear();
-        }
 
-        public void CrearArticuloPedidoPorIdPedidoConListaActual(int idPedido)
-        {
-
-        }
 
         public int CrearPedido(Pedido pedido)
         {
@@ -171,7 +159,7 @@ namespace Service
 
         public List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido)
         {
-            return _dbContext.PedidoArticulos.Include(a => a.IdArticuloNavigation).Include(a=> a.IdPedidoNavigation).Where(pa => pa.IdPedido == idPedido).ToList();
+            return _dbContext.PedidoArticulos.Include(a => a.IdArticuloNavigation).Include(a => a.IdPedidoNavigation).Where(pa => pa.IdPedido == idPedido).ToList();
         }
 
         public Dictionary<Articulo, int> listarArticulosConCantidadesDeUnPedidoPorPedidoId(int idPedido)
@@ -201,6 +189,28 @@ namespace Service
                 throw new Exception("No existe un PedidoArticulo con los idPedido " + idPedido + " y el idArticulo " + idArticulo);
             }
 
+        }
+
+        public List<Articulo> listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(int idPedido)
+        {
+            List<Articulo> articulos = this.articuloServicio.ListarNoEliminados();
+            List<PedidoArticulo> articulosDeUnPedido = listarPedidoArticuloPorIdPedido(idPedido);
+            List<Articulo> articulosNoSeleccionados = new List<Articulo>();
+            articulos.ForEach(a =>
+            {
+                bool aux = false;
+                articulosDeUnPedido.ForEach(a2 =>
+                {
+                    if (a2.IdArticuloNavigation.IdArticulo == a.IdArticulo)
+                    {
+                        aux = true;
+                        return;
+                    }
+                });
+                if (!aux) articulosNoSeleccionados.Add(a);
+            });
+
+            return articulosNoSeleccionados;
         }
     }
 }

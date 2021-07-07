@@ -6,10 +6,9 @@ namespace Service
     public interface IPedidoServicio : IBaseServicio<Pedido>
     {
         int CrearPedido(Pedido pedido);
-        void VaciarCarrito();
+
         void AgregarArticuloAlCarritoPorIdArticulo(int idArticulo);
-        List<Articulo> DevolverCarrito();
-        void CrearArticuloPedidoPorIdPedidoConListaActual(int idPedido);
+
 
 
 
@@ -19,8 +18,8 @@ namespace Service
         List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido);
 
         Dictionary<Articulo, int> listarArticulosConCantidadesDeUnPedidoPorPedidoId(int idPedido);
-
         void EliminarArticuloAlPedido(PedidoArticulo pedidoArticulo);
         PedidoArticulo BuscarPedidoArticuloPorIdPedidoYIdArticulo(int idPedido, int idArticulo);
+        List<Articulo> listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(int idPedido);
     }
 }

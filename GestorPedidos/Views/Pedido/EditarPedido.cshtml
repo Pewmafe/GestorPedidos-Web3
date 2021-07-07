@@ -20,19 +20,26 @@
             <div class="mb-3">
                 <label class="form-label-group text-uppercase">Cliente : @Model.Pedido.IdClienteNavigation.Nombre</label>
             </div>
-
-            <div class="mb-2">
-                <label class="form-label-group text-uppercase">Articulos</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>-</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-dark text-uppercase">Agregar a la lista</button>
-            </div>
+            <form asp-controller="Pedido" asp-action="AgregarArticuloAUnPedido">
+                <div class="mb-2">
+                    <label class="form-label-group text-uppercase">Articulos</label>
+                    <select class="form-select" aria-label="Default select example" name="IdArticulo" id="articulos-select3">
+                        <option selected>-</option>
+                        @foreach (var ar in Model.ArticulosNoSeleccionados)
+                        {
+                            <option value="@ar.IdArticulo">@ar.Codigo - @ar.Descripcion</option>
+                        }
+                    </select>
+                </div>
+                <div class="mt-1 mb-2">
+                    <label class="form-label-group text-uppercase">Cantidad Articulo</label>
+                    <input type="number" name="Cantidad" class="form-control" />
+                </div>
+                <div class="d-flex justify-content-end">
+                    <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
+                    <button class="btn btn-outline-dark text-uppercase">Agregar a la lista</button>
+                </div>
+            </form>
         </div>
         <div class="hr-pedido">
             <hr />
@@ -59,33 +66,14 @@
                                 <td class="text-center d-flex">
                                     <a target="_blank" href="/Articulo/EditarArticulo?IdArticulo=@articulo.Key.IdArticulo" data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></a> |
                                     <form asp-controller="Pedido" asp-action="BorrarArticuloDePedido" method="POST">
-                                        <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido"  />
-                                        <input type="hidden" name="IdArticulo" id="IdPedido" value="@articulo.Key.IdArticulo"  />
+                                        <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
+                                        <input type="hidden" name="IdArticulo" id="IdPedido" value="@articulo.Key.IdArticulo" />
                                         <button type="submit" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></button>
                                     </form>
                                 </td>
 
                             </tr>
                         }
-                        <tr>
-                            <td class="text-center">Coca Cola</td>
-                            <td class="text-center">A122</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">
-                                <span data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></span> |
-                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></span>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td class="text-center">Pepsi</td>
-                            <td class="text-center">B2B1</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">
-                                <span data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></span> |
-                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></span>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
