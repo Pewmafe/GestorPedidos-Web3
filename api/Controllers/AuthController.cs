@@ -34,14 +34,22 @@ namespace api.Controllers
         [AllowAnonymous]
         public ActionResult<object> Login(Usuario usuario)
         {
+            Usuario usuarioValidado = loginServicio.LogIn(usuario);
+            if (usuarioValidado == null)
+            {
+                return Unauthorized();
+            }
             string secret = this.conf.GetValue<string>("Secret");
             JWTHelper jwtHelper = new JWTHelper(secret);
             string token = jwtHelper.CreateToken(usuario.Email);
 
             return Ok(new
             {
-                ok=true,
-                msg="Logueado con exito.",
+                Email = usuarioValidado.Email,
+                IdUsuario = usuarioValidado.IdUsuario,
+                Nombre = usuarioValidado.Nombre,
+                Apellido = usuarioValidado.Apellido,
+                FechaNacimiento= usuarioValidado.FechaNacimiento,
                 token
             });
         }
