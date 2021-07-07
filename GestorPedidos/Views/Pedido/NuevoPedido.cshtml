@@ -48,7 +48,7 @@
                 </div>
                 <div class="mt-1 mb-2">
                     <label class="form-label-group text-uppercase">Cantidad Articulo</label>
-                    <input type="number" name="Cantidad" class="form-control"/>
+                    <input type="number" name="Cantidad" class="form-control" />
                 </div>
                 <div class="nuevo-pedido">
                     <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
@@ -70,69 +70,6 @@
             <div class="hr-pedido">
                 <hr />
             </div>
-            <!--
-
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-dark text-uppercase" id="agregarAlCarrito" onclick="function()">Agregar al carrito</button>
-
-                </div>
-
-
-            <div class="col-12 col-md-6 mt-3">
-                <p class="text-uppercase">Carrito</p>
-                <div class="table-responsive ">
-                    <table id="tblCarrito" class="table table-striped" style="width:100%">
-                        <thead class="bg-dark text-light">
-                            <tr>
-                                <th class="text-center">Descripcion</th>
-                                <th class="text-center">Codigo</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            if (carrito != null && carrito.Count() != 0)
-                            {
-                                foreach (var articulo in carrito)
-                                {
-                                    <tr>
-                                        <td class="text-center">articulo.Descripcion</td>
-                                        <td class="text-center">articulo.Codigo</td>
-                                        <td class="text-center">
-                                            <span data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></span> |
-                                            <span data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></span>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td class="text-center"> - </td>
-                                    <td class="text-center"> - </td>
-                                    <td class="text-center"> - </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="nuevo-pedido">
-                    <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
-                    <textarea asp-for="Comentarios" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="d-none row my-2 pedido-pc">
-                    <div class="col-6">
-                        <div class="d-flex justify-content-start">
-                            <button type="submit" class="btn btn-outline-success text-uppercase">Agregar</button>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-outline-success text-uppercase">Agregar otro </button>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-
         </div>
 
         <div class="row my-2 pedido-phone">
@@ -150,7 +87,3 @@
     </div>
 </form>
 <script src="~/js/pedidoScript.js"></script>
-<!--section Scripts{
-    <script src="~/js/pedidoScript.js"></script>
-}
-  -->
