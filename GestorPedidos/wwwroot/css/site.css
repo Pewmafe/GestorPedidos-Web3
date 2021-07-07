@@ -264,7 +264,13 @@ a {
     border: 0 !important;
     border-radius: 0 !important;
     border-bottom: 2px solid #ccc !important;
-    background-color: #f7f4ef!important;
+    background-color: #f7f4ef !important;
+}
+.nuevo-pedido input {
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 2px solid #ccc !important;
+    background-color: #f7f4ef !important;
 }
 .nuevo-pedido .select2-container--default .select2-selection--single {
     border: 0 !important;
