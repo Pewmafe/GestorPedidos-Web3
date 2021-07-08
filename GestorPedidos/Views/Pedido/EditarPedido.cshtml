@@ -21,10 +21,10 @@
     <div class="row nuevo-pedido">
         <div class="col-12 col-md-6 mt-3">
             <div class="mb-3">
-                <h4 class="form-label-group text-uppercase">Estado : @Model.Pedido.IdEstadoNavigation.Descripcion </h4>
+                <h4 class="form-label-group text-uppercase">Estado : <span class="estado-@Model.Pedido.IdEstadoNavigation.Descripcion text-decoration-underline"> @Model.Pedido.IdEstadoNavigation.Descripcion </span> </h4>
             </div>
             <div class="mb-3">
-                <h5 class="form-label-group text-uppercase">Cliente : @Model.Pedido.IdClienteNavigation.Nombre</h5>
+                <h5 class="form-label-group text-uppercase">Cliente : <span class="fst-italic"> @Model.Pedido.IdClienteNavigation.Nombre</span></h5>
             </div>
 
             <form asp-controller="Pedido" asp-action="AgregarArticuloAUnPedido">
@@ -74,8 +74,9 @@
                                 <td class="text-center">@articulo.Key.Descripcion</td>
                                 <td class="text-center">@articulo.Key.Codigo</td>
                                 <td class="text-center">@articulo.Value</td>
-                                <td class="text-center d-flex">
-                                    <a target="_blank" href="/Articulo/EditarArticulo?IdArticulo=@articulo.Key.IdArticulo" data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></a> |
+                                <td class="text-center d-flex justify-content-center">
+                                    <a class="btn text-center" target="_blank" href="/Articulo/EditarArticulo?IdArticulo=@articulo.Key.IdArticulo" data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></a>
+                                    <span class="btn">|</span>
                                     <form asp-controller="Pedido" asp-action="BorrarArticuloDePedido" method="POST">
                                         <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
                                         <input type="hidden" name="IdArticulo" id="IdPedido" value="@articulo.Key.IdArticulo" />
