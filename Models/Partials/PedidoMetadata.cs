@@ -10,6 +10,6 @@ namespace Models.Models
         [CustomOnlyNumber(ErrorMessage = ValidationConstants.OnlyNumber)]
         public int Code { get; set; }
         [Required(ErrorMessage = ValidationConstants.RequiredField)]
-        public string Description { get; set; }
+        public string Comentarios { get; set; }
     }
 }
