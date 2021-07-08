@@ -36,7 +36,7 @@ namespace GestorPedidos.Controllers
             }
             this.GuardarInformacionSesion(usuarioValidado);
 
-            return RedirectToAction("Articulos", "Articulo");
+            return RedirectToAction("Index", "Home");
         }
         [HttpGet]
         public IActionResult Logout()
