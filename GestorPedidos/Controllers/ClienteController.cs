@@ -65,8 +65,10 @@ namespace GestorPedidos.Controllers
 
             if (guardar.ToLower().Equals("guardar"))
             {
+                TempData["Success"] = "Cliente  '" + cliente.Nombre + "' agregado correctamente";
                 return RedirectToAction("Clientes");
             }
+            TempData["Success"] = "Cliente  '" + cliente.Nombre + "' agregado correctamente";
             return RedirectToAction("NuevoCliente");
         }
 
@@ -99,6 +101,7 @@ namespace GestorPedidos.Controllers
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             clienteServicio.Modificar(Cliente, idUsuario);
 
+            TempData["Success"] = "Cliente  '" + Cliente.Nombre + "' modificado correctamente";
             return RedirectToAction("Clientes");
         }
 
@@ -107,6 +110,8 @@ namespace GestorPedidos.Controllers
         {
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             clienteServicio.BorrarPorId(idCliente, idUsuario);
+            Cliente cliente = this.clienteServicio.ObtenerPorId(idCliente);
+            TempData["Success"] = "Cliente  '" + cliente.Nombre + "' borrado correctamente";
             return RedirectToAction("Clientes");
         }
 
