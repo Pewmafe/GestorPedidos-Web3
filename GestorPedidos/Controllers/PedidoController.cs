@@ -35,7 +35,7 @@ namespace GestorPedidos.Controllers
             string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
             if (idUsuario == null)
             {
-                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
                 return RedirectToAction("Login", "Login");
             }
             ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
@@ -48,7 +48,7 @@ namespace GestorPedidos.Controllers
             string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
             if (idUsuario == null)
             {
-                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
                 return RedirectToAction("Login", "Login");
             }
             ViewData["Clientes"] = this.clienteServicio.listarClientesSinPedidosActivos();
@@ -85,7 +85,7 @@ namespace GestorPedidos.Controllers
             string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
             if (idUsuario == null)
             {
-                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
                 return RedirectToAction("Login", "Login");
             }
             Pedido pedido = this.pedidoServicio.ObtenerPorId(id);
