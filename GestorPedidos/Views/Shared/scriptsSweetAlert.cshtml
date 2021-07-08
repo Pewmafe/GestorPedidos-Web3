@@ -11,7 +11,16 @@
             '¡Confirmado!',
             '@TempData["Success"]',
             'success'
-        );
+           );
+           warning
+    }
+      if ('@TempData["warning"]') {
+        Swal.fire(
+            '¡Aviso!',
+            '@TempData["warning"]',
+            'warning'
+           );
+           warning
     }
 
 </script>
