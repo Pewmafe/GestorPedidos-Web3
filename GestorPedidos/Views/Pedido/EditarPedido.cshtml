@@ -95,12 +95,18 @@
             <div class="d-none row my-2 pedido-pc">
                 <div class="col-4 col-md-4">
                     <div class="d-flex justify-content-start">
-                        <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Marcar como entregado</button>
+                        <form asp-controller="Pedido" asp-action="MarcarPedidoComoEntregado" method="post">
+                            <input type="hidden" name="idPedido" id="dPedido" value="@Model.Pedido.IdPedido" />
+                            <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Entregar</button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="d-flex justify-content-end">
-                        <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
+                        <form asp-controller="Pedido" asp-action="MarcarPedidoComoCerrado" method="post">
+                            <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
+                            <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-4">
@@ -116,12 +122,20 @@
     <div class="row my-2 pedido-phone">
         <div class="col-4 col-md-4">
             <div class="d-flex justify-content-start">
-                <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Marcar como entregado</button>
+                <form asp-controller="Pedido" asp-action="MarcarPedidoComoEntregado" method="post">
+                    <input type="hidden" name="idPedido" id="dPedido" value="@Model.Pedido.IdPedido" />
+                    <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Entregar</button>
+                </form>
+
             </div>
         </div>
         <div class="col-4 col-md-4">
             <div class="d-flex justify-content-end">
-                <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
+                <form asp-controller="Pedido" asp-action="MarcarPedidoComoCerrado" method="post">
+                    <input type="hidden" name="idPedido" id="dPedido" value="@Model.Pedido.IdPedido" />
+                    <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
+                </form>
+
             </div>
         </div>
         <div class="col-4 col-md-4">

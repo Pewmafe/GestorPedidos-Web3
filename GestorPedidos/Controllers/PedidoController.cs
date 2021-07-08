@@ -53,7 +53,7 @@ namespace GestorPedidos.Controllers
                 if (!ModelState.IsValid)
                 {
                     TempData["Error"] = "Por favor complete el pedido con las validaciones correspondientes";
-                    return View();
+                    return RedirectToAction("NuevoPedido");
                 }
                 int idPedido = this.pedidoServicio.CrearPedido(pedido);
                 pedidoArticulo.IdPedido = idPedido;
@@ -63,7 +63,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al generar el pedido, por favor intente de nuevo!";
+                TempData["Error"] = "Ocurrio un error al generar el pedido, por favor intente de nuevo! \n " + e;
                 return RedirectToAction("Pedido");
             }
 
@@ -92,6 +92,26 @@ namespace GestorPedidos.Controllers
             int idPedido2 = pedidoArticulo.IdPedido;
             this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
             return RedirectToAction("EditarPedido", new { id = idPedido2 });
+        }
+
+        [HttpPost]
+        public IActionResult MarcarPedidoComoCerrado(int idPedido)
+        {
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            this.pedidoServicio.MarcarPedidoComoCerrado(idPedido, idUsuario);
+            Pedido pedido = this.pedidoServicio.ObtenerPorId(idPedido);
+            TempData["Success"] = "Pedido numero " + pedido.NroPedido + " cerrado correctamente ";
+            return RedirectToAction("Pedido");
+        }
+
+        [HttpPost]
+        public IActionResult MarcarPedidoComoEntregado(int idPedido)
+        {
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            this.pedidoServicio.MarcarPedidoComoEntregado(idPedido, idUsuario);
+            Pedido pedido = this.pedidoServicio.ObtenerPorId(idPedido);
+            TempData["Success"] = "Pedido numero " + pedido.NroPedido + " entregado correctamente ";
+            return RedirectToAction("Pedido");
         }
     }
 }

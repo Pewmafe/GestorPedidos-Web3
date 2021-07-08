@@ -40,7 +40,6 @@ namespace Service
             pedido.ModificadoPor = idUsuario;
             pedido.FechaModificacion = DateTime.Today;
             pedido.FechaBorrado = DateTime.Today;
-
             _dbContext.SaveChanges();
 
         }
@@ -154,6 +153,26 @@ namespace Service
             });
 
             return articulosNoSeleccionados;
+        }
+        public void MarcarPedidoComoCerrado(int idPedido, int idUsuario)
+        {
+            Pedido pedido = ObtenerPorId(idPedido);
+            pedido.IdEstado = (int)EstadoPedidoEnum.CERRADO;
+            pedido.BorradoPor = idUsuario;
+            pedido.ModificadoPor = idUsuario;
+            pedido.FechaModificacion = DateTime.Today;
+            pedido.FechaBorrado = DateTime.Today;
+            _dbContext.SaveChanges();
+        }
+        public void MarcarPedidoComoEntregado(int idPedido, int idUsuario)
+        {
+            Pedido pedido = ObtenerPorId(idPedido);
+            pedido.IdEstado = (int)EstadoPedidoEnum.ENTREGADO;
+            pedido.BorradoPor = idUsuario;
+            pedido.ModificadoPor = idUsuario;
+            pedido.FechaModificacion = DateTime.Today;
+            pedido.FechaBorrado = DateTime.Today;
+            _dbContext.SaveChanges();
         }
     }
 }
