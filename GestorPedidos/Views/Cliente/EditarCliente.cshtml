@@ -2,7 +2,7 @@
 @{
     Layout = "_UsuarioLayout";
     ViewData["Title"] = "Editar Cliente";
-    Boolean readOnly = Model.FechaBorrado == null ? true : false;
+    Boolean readOnly = Model.FechaBorrado != null ? true : false;
 }
 
 <div>
