@@ -15,7 +15,7 @@
             RemoverDelCarrito();
         });
     });
- 
+
     function AgregarAlCarrito() {
         console.log("entramos a loadData")
         var idArticulo = parseInt($("#articulos-select").val());
@@ -64,7 +64,7 @@
                 var items = '';
                 console.log(data);
                 $.each(data, function (i, articulo) {
-                    console.log(i + "*******" + JSON(articulo) );
+                    console.log(i + "*******" + JSON(articulo));
                     var rows = "<tr>"
                         + "<td class='text-center'>" + articulo.pedido.descripcion + "</td>"
                         + "<td class='text-center'>" + articulo.articulo.codigo + "</td>"
@@ -84,5 +84,7 @@
         });
         return false;
     }
+
+
 
 });

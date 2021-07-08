@@ -33,7 +33,7 @@ namespace GestorPedidos.Controllers
         public IActionResult Pedido()
         {
             ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
-            ViewData["Error"]
+
             return View();
         }
 
@@ -42,6 +42,7 @@ namespace GestorPedidos.Controllers
         {
             ViewData["Clientes"] = this.clienteServicio.ListarNoEliminados();
             ViewData["Articulos"] = this.articuloServicio.ListarNoEliminados();
+
             return View();
         }
         [HttpPost]
@@ -51,15 +52,18 @@ namespace GestorPedidos.Controllers
             {
                 if (!ModelState.IsValid)
                 {
+                    TempData["Error"] = "Por favor complete el pedido con las validaciones correspondientes";
                     return View();
                 }
                 int idPedido = this.pedidoServicio.CrearPedido(pedido);
                 pedidoArticulo.IdPedido = idPedido;
                 this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
+                TempData["Success"] = "Pedido nro " + pedido.NroPedido + " agregado correctamente";
                 return RedirectToAction("EditarPedido", new { id = idPedido });
             }
             catch (Exception e)
             {
+                TempData["Error"] = "Ocurrio un error al generar el pedido, por favor intente de nuevo!";
                 return RedirectToAction("Pedido");
             }
 

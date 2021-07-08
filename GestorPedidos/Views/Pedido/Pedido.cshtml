@@ -4,15 +4,8 @@
     Layout = "_UsuarioLayout";
     ViewData["Title"] = "Pedido";
     List<Pedido> pedidos = (List<Pedido>)ViewData["Pedidos"];
-    string error = (string)ViewData["Error"];
 }
 <div>
-    @if (error != null) { 
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>¡Error!</strong> @error
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    }
     <div class="volver mb-3 row">
         <div class="col">
             <a asp-controller="Pedido" asp-action="NuevoPedido" class="mx-1">
@@ -87,5 +80,5 @@
         </div>
 
     </div>
-
+  
 </div>
