@@ -21,6 +21,18 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Articulos()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "TRUE")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion";
+                return RedirectToAction("Index", "Home");
+            }
 
             List<Articulo> articulos = articuloServicio.ListarTodos();
 
@@ -31,6 +43,18 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult NuevoArticulo()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "TRUE")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion";
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -57,6 +81,18 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult EditarArticulo(int IdArticulo)
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "TRUE")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion";
+                return RedirectToAction("Index", "Home");
+            }
             Articulo articulo = articuloServicio.ObtenerPorId(IdArticulo);
 
             return View(articulo);
