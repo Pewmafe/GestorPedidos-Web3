@@ -102,14 +102,13 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult EditarArticulo(Articulo articulo)
         {
-
             if (!ModelState.IsValid)
             {
                 return View(articulo);
             }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             articuloServicio.Modificar(articulo, idUsuario);
-
+            TempData["Success"] = "Articulo:  " + articulo.Codigo + " | " + articulo.Descripcion + " modificado correctamente";
             return RedirectToAction(nameof(Articulos));
         }
 
