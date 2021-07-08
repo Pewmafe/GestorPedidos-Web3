@@ -32,14 +32,25 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Pedido()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
+                return RedirectToAction("Login", "Login");
+            }
             ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
-
             return View();
         }
 
         [HttpGet]
         public IActionResult NuevoPedido()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
+                return RedirectToAction("Login", "Login");
+            }
             ViewData["Clientes"] = this.clienteServicio.listarClientesSinPedidosActivos();
             ViewData["Articulos"] = this.articuloServicio.ListarNoEliminados();
 
@@ -71,6 +82,12 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult EditarPedido(int id)
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
+                return RedirectToAction("Login", "Login");
+            }
             Pedido pedido = this.pedidoServicio.ObtenerPorId(id);
             EditarPedidoViewModel editarPedidoViewModel = new() { Pedido = pedido };
             editarPedidoViewModel.ArticulosYCantidadesDelPedido = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(id);
