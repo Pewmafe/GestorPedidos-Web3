@@ -11,9 +11,11 @@ namespace Service
     {
 
         private _20211CTPContext _dbContext;
+        private IPedidoServicio pedidoServicio;
 
         public ClienteServicio(_20211CTPContext dbContext)
         {
+            this.pedidoServicio = new PedidoServicio(dbContext);
             _dbContext = dbContext;
         }
 
@@ -23,7 +25,7 @@ namespace Service
             _dbContext.SaveChanges();
         }
 
-        public void Borrar(Cliente entity,int idUsuario)
+        public void Borrar(Cliente entity, int idUsuario)
         {
             throw new NotImplementedException();
         }
@@ -72,22 +74,13 @@ namespace Service
 
         public List<Cliente> listarClientesSinPedidosActivos()
         {
-            /*var clientes = from c in _dbContext.Clientes.Include(c => c.Pedidos).Include("Pedidos.IdEstadoPedido")
-                           select c;
+            List<Cliente> clientesSinPedidosActivos = new List<Cliente>();
+            ListarNoEliminados().ForEach(a =>
+            {
+                if (!this.pedidoServicio.validarSiExistePedidoAbiertoDeUnClientePorIdCliente(a.IdCliente)) clientesSinPedidosActivos.Add(a);
+            });
 
-            List<Cliente> cliente = clientes.ToList();
-
-            return cliente.ForEach(c =>
-             {
-                 _dbContext.Pedidos
-                 .Include(p => p.IdClienteNavigation)
-                 .Where(p => p.IdClienteNavigation.IdCliente == c.IdCliente && c.FechaBorrado != null)
-                 .Where(p => p.IdEstado.Equals(1)).FirstOrDefault();
-             }
-             ).ToList();
-
-            cliente.*/
-            return null;
+            return clientesSinPedidosActivos;
 
         }
 
