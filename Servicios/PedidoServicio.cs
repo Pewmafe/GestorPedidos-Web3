@@ -59,7 +59,7 @@ namespace Service
         }
         public Pedido ObtenerPorId(int id)
         {
-            return _dbContext.Pedidos.Include(p => p.IdClienteNavigation).FirstOrDefault(o => o.IdPedido == id);
+            return _dbContext.Pedidos.Include(p => p.IdClienteNavigation).Include(p => p.IdEstadoNavigation).FirstOrDefault(o => o.IdPedido == id);
         }
 
         public void Modificar(Pedido entity, int idUsuario)

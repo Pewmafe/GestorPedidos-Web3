@@ -21,7 +21,7 @@
     <div class="row nuevo-pedido">
         <div class="col-12 col-md-6 mt-3">
             <div class="mb-3">
-                <h4 class="form-label-group text-uppercase">Estado : </h4>
+                <h4 class="form-label-group text-uppercase">Estado : @Model.Pedido.IdEstadoNavigation.Descripcion </h4>
             </div>
             <div class="mb-3">
                 <h5 class="form-label-group text-uppercase">Cliente : @Model.Pedido.IdClienteNavigation.Nombre</h5>
@@ -79,7 +79,7 @@
                                     <form asp-controller="Pedido" asp-action="BorrarArticuloDePedido" method="POST">
                                         <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
                                         <input type="hidden" name="IdArticulo" id="IdPedido" value="@articulo.Key.IdArticulo" />
-                                        <button type="submit" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></button>
+                                        <button disabled="@cerrado" type="submit" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></button>
                                     </form>
                                 </td>
 
@@ -90,22 +90,22 @@
             </div>
             <div>
                 <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">@Model.Pedido.Comentarios</textarea>
+                <textarea disabled="@cerrado" class="form-control" id="exampleFormControlTextarea1" rows="3">@Model.Pedido.Comentarios</textarea>
             </div>
             <div class="d-none row my-2 pedido-pc">
                 <div class="col-4 col-md-4">
                     <div class="d-flex justify-content-start">
-                        <button class="btn btn-outline-secondary text-uppercase">Marcar como entregado</button>
+                        <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Marcar como entregado</button>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-outline-danger text-uppercase">Cerrar</button>
+                        <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-outline-success text-uppercase">Modificar</button>
+                        <button disabled="@cerrado" class="btn btn-outline-success text-uppercase">Modificar</button>
                     </div>
                 </div>
             </div>
@@ -116,17 +116,17 @@
     <div class="row my-2 pedido-phone">
         <div class="col-4 col-md-4">
             <div class="d-flex justify-content-start">
-                <button class="btn btn-outline-secondary text-uppercase">Marcar como entregado</button>
+                <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Marcar como entregado</button>
             </div>
         </div>
         <div class="col-4 col-md-4">
             <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-danger text-uppercase">Cerrar</button>
+                <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
             </div>
         </div>
         <div class="col-4 col-md-4">
             <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-success text-uppercase">Modificar</button>
+                <button disabled="@cerrado" class="btn btn-outline-success text-uppercase">Modificar</button>
             </div>
         </div>
     </div>
