@@ -74,22 +74,6 @@ namespace Service
 
         public List<Cliente> listarClientesSinPedidosActivos()
         {
-            /*var clientes = from c in _dbContext.Clientes.Include(c => c.Pedidos).Include("Pedidos.IdEstadoPedido")
-                           select c;
-
-            List<Cliente> cliente = clientes.ToList();
-
-            return cliente.ForEach(c =>
-             {
-                 _dbContext.Pedidos
-                 .Include(p => p.IdClienteNavigation)
-                 .Where(p => p.IdClienteNavigation.IdCliente == c.IdCliente && c.FechaBorrado != null)
-                 .Where(p => p.IdEstado.Equals(1)).FirstOrDefault();
-             }
-             ).ToList();
-
-            cliente.*/
-
             List<Cliente> clientesSinPedidosActivos = new List<Cliente>();
             ListarNoEliminados().ForEach(a =>
             {
