@@ -1,0 +1,17 @@
+﻿<script>
+    if ('@TempData["Error"]') {
+        Swal.fire(
+            '¡Ups!',
+            '@TempData["Error"]',
+            'error'
+        );
+    }
+       if ('@TempData["Success"]') {
+        Swal.fire(
+            '¡Confirmado!',
+            '@TempData["Success"]',
+            'success'
+        );
+    }
+
+</script>

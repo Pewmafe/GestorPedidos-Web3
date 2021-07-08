@@ -44,5 +44,6 @@
         <script src="~/js/pedidoScript.js"></script>
     </environment>
     @await RenderSectionAsync("Scripts", required: false)
+    @{await Html.RenderPartialAsync("~/Views/Pedido/scripts.cshtml");}
 </body>
 </html>
