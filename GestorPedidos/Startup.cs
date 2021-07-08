@@ -33,7 +33,7 @@ namespace GestorPedidos
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".MiAPP.Session";
-                options.IdleTimeout = TimeSpan.FromSeconds(60);
+                options.IdleTimeout = TimeSpan.FromSeconds(300);
             });
         }
 
