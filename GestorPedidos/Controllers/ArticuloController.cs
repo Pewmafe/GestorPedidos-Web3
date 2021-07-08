@@ -68,13 +68,14 @@ namespace GestorPedidos.Controllers
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             articuloServicio.Crear(articulo, idUsuario);
 
-            TempData["art"] = JsonConvert.SerializeObject(articulo);
+            //TempData["art"] = JsonConvert.SerializeObject(articulo);
 
             if (guardar != null && guardar.ToLower().Equals("guardar"))
             {
+                TempData["Success"] = "Articulo:  " + articulo.Codigo + " | " + articulo.Descripcion + " agregado correctamente";
                 return RedirectToAction(nameof(Articulos));
             }
-
+            TempData["Success"] = "Articulo:  " + articulo.Codigo + " | " + articulo.Descripcion + " agregado correctamente";
             return RedirectToAction(nameof(NuevoArticulo));
         }
 
@@ -107,7 +108,7 @@ namespace GestorPedidos.Controllers
                 return View(articulo);
             }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
-            articuloServicio.Modificar(articulo,idUsuario);
+            articuloServicio.Modificar(articulo, idUsuario);
 
             return RedirectToAction(nameof(Articulos));
         }
@@ -117,8 +118,9 @@ namespace GestorPedidos.Controllers
         public IActionResult EliminarArticulo(int IdArticulo)
         {
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
-            articuloServicio.BorrarPorId(IdArticulo,idUsuario);
-
+            articuloServicio.BorrarPorId(IdArticulo, idUsuario);
+            Articulo articulo = this.articuloServicio.ObtenerPorId(IdArticulo);
+            TempData["Success"] = "Articulo:  " + articulo.Codigo + " | " + articulo.Descripcion + " borrado correctamente";
             return RedirectToAction(nameof(Articulos));
         }
 
