@@ -42,6 +42,7 @@ namespace GestorPedidos.Controllers
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
             if (idUsuario == null)
             {
+                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
                 return RedirectToAction("Login", "Login");
             }
             if (admin != null && admin != "TRUE")
@@ -76,6 +77,7 @@ namespace GestorPedidos.Controllers
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
             if (idUsuario == null)
             {
+                TempData["Error"] = "Por favor inicie Sesion para poder ingresar a esta seccion";
                 return RedirectToAction("Login", "Login");
             }
             if (admin != null && admin != "TRUE")
