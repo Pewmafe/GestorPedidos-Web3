@@ -2,6 +2,9 @@
 @{
     Layout = "_UsuarioLayout";
     ViewData["Title"] = "Editar Pedido";
+
+    Boolean cerrado = Model.Pedido.IdEstado != 1 ? true : false;
+
 }
 <div>
     <div class="volver mb-3 row">
@@ -18,12 +21,16 @@
     <div class="row nuevo-pedido">
         <div class="col-12 col-md-6 mt-3">
             <div class="mb-3">
-                <label class="form-label-group text-uppercase">Cliente : @Model.Pedido.IdClienteNavigation.Nombre</label>
+                <h4 class="form-label-group text-uppercase">Estado : </h4>
             </div>
+            <div class="mb-3">
+                <h5 class="form-label-group text-uppercase">Cliente : @Model.Pedido.IdClienteNavigation.Nombre</h5>
+            </div>
+
             <form asp-controller="Pedido" asp-action="AgregarArticuloAUnPedido">
                 <div class="mb-2">
                     <label class="form-label-group text-uppercase">Articulos</label>
-                    <select class="form-select" aria-label="Default select example" name="IdArticulo" id="articulos-select3">
+                    <select disabled="@cerrado" class="form-select" aria-label="Default select example" name="IdArticulo" id="articulos-select3">
                         <option selected>-</option>
                         @foreach (var ar in Model.ArticulosNoSeleccionados)
                         {
@@ -33,11 +40,15 @@
                 </div>
                 <div class="mt-1 mb-2">
                     <label class="form-label-group text-uppercase">Cantidad Articulo</label>
-                    <input type="number" name="Cantidad" class="form-control" />
+                    <input disabled="@cerrado" type="number" name="Cantidad" class="form-control" />
                 </div>
                 <div class="d-flex justify-content-end">
                     <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
-                    <button class="btn btn-outline-dark text-uppercase">Agregar a la lista</button>
+                    @if (!cerrado)
+                    {
+                        <button disabled="@cerrado" class="btn btn-outline-dark text-uppercase">Agregar a la lista</button>
+                    }
+
                 </div>
             </form>
         </div>
@@ -82,9 +93,14 @@
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">@Model.Pedido.Comentarios</textarea>
             </div>
             <div class="d-none row my-2 pedido-pc">
+                <div class="col-4 col-md-4">
+                    <div class="d-flex justify-content-start">
+                        <button class="btn btn-outline-secondary text-uppercase">Marcar como entregado</button>
+                    </div>
+                </div>
                 <div class="col-4">
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-outline-danger text-uppercase">Borrar</button>
+                        <button class="btn btn-outline-danger text-uppercase">Cerrar</button>
                     </div>
                 </div>
                 <div class="col-4">
@@ -100,12 +116,12 @@
     <div class="row my-2 pedido-phone">
         <div class="col-4 col-md-4">
             <div class="d-flex justify-content-start">
-                <button class="btn btn-outline-secondary text-uppercase">Cancelar</button>
+                <button class="btn btn-outline-secondary text-uppercase">Marcar como entregado</button>
             </div>
         </div>
         <div class="col-4 col-md-4">
             <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-danger text-uppercase">Borrar</button>
+                <button class="btn btn-outline-danger text-uppercase">Cerrar</button>
             </div>
         </div>
         <div class="col-4 col-md-4">

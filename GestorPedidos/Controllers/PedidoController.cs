@@ -33,6 +33,7 @@ namespace GestorPedidos.Controllers
         public IActionResult Pedido()
         {
             ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
+            ViewData["Error"]
             return View();
         }
 
@@ -52,9 +53,10 @@ namespace GestorPedidos.Controllers
                 {
                     return View();
                 }
-                pedidoArticulo.IdPedido = this.pedidoServicio.CrearPedido(pedido);
+                int idPedido = this.pedidoServicio.CrearPedido(pedido);
+                pedidoArticulo.IdPedido = idPedido;
                 this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
-                return RedirectToAction("Pedido");
+                return RedirectToAction("EditarPedido", new { id = idPedido });
             }
             catch (Exception e)
             {
@@ -72,14 +74,6 @@ namespace GestorPedidos.Controllers
             return View(editarPedidoViewModel);
         }
 
-        /* public IActionResult BorrarArticuloDePedido(int idPedido, int idArticulo)
-         {
-             PedidoArticulo pedidoArticulo = this.pedidoServicio.BuscarPedidoArticuloPorIdPedidoYIdArticulo(idPedido, idArticulo);
-             int idPedido2 = pedidoArticulo.IdPedido;
-             this.pedidoServicio.EliminarArticuloAlPedido(pedidoArticulo);
-             Dictionary<Articulo, int> carrito = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(idPedido2);
-             return RedirectToAction("EditarPedido?idpedido=" + idPedido2);
-         }*/
         public IActionResult BorrarArticuloDePedido(PedidoArticulo pedidoArticulo)
         {
             int idPedido2 = pedidoArticulo.IdPedido;
