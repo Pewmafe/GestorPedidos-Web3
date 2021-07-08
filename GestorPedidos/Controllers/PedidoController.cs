@@ -40,7 +40,7 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult NuevoPedido()
         {
-            ViewData["Clientes"] = this.clienteServicio.ListarNoEliminados();
+            ViewData["Clientes"] = this.clienteServicio.listarClientesSinPedidosActivos();
             ViewData["Articulos"] = this.articuloServicio.ListarNoEliminados();
 
             return View();

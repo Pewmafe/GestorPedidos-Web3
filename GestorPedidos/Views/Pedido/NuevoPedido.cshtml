@@ -1,13 +1,9 @@
 ﻿@using Models.Models
-@model Models.Models.Pedido
 @{
     Layout = "_UsuarioLayout";
     ViewData["Title"] = "Nuevo Pedido";
     List<Cliente> clientes = (List<Cliente>)ViewData["Clientes"];
     List<Articulo> articulos = (List<Articulo>)ViewData["Articulos"];
-    List<Articulo> carrito = (List<Articulo>)ViewData["Carrito"];
-
-
 }
 
 <form asp-controller="Pedido" asp-action="NuevoPedido" method="post">
@@ -26,8 +22,8 @@
         <div class="row nuevo-pedido">
             <div class="col-12 mt-3">
                 <div class="mb-3">
-                    <label class="form-label-group text-uppercase">Cliente</label>
-                    <select name="IdCliente" class="form-select" aria-label="Default select example" id="articulos-select2">
+                    <label class="form-label-group text-uppercase">Cliente*</label>
+                    <select name="IdCliente" class="form-select" aria-label="Default select example" id="articulos-select2" required>
                         <option selected>-</option>
                         @foreach (var c in clientes)
                         {
@@ -37,8 +33,8 @@
                 </div>
 
                 <div class="mb-2">
-                    <label class="form-label-group text-uppercase">Articulo</label>
-                    <select class="form-select" aria-label="Default select example" name="IdArticulo" id="articulos-select">
+                    <label class="form-label-group text-uppercase">Articulo*</label>
+                    <select class="form-select" aria-label="Default select example" name="IdArticulo" id="articulos-select" required>
                         <option value="first" selected>-</option>
                         @foreach (var a in articulos)
                         {
@@ -52,7 +48,7 @@
                 </div>
                 <div class="nuevo-pedido">
                     <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
-                    <textarea asp-for="Comentarios" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea name="Comentarios" id="Comentarios" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <div class="d-none row my-2 pedido-pc">
                     <div class="col-6">
