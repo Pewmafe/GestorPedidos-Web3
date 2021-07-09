@@ -53,7 +53,7 @@
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="FechaNacimiento" class="form-label">Fecha De Nacimiento:</label>
-            <input asp-format="{0:dd/MM/yyyy}" type="date" asp-for="FechaNacimiento" disabled="@readOnly" value="@Model.FechaNacimiento" class="form-control" />
+            <input type="datetime" asp-for="FechaNacimiento" disabled="@readOnly" value="@Model.FechaNacimiento.Value.ToShortDateString()" class="form-control" />
             <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
         </div>
 

@@ -4,6 +4,14 @@
     ViewData["Title"] = "Usuarios";
 
 }
+
+@section Scripts{
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script src="~/js/UsuarioScript.js"></script>
+
+}
+
 <div>
     <div class="volver mb-3 row">
         <div class="col">
@@ -29,24 +37,11 @@
                         Excluir eliminados
                     </p>
                 </div>
-                
-                <div class="mb-3">
-                    <select class="form-select" name="codigo">
-                        <option>Nombre Usuario</option>
-                        <option>-</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <select class="form-select" name="codigo">
-                        <option>Email</option>
-                    </select>
-                </div>
             </div>
-
-
-            <div class="table-responsive ">
-                <table id="tblUsuario"class="table table-striped" style="width:100%">
-                    <thead class="bg-dark text-light">
+          
+           
+                <table id="table_id" class="display">
+                    <thead>
                         <tr>
                             <th class="text-center">#</th>
                             <th class="text-center" scope="col">Nombre</th>
@@ -54,6 +49,7 @@
                             <th class="text-center" scope="col">Fecha Nacimiento</th>
                             <th class="text-center" scope="col">Ver</th>
                             <th class="text-center" scope="col">Eliminados</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -92,65 +88,13 @@
                         }
                     </tbody>
                 </table>
-            </div>
+           
         </div>
 
     </div>
 
 </div>
 
-@section Scripts
-{
-    
-    <script type="text/javascript">
 
-    $(function () {
 
-        $("#flexCheckChecked").on('change', function () {
 
-            if ($(this).is(':checked')) {
-
-                LoadData();
-            }
-
-            else {
-
-                location.reload();
-            }
-
-        });
-
-    });
-
-        function LoadData() {
-            $("#tblUsuario tbody tr td").remove();
-            $.ajax({
-                type: 'GET',
-                url: 'UsuariosNoEliminados',
-                dataType: 'json',
-                success: function (data) {
-                    var items = '';
-                    $.each(data, function (i, usuario) {
-                        console.log(usuario)
-                        var rows = "<tr>"
-                            + "<td class='text-center'>"+ usuario.idUsuario +"</td>"
-                            + "<td class='text-center'>"+ usuario.nombre +" "+ usuario.apellido +"</td>"
-                            + "<td class='text-center'>"+ usuario.email +"</td>"
-                            + "<td class='text-center'>"+ usuario.fechaNacimiento +"</td>"
-                            + "<td class='text-center'> <a href='EditarUsuario/"+ usuario.idUsuario +"' data-bs-toggle='tooltip' data-bs-placement='top' title='Ver Usuario'> <i class='fas fa-info btn'></i></a> </td>"
-                            + "<td class='text-center'> <a href='BajaUsuario/"+ usuario.idUsuario +"' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar Usuario'> <i class='fas fa-times btn text-danger'></i> </a> </td>"
-                            + "</tr>";
-                        $('#tblUsuario tbody').append(rows);
-                    });
-                },
-                error: function (ex) {
-
-                    alert("Message: error ");
-
-                }
-            });
-            return false;
-        }
-
-    </script>  
-}
