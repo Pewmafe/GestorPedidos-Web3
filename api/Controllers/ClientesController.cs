@@ -6,6 +6,7 @@ using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -45,10 +46,9 @@ namespace api.Controllers
         [HttpPost]
         [Route("filtrar")]
         [Authorize]
-        public ActionResult<object> GetAllByFilter(string Filtro)
+        public ActionResult<object> GetAllByFilter([FromBody] FiltroBody Filtro)
         {
-
-            List<Cliente> clientes = clienteServicio.ListarPorFiltro(Filtro);
+            List<Cliente> clientes = clienteServicio.ListarPorFiltro(Filtro.Filtro);
             List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
             if (clientes.Count != 0)
             {

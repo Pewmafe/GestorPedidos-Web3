@@ -101,5 +101,12 @@ namespace Service
             }
             return clientesDTO;
         }
+
+        public List<Cliente> ListarPorFiltro(string Filtro)
+        {
+            return _dbContext.Clientes
+                .Where(p => p.Nombre.Contains(Filtro))
+                .ToList();
+        }
     }
 }
