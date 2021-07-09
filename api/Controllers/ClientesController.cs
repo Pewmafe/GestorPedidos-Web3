@@ -41,5 +41,26 @@ namespace api.Controllers
                 Items= clientesDTO
             });
         }
+
+        [HttpPost]
+        [Route("filtrar")]
+        [Authorize]
+        public ActionResult<object> GetAllByFilter(string Filtro)
+        {
+
+            List<Cliente> clientes = clienteServicio.ListarPorFiltro(Filtro);
+            List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
+            if (clientes.Count != 0)
+            {
+                clientesDTO = clienteServicio.mapearListaClienteAListaClienteDTO(clientes);
+            }
+
+
+            return Ok(new
+            {
+                Count = clientesDTO.Count,
+                Items = clientesDTO
+            });
+        }
     }
 }
