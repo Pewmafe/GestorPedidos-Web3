@@ -1,4 +1,5 @@
 ﻿using Models.Models;
+using Models.DTO;
 using System.Collections.Generic;
 
 namespace Service
@@ -9,8 +10,7 @@ namespace Service
         List<Articulo> listarPorCodigo(string codigo);
         List<Articulo> listarPorDescripcion(string descripcion);
         List<Articulo> listarPorCodigoYDescripcion(string codigo, string descripcion);
-      
-
+        List<ArticuloDTO> mapearListaArticuloAListaArticuloDTO(List<Articulo> articulos);
     }
 }
        

@@ -1,4 +1,5 @@
-﻿using Models.Models;
+﻿using Models.DTO;
+using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,7 +120,21 @@ namespace Service
 
             return articulos.ToList();
         }
+        public List<ArticuloDTO> mapearListaArticuloAListaArticuloDTO(List<Articulo> articulos)
+        {
+            List<ArticuloDTO> articulosDTO = new List<ArticuloDTO>();
+            foreach (Articulo articulo in articulos)
+            {
+                ArticuloDTO articuloDTO = new ArticuloDTO();
 
+                articuloDTO.IdArticulo =articulo.IdArticulo;
+                articuloDTO.Codigo= articulo.Codigo;
+                articuloDTO.Descripcion = articulo.Descripcion;
+               
+                articulosDTO.Add(articuloDTO);
+            }
+            return articulosDTO;
+        }
     }
 
 }
