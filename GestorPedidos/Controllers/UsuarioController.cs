@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Models.Models;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
+
 
 namespace GestorPedidos.Controllers
 {
@@ -84,7 +86,8 @@ namespace GestorPedidos.Controllers
             {
                 return View(usuario);
             }
-            _usuarioServicio.Crear(usuario);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            _usuarioServicio.Crear(usuario, idUsuario);
 
             return RedirectToAction(nameof(Usuarios));
         }
@@ -99,13 +102,15 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult EditarUsuario(Usuario usuario)
         {
-            _usuarioServicio.Modificar(usuario);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            _usuarioServicio.Modificar(usuario,idUsuario);
             return RedirectToAction(nameof(Usuarios));
         }
 
         public IActionResult BajaUsuario(int id)
         {
-            _usuarioServicio.BorrarPorId(id);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            _usuarioServicio.BorrarPorId(id,idUsuario);
 
             return RedirectToAction(nameof(Usuarios));
         }

@@ -261,10 +261,25 @@ a {
 }
 
 .nuevo-pedido select {
-    border: 0;
-    border-radius: 0;
-    border-bottom: 2px solid #ccc;
-    background-color: #f7f4ef;
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 2px solid #ccc !important;
+    background-color: #f7f4ef !important;
+}
+
+.nuevo-pedido input {
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 2px solid #ccc !important;
+    background-color: #f7f4ef !important;
+}
+
+.nuevo-pedido .select2-container--default .select2-selection--single {
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 2px solid #ccc !important;
+    background-color: #f7f4ef !important;
+    max-width: 100%;
 }
 
 .nuevo-pedido textarea {
@@ -272,6 +287,18 @@ a {
     border-radius: 0;
     border-bottom: 2px solid #ccc;
     background-color: #f7f4ef;
+}
+
+.estado-Abierto {
+    color: #6c757d !important;
+}
+
+.estado-Cerrado {
+    color: #dc3545 !important;
+}
+
+.estado-Entregado {
+    color: #198754 !important;
 }
 
 @media screen and (min-width: 768px) {

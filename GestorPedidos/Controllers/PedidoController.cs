@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GestorPedidos.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Models.Models;
 using Service;
+using System;
+using System.Collections.Generic;
+
 
 namespace GestorPedidos.Controllers
 {
@@ -10,7 +15,9 @@ namespace GestorPedidos.Controllers
         private IUsuarioServicio usuarioServicio;
         private IClienteServicio clienteServicio;
         private IArticuloServicio articuloServicio;
+
         private _20211CTPContext dbContext;
+
 
         public PedidoController(_20211CTPContext _dbContext)
         {
@@ -19,27 +26,109 @@ namespace GestorPedidos.Controllers
             this.clienteServicio = new ClienteServicio(dbContext);
             this.usuarioServicio = new UsuarioServicio(dbContext);
             this.articuloServicio = new ArticuloServicio(dbContext);
+
+
         }
         [HttpGet]
         public IActionResult Pedido()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
             return View();
         }
 
         [HttpGet]
         public IActionResult NuevoPedido()
         {
-            ViewData["Clientes"] = this.clienteServicio.ListarNoEliminados();
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            ViewData["Clientes"] = this.clienteServicio.listarClientesSinPedidosActivos();
             ViewData["Articulos"] = this.articuloServicio.ListarNoEliminados();
+
             return View();
         }
-
-        [HttpGet]
-        public IActionResult EditarPedido()
+        [HttpPost]
+        public IActionResult NuevoPedido(Pedido pedido, PedidoArticulo pedidoArticulo)
         {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    TempData["Error"] = "Por favor complete el pedido con las validaciones correspondientes";
+                    return RedirectToAction("NuevoPedido");
+                }
+                int idPedido = this.pedidoServicio.CrearPedido(pedido);
+                pedidoArticulo.IdPedido = idPedido;
+                this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
+                TempData["Success"] = "Pedido nro " + pedido.NroPedido + " agregado correctamente";
+                return RedirectToAction("EditarPedido", new { id = idPedido });
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = "Ocurrio un error al generar el pedido, por favor intente de nuevo! \n " + e;
+                return RedirectToAction("Pedido");
+            }
 
-            return View();
+        }
+        [HttpGet]
+        public IActionResult EditarPedido(int id)
+        {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            Pedido pedido = this.pedidoServicio.ObtenerPorId(id);
+            EditarPedidoViewModel editarPedidoViewModel = new() { Pedido = pedido };
+            editarPedidoViewModel.ArticulosYCantidadesDelPedido = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(id);
+            editarPedidoViewModel.ArticulosNoSeleccionados = this.pedidoServicio.listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(id);
+            return View(editarPedidoViewModel);
+        }
 
+        public IActionResult BorrarArticuloDePedido(PedidoArticulo pedidoArticulo)
+        {
+            int idPedido2 = pedidoArticulo.IdPedido;
+            this.pedidoServicio.EliminarArticuloAlPedido(pedidoArticulo);
+            Dictionary<Articulo, int> carrito = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(idPedido2);
+            return RedirectToAction("EditarPedido", new { id = idPedido2 });
+        }
+
+        [HttpPost]
+        public IActionResult AgregarArticuloAUnPedido(PedidoArticulo pedidoArticulo)
+        {
+            int idPedido2 = pedidoArticulo.IdPedido;
+            this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
+            return RedirectToAction("EditarPedido", new { id = idPedido2 });
+        }
+
+        [HttpPost]
+        public IActionResult MarcarPedidoComoCerrado(int idPedido)
+        {
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            this.pedidoServicio.MarcarPedidoComoCerrado(idPedido, idUsuario);
+            Pedido pedido = this.pedidoServicio.ObtenerPorId(idPedido);
+            TempData["Success"] = "Pedido numero " + pedido.NroPedido + " cerrado correctamente ";
+            return RedirectToAction("Pedido");
+        }
+
+        [HttpPost]
+        public IActionResult MarcarPedidoComoEntregado(int idPedido)
+        {
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            this.pedidoServicio.MarcarPedidoComoEntregado(idPedido, idUsuario);
+            Pedido pedido = this.pedidoServicio.ObtenerPorId(idPedido);
+            TempData["Success"] = "Pedido numero " + pedido.NroPedido + " entregado correctamente ";
+            return RedirectToAction("Pedido");
         }
     }
 }

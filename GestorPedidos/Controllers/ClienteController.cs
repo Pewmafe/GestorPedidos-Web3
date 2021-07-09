@@ -2,6 +2,7 @@
 using Models.Models;
 using Service;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace GestorPedidos.Controllers
 {
@@ -19,12 +20,36 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Clientes()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             List<Cliente> clientes = clienteServicio.ListarTodos();
             return View(clientes);
         }
 
         public IActionResult NuevoCliente()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -35,19 +60,33 @@ namespace GestorPedidos.Controllers
             {
                 return View(cliente);
             }
-
-            clienteServicio.Crear(cliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            clienteServicio.Crear(cliente, idUsuario);
 
             if (guardar.ToLower().Equals("guardar"))
             {
+                TempData["Success"] = "Cliente  '" + cliente.Nombre + "' agregado correctamente";
                 return RedirectToAction("Clientes");
             }
+            TempData["Success"] = "Cliente  '" + cliente.Nombre + "' agregado correctamente";
             return RedirectToAction("NuevoCliente");
         }
 
         [HttpGet]
         public IActionResult EditarCliente(int idCliente)
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             Cliente cliente = clienteServicio.ObtenerPorId(idCliente);
             return View(cliente);
         }
@@ -59,15 +98,20 @@ namespace GestorPedidos.Controllers
             {
                 return View(Cliente);
             }
-            clienteServicio.Modificar(Cliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            clienteServicio.Modificar(Cliente, idUsuario);
 
+            TempData["Success"] = "Cliente  '" + Cliente.Nombre + "' modificado correctamente";
             return RedirectToAction("Clientes");
         }
 
         [HttpGet]
         public IActionResult Borrarcliente(int idCliente)
         {
-            clienteServicio.BorrarPorId(idCliente);
+            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            clienteServicio.BorrarPorId(idCliente, idUsuario);
+            Cliente cliente = this.clienteServicio.ObtenerPorId(idCliente);
+            TempData["Success"] = "Cliente  '" + cliente.Nombre + "' borrado correctamente";
             return RedirectToAction("Clientes");
         }
 

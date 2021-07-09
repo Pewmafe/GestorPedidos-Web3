@@ -1,5 +1,9 @@
-﻿@{
+
+﻿@using Models.Models
+@{
+    Layout = "_UsuarioLayout";
     ViewData["Title"] = "Pedido";
+    List<Pedido> pedidos = (List<Pedido>)ViewData["Pedidos"];
 }
 <div>
     <div class="volver mb-3 row">
@@ -12,9 +16,7 @@
     <div class="py-2 titulos-paginas">
         <h2>PEDIDOS</h2>
     </div>
-
     <div class="row">
-
         <div class="col-12 mt-3">
             <h4 class="titulos-paginas">Lista de Pedidos</h4>
             <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
@@ -31,7 +33,6 @@
                         Excluir eliminados
                     </p>
                 </div>
-
             </div>
             <div class="table-responsive ">
                 <table id="" class="table table-striped" style="width:100%">
@@ -47,7 +48,20 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        @foreach (var p in pedidos)
+                        {
+                            <tr>
+                                <td class="text-center">@p.IdPedido</td>
+                                <td class="text-center">@p.IdClienteNavigation.Nombre</td>
+                                <td class="text-center">@p.IdEstadoNavigation.Descripcion</td>
+                                <td class="text-center">@p.NroPedido</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">@p.Comentarios</td>
+                                <td class="text-center">
+                                    <a href="/pedido/editarpedido/@p.IdPedido" data-bs-toggle="tooltip" data-placement="top" title="Ver pedido"><i class="fas fa-info btn"></i></a>
+                                </td>
+                            </tr>
+                        }
                         <tr>
                             <td class="text-center">1</td>
                             <td class="text-center">Sancor Seguros</td>
@@ -59,55 +73,12 @@
                                 <a href="/pedido/editarpedido" data-bs-toggle="tooltip" data-placement="top" title="Ver pedido"><i class="fas fa-info btn"></i></a> |
                                 <a href="/pedido/borrarPedido" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar pedido"> <i class="fas fa-times btn text-danger"></i></a>
                             </td>
-
-
                         </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Sancor Seguros</td>
-                            <td class="text-center">Pendiente</td>
-                            <td class="text-center">0112</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">Sin comentarios</td>
-                            <td class="text-center">
-                                <a href="/pedido/editarpedido" data-bs-toggle="tooltip" data-placement="top" title="Ver pedido"><i class="fas fa-info btn"></i></a> |
-                                <a href="/pedido/borrarPedido" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar pedido"> <i class="fas fa-times btn text-danger"></i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Sancor Seguros</td>
-                            <td class="text-center">Pendiente</td>
-                            <td class="text-center">0112</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">Sin comentarios</td>
-                            <td class="text-center">
-                                <a href="/pedido/editarpedido" data-bs-toggle="tooltip" data-placement="top" title="Ver pedido"><i class="fas fa-info btn"></i></a> |
-                                <a href="/pedido/borrarPedido" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar pedido"> <i class="fas fa-times btn text-danger"></i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Sancor Seguros</td>
-                            <td class="text-center">Pendiente</td>
-                            <td class="text-center">0112</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">Sin comentarios</td>
-                            <td class="text-center">
-                                <a href="/pedido/editarpedido" data-bs-toggle="tooltip" data-placement="top" title="Ver pedido"><i class="fas fa-info btn"></i></a> |
-                                <a href="/pedido/borrarPedido" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar pedido"> <i class="fas fa-times btn text-danger"></i></a>
-                            </td>
-
-                        </tr>
-
-
                     </tbody>
                 </table>
             </div>
         </div>
 
     </div>
-
+  
 </div>

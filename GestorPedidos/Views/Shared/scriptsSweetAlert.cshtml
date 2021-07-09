@@ -1,0 +1,26 @@
+﻿<script>
+    if ('@TempData["Error"]') {
+        Swal.fire(
+            '¡Ups!',
+            '@TempData["Error"]',
+            'error'
+        );
+    }
+       if ('@TempData["Success"]') {
+        Swal.fire(
+            '¡Confirmado!',
+            '@TempData["Success"]',
+            'success'
+           );
+           warning
+    }
+      if ('@TempData["warning"]') {
+        Swal.fire(
+            '¡Aviso!',
+            '@TempData["warning"]',
+            'warning'
+           );
+           warning
+    }
+
+</script>

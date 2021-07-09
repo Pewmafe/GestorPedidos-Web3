@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Models.DTO;
 using Models.Models;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,26 @@ namespace Service
     {
 
         private _20211CTPContext _dbContext;
+        private IPedidoServicio pedidoServicio;
 
         public ClienteServicio(_20211CTPContext dbContext)
         {
+            this.pedidoServicio = new PedidoServicio(dbContext);
             _dbContext = dbContext;
         }
 
-        public void Crear(Cliente entity)
+        public void Crear(Cliente entity, int idUsuario)
         {
             _dbContext.Clientes.Add(entity);
             _dbContext.SaveChanges();
         }
 
-        public void Borrar(Cliente entity)
+        public void Borrar(Cliente entity, int idUsuario)
         {
             throw new NotImplementedException();
         }
 
-        public void BorrarPorId(int id)
+        public void BorrarPorId(int id, int idUsuario)
         {
             Cliente objActual = ObtenerPorId(id);
             objActual.FechaBorrado = DateTime.Now;
@@ -45,7 +48,7 @@ namespace Service
                 .FirstOrDefault(o => o.IdCliente == id);
         }
 
-        public void Modificar(Cliente entity)
+        public void Modificar(Cliente entity, int idUsuario)
         {
             Cliente objActual = ObtenerPorId(entity.IdCliente);
 
@@ -71,23 +74,32 @@ namespace Service
 
         public List<Cliente> listarClientesSinPedidosActivos()
         {
-            /*var clientes = from c in _dbContext.Clientes.Include(c => c.Pedidos).Include("Pedidos.IdEstadoPedido")
-                           select c;
+            List<Cliente> clientesSinPedidosActivos = new List<Cliente>();
+            ListarNoEliminados().ForEach(a =>
+            {
+                if (!this.pedidoServicio.validarSiExistePedidoAbiertoDeUnClientePorIdCliente(a.IdCliente)) clientesSinPedidosActivos.Add(a);
+            });
 
-            List<Cliente> cliente = clientes.ToList();
+            return clientesSinPedidosActivos;
 
-            return cliente.ForEach(c =>
-             {
-                 _dbContext.Pedidos
-                 .Include(p => p.IdClienteNavigation)
-                 .Where(p => p.IdClienteNavigation.IdCliente == c.IdCliente && c.FechaBorrado != null)
-                 .Where(p => p.IdEstado.Equals(1)).FirstOrDefault();
-             }
-             ).ToList();
+        }
 
-            cliente.*/
-            return null;
+        public List<ClienteDTO> mapearListaClienteAListaClienteDTO(List<Cliente> clientes)
+        {
+            List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
+            foreach (Cliente cliente in clientes)
+            {
+                ClienteDTO clienteDTO = new ClienteDTO();
 
+                clienteDTO.IdCliente = cliente.IdCliente;
+                clienteDTO.Nombre = cliente.Nombre;
+                clienteDTO.Numero = cliente.Numero;
+                clienteDTO.Telefono = cliente.Telefono;
+                clienteDTO.Direccion = cliente.Direccion;
+
+                clientesDTO.Add(clienteDTO);
+            }
+            return clientesDTO;
         }
     }
 }

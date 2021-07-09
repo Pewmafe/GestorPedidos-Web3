@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Models.Models.Usuario>
 
 @{
+    Layout = "_UsuarioLayout";
     ViewData["Title"] = "Usuarios";
 
 }
 
 @section Scripts{
-
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/UsuarioScript.js"></script>
 
 }
@@ -38,57 +38,57 @@
                     </p>
                 </div>
             </div>
-          
-           
-                <table id="table_id" class="display">
-                    <thead>
+
+
+            <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center" scope="col">Nombre</th>
+                        <th class="text-center" scope="col">Email</th>
+                        <th class="text-center" scope="col">Fecha Nacimiento</th>
+                        <th class="text-center" scope="col">Ver</th>
+                        <th class="text-center" scope="col">Eliminados</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var usuario in @Model)
+                    {
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center" scope="col">Nombre</th>
-                            <th class="text-center" scope="col">Email</th>
-                            <th class="text-center" scope="col">Fecha Nacimiento</th>
-                            <th class="text-center" scope="col">Ver</th>
-                            <th class="text-center" scope="col">Eliminados</th>
+                            <td class="text-center">@usuario.IdUsuario</td>
+                            <td class="text-center">@usuario.Nombre @usuario.Apellido</td>
+                            <td class="text-center">@usuario.Email</td>
+                            @if (usuario.FechaNacimiento != null)
+                            {
+                                <td class="text-center">@usuario.FechaNacimiento.Value.ToShortDateString()</td>
+                            }
+                            else
+                            {
+                                <td class="text-center">-</td>
+                            }
+
+                            <td class="text-center">
+                                <a asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-placement="top" title="Ver Usuario"><i class="fas fa-info btn"></i></a>
+                            </td>
+                            @if (usuario.FechaBorrado == null)
+                            {
+                                <td class="text-center">
+                                    <a asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario"> <i class="fas fa-times btn text-danger"></i></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-center fst-italic"><p>Eliminado</p></td>
+                            }
 
                         </tr>
-                    </thead>
-                    <tbody>
+                    }
+                </tbody>
+            </table>
 
-
-                        @foreach (var usuario in @Model)
-                        {
-                            <tr>
-                                <td class="text-center">@usuario.IdUsuario</td>
-                                <td class="text-center">@usuario.Nombre @usuario.Apellido</td>
-                                <td class="text-center">@usuario.Email</td>
-                                @if (usuario.FechaNacimiento != null)
-                                {
-                                    <td class="text-center">@usuario.FechaNacimiento.Value.ToShortDateString()</td>
-                                }
-                                else
-                                {
-                                    <td class="text-center">-</td>
-                                }
-
-                                <td class="text-center">
-                                    <a asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-placement="top" title="Ver Usuario"><i class="fas fa-info btn"></i></a>
-                                </td>
-                                @if (usuario.FechaBorrado == null)
-                                {
-                                    <td class="text-center">
-                                        <a asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario"> <i class="fas fa-times btn text-danger"></i></a>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td class="text-center fst-italic"><p>Eliminado</p></td>
-                                }
-
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-           
         </div>
 
     </div>

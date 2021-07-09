@@ -1,5 +1,6 @@
 ﻿@model Models.Models.Cliente;
 @{
+    Layout = "_UsuarioLayout";
     ViewData["Title"] = "Editar Cliente";
     Boolean readOnly = Model.FechaBorrado == null ? true : false;
 }
@@ -20,7 +21,7 @@
         }
         else
         {
-            <h3>Articulo</h3>
+            <h3>Cliente</h3>
         }
     </div>
     <form class="nuevo-articulo row" action="/Cliente/EditarCliente" method="post">

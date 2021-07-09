@@ -1,7 +1,10 @@
 ﻿@using Newtonsoft.Json;
 @model Models.Models.Articulo;
 @{
+    Layout = "_UsuarioLayout";
     ViewData["Title"] = "Nuevo Articulo";
+  
+
 }
 
 <div>
@@ -37,6 +40,7 @@
             <label for="Descripcion" class="form-label text-uppercase">Descripción:</label>
             <input type="text" asp-for="Descripcion" value="" class="form-control" />
             <span asp-validation-for="Descripcion" class="text-danger fst-italic text-uppercase"></span>
+           
         </div>
         <div class="mb-3">
             <input type="submit" class="btn btn-outline-success text-uppercase" value="Guardar" name="guardar" />
