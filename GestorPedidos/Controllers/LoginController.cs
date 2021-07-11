@@ -32,6 +32,7 @@ namespace GestorPedidos.Controllers
             Usuario usuarioValidado = loginServicio.LogIn(usuario);
             if (usuarioValidado == null)
             {
+                TempData["Error"] = "Email o contraseña incorrecto.";
                 return RedirectToAction("Login");
             }
             this.GuardarInformacionSesion(usuarioValidado);
