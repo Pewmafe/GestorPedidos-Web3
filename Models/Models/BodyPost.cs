@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Models
 {
-    public class FiltroBody
+    public class BodyPost
     {
         public string Filtro { get; set; }
     }

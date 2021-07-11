@@ -46,7 +46,7 @@ namespace api.Controllers
         [HttpPost]
         [Route("filtrar")]
         [Authorize]
-        public ActionResult<object> GetAllByFilter([FromBody] FiltroBody Filtro)
+        public ActionResult<object> GetAllByFilter([FromBody] BodyPost Filtro)
         {
             List<Cliente> clientes = clienteServicio.ListarPorFiltro(Filtro.Filtro);
             List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
