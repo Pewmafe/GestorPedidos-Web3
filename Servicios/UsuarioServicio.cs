@@ -74,11 +74,11 @@ namespace Service
         {
             List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u=> u.FechaBorrado == null).ToList();
 
-            //foreach (var item in usuariosNoEliminados)
-            //{
-            //    String fecha = item.FechaNacimiento.Value.ToShortDateString();
-            //    item.FechaNacimiento = DateTime.ParseExact(fecha, "d/M/yyyy", null);
-            //}
+            foreach (var item in usuariosNoEliminados)
+            {
+                String fecha = item.FechaNacimiento.Value.ToShortDateString();
+                item.FechaNacimiento = DateTime.ParseExact(fecha, "d/M/yyyy", null);
+            }
 
             return usuariosNoEliminados;
 
