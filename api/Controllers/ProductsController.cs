@@ -41,5 +41,23 @@ namespace api.Controllers
                 Items = productosDTO
             });
         }
+        [HttpPost]
+        [Route("filtrar")]
+        [Authorize]
+        public ActionResult<object> GetAllByFilter([FromBody] BodyPost Filtro)
+        {
+            List<Articulo> productos = articuloServicio.ListarPorFiltro(Filtro.Filtro);
+            List<ArticuloDTO> productosDTO = new List<ArticuloDTO>();
+            if (productos.Count != 0)
+            {
+                productosDTO = articuloServicio.mapearListaArticuloAListaArticuloDTO(productos);
+            }
+
+            return Ok(new
+            {
+                Count = productosDTO.Count,
+                Items = productosDTO
+            });
+        }
     }
 }

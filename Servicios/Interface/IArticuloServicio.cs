@@ -7,10 +7,8 @@ namespace Service
     public interface IArticuloServicio : IBaseServicio<Articulo>
     {
        
-        List<Articulo> listarPorCodigo(string codigo);
-        List<Articulo> listarPorDescripcion(string descripcion);
-        List<Articulo> listarPorCodigoYDescripcion(string codigo, string descripcion);
         List<ArticuloDTO> mapearListaArticuloAListaArticuloDTO(List<Articulo> articulos);
+        List<Articulo> ListarPorFiltro(string Filtro);
     }
 }
        
