@@ -46,7 +46,7 @@ namespace GestorPedidos.Controllers
                 clientes = clienteServicio.ListarTodos();
                 ViewData["ExcluirEliminados"] = false;
             }
-                
+
             return View(clientes);
         }
 
@@ -70,6 +70,18 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult NuevoCliente(Cliente cliente, string guardar)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(cliente);
@@ -118,6 +130,18 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult EditarCliente(Cliente Cliente)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(Cliente);
@@ -132,6 +156,18 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Borrarcliente(int idCliente)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             clienteServicio.BorrarPorId(idCliente, idUsuario);
             Cliente cliente = this.clienteServicio.ObtenerPorId(idCliente);
@@ -142,6 +178,18 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult ClientesNoEliminados()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             TempData["Eliminados"] = true;
             return RedirectToAction("Clientes");
         }

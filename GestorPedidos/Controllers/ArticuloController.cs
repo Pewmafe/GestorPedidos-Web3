@@ -61,6 +61,18 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult NuevoArticulo(Articulo articulo, string guardar)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(articulo);
@@ -102,6 +114,18 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult EditarArticulo(Articulo articulo)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(articulo);
@@ -116,6 +140,18 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult EliminarArticulo(int IdArticulo)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             articuloServicio.BorrarPorId(IdArticulo, idUsuario);
             Articulo articulo = this.articuloServicio.ObtenerPorId(IdArticulo);

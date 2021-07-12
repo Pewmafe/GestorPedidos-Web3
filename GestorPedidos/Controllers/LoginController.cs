@@ -19,7 +19,7 @@ namespace GestorPedidos.Controllers
             this.loginServicio = new LoginService(dbContext);
         }
 
-      
+
         [HttpGet]
         public IActionResult Login()
         {

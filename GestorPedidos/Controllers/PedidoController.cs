@@ -48,6 +48,12 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult ListarEntregados()
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             TempData["Entregados"] = true;
             return RedirectToAction("Pedido");
         }
@@ -71,6 +77,12 @@ namespace GestorPedidos.Controllers
         {
             try
             {
+                string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+                if (idUsuario == null)
+                {
+                    TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                    return RedirectToAction("Login", "Login");
+                }
                 if (!ModelState.IsValid)
                 {
                     TempData["Error"] = "Por favor complete el pedido con las validaciones correspondientes";
@@ -107,6 +119,12 @@ namespace GestorPedidos.Controllers
 
         public IActionResult BorrarArticuloDePedido(PedidoArticulo pedidoArticulo)
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             int idPedido2 = pedidoArticulo.IdPedido;
             this.pedidoServicio.EliminarArticuloAlPedido(pedidoArticulo);
             Dictionary<Articulo, int> carrito = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(idPedido2);
@@ -116,6 +134,12 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult AgregarArticuloAUnPedido(PedidoArticulo pedidoArticulo)
         {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             int idPedido2 = pedidoArticulo.IdPedido;
             this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
             return RedirectToAction("EditarPedido", new { id = idPedido2 });
@@ -124,6 +148,12 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult MarcarPedidoComoCerrado(int idPedido)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             this.pedidoServicio.MarcarPedidoComoCerrado(idPedido, idUsuario);
             Pedido pedido = this.pedidoServicio.ObtenerPorId(idPedido);
@@ -134,6 +164,12 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult MarcarPedidoComoEntregado(int idPedido)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             this.pedidoServicio.MarcarPedidoComoEntregado(idPedido, idUsuario);
             Pedido pedido = this.pedidoServicio.ObtenerPorId(idPedido);
