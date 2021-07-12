@@ -265,6 +265,7 @@ a {
     border-radius: 0 !important;
     border-bottom: 2px solid #ccc !important;
     background-color: #f7f4ef !important;
+    max-width: 100%;
 }
 
 .nuevo-pedido input {
@@ -272,6 +273,7 @@ a {
     border-radius: 0 !important;
     border-bottom: 2px solid #ccc !important;
     background-color: #f7f4ef !important;
+    
 }
 
 .nuevo-pedido .select2-container--default .select2-selection--single {
@@ -306,13 +308,6 @@ a {
         display: none;
     }
 
-    .pedido-phone {
-        display: none !important;
-    }
-
-    .pedido-pc {
-        display: flex !important;
-    }
 }
 /*******ARTICULO*******/
 

@@ -64,7 +64,6 @@ namespace Service
         public void Modificar(Pedido entity, int idUsuario)
         {
             Pedido pedido = ObtenerPorId(entity.IdPedido);
-            pedido.IdEstado = entity.IdEstado;
             pedido.Comentarios = entity.Comentarios;
             pedido.ModificadoPor = idUsuario;
             pedido.FechaModificacion = DateTime.Today;

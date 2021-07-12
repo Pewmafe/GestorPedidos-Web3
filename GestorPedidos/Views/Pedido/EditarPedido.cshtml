@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="py-2 titulos-paginas">
-        <h3>Editar pedido</h3>
+        <h3>Editar pedido nro: @Model.Pedido.NroPedido</h3>
     </div>
 
     <div class="row nuevo-pedido">
@@ -89,62 +89,39 @@
                     </tbody>
                 </table>
             </div>
-            <div>
-                <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
-                <textarea disabled="@cerrado" class="form-control" id="exampleFormControlTextarea1" rows="3">@Model.Pedido.Comentarios</textarea>
-            </div>
-            <div class="d-none row my-2 pedido-pc">
-                <div class="col-4 col-md-4">
-                    <div class="d-flex justify-content-start">
+
+            <form asp-action="EditarPedido" asp-controller="Pedido" method="post">
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
+                    <textarea disabled="@cerrado" class="form-control" name="Comentarios" id="exampleFormControlTextarea1" rows="3">@Model.Pedido.Comentarios</textarea>
+                </div>
+
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
+                    <button disabled="@cerrado" class="col-12 btn btn-outline-success text-uppercase">Modificar</button>
+                </div>
+            </form>
+            <div class="row my-2 pedido-pc">
+                <div class="col-6 col-md-6 text-center">
+                    <div class="d-flex justify-content-center">
                         <form asp-controller="Pedido" asp-action="MarcarPedidoComoEntregado" method="post">
                             <input type="hidden" name="idPedido" id="dPedido" value="@Model.Pedido.IdPedido" />
                             <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Entregar</button>
                         </form>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="d-flex justify-content-end">
+                <div class="col-6 col-md-6 text-center">
+                    <div class="d-flex justify-content-center">
                         <form asp-controller="Pedido" asp-action="MarcarPedidoComoCerrado" method="post">
                             <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
                             <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
                         </form>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="d-flex justify-content-end">
-                        <button disabled="@cerrado" class="btn btn-outline-success text-uppercase">Modificar</button>
-                    </div>
-                </div>
+
             </div>
         </div>
 
     </div>
-
-    <div class="row my-2 pedido-phone">
-        <div class="col-4 col-md-4">
-            <div class="d-flex justify-content-start">
-                <form asp-controller="Pedido" asp-action="MarcarPedidoComoEntregado" method="post">
-                    <input type="hidden" name="idPedido" id="dPedido" value="@Model.Pedido.IdPedido" />
-                    <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Entregar</button>
-                </form>
-
-            </div>
-        </div>
-        <div class="col-4 col-md-4">
-            <div class="d-flex justify-content-end">
-                <form asp-controller="Pedido" asp-action="MarcarPedidoComoCerrado" method="post">
-                    <input type="hidden" name="idPedido" id="dPedido" value="@Model.Pedido.IdPedido" />
-                    <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
-                </form>
-
-            </div>
-        </div>
-        <div class="col-4 col-md-4">
-            <div class="d-flex justify-content-end">
-                <button disabled="@cerrado" class="btn btn-outline-success text-uppercase">Modificar</button>
-            </div>
-        </div>
-    </div>
-
 
 </div>

@@ -30,6 +30,7 @@ namespace GestorPedidos.Controllers
 
 
         }
+
         [HttpGet]
         public IActionResult Pedido()
         {
@@ -72,6 +73,7 @@ namespace GestorPedidos.Controllers
 
             return View();
         }
+
         [HttpPost]
         public IActionResult NuevoPedido(Pedido pedido, PedidoArticulo pedidoArticulo)
         {
@@ -101,6 +103,7 @@ namespace GestorPedidos.Controllers
             }
 
         }
+
         [HttpGet]
         public IActionResult EditarPedido(int id)
         {
@@ -115,6 +118,22 @@ namespace GestorPedidos.Controllers
             editarPedidoViewModel.ArticulosYCantidadesDelPedido = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(id);
             editarPedidoViewModel.ArticulosNoSeleccionados = this.pedidoServicio.listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(id);
             return View(editarPedidoViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult EditarPedido(Pedido pedido)
+        {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            int idUsuario2 = (int)HttpContext.Session.GetInt32("IdUser");
+            this.pedidoServicio.Modificar(pedido, idUsuario2);
+            Pedido pedido2 = this.pedidoServicio.ObtenerPorId(pedido.IdPedido);
+            TempData["Success"] = "Pedido numero " + pedido2.NroPedido + " modificado correctamente ";
+            return RedirectToAction("Pedido");
         }
 
         public IActionResult BorrarArticuloDePedido(PedidoArticulo pedidoArticulo)
