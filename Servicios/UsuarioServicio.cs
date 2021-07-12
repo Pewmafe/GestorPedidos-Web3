@@ -1,11 +1,8 @@
 ﻿using Models.Models;
-using Service;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Service
 {
@@ -72,7 +69,7 @@ namespace Service
 
         public List<Usuario> ListarNoEliminados()
         {
-            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u=> u.FechaBorrado == null).ToList();
+            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u => u.FechaBorrado == null).ToList();
 
             foreach (var item in usuariosNoEliminados)
             {

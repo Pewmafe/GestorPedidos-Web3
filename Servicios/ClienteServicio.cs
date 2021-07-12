@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Models.DTO;
+﻿using Models.DTO;
 using Models.Models;
 using System;
 using System.Collections.Generic;
