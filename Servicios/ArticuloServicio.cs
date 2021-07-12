@@ -64,35 +64,7 @@ namespace Service
                 dbContexto.SaveChanges();
             }
         }
-        public List<Articulo> listarPorCodigo(string codigo)
-        {
-            var articulos = from a in dbContexto.Articulos
-                            where a.Codigo == codigo
-                            orderby a.Codigo ascending
-                            select a;
-
-            return articulos.ToList();
-        }
-
-        public List<Articulo> listarPorDescripcion(string descripcion)
-        {
-            var articulos = from a in dbContexto.Articulos
-                            where a.Descripcion == descripcion
-                            orderby a.Codigo ascending
-                            select a;
-
-            return articulos.ToList();
-        }
-
-        public List<Articulo> listarPorCodigoYDescripcion(string codigo, string descripcion)
-        {
-            var articulos = from a in dbContexto.Articulos
-                            where a.Codigo == codigo && a.Descripcion == descripcion
-                            orderby a.Codigo ascending
-                            select a;
-
-            return articulos.ToList();
-        }
+      
 
         public Articulo ObtenerPorId(int id)
         {
@@ -134,6 +106,16 @@ namespace Service
                 articulosDTO.Add(articuloDTO);
             }
             return articulosDTO;
+        }
+
+        public List<Articulo> ListarPorFiltro(string Filtro)
+        {
+            var articulos = from a in dbContexto.Articulos
+                            where a.Descripcion.Contains(Filtro)
+                            orderby a.Codigo ascending
+                            select a;
+
+            return articulos.ToList();
         }
     }
 
