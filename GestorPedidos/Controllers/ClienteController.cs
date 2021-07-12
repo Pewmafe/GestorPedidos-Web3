@@ -61,6 +61,16 @@ namespace GestorPedidos.Controllers
                 return View(cliente);
             }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+
+            if (cliente.Email != null)
+            {
+                if (clienteServicio.emailExistente(cliente.Email))
+                {
+                    TempData["Error"] = "Ya existe un cliente con ese email.";
+                    return View(cliente);
+                }
+            }
+
             clienteServicio.Crear(cliente, idUsuario);
 
             if (guardar.ToLower().Equals("guardar"))
