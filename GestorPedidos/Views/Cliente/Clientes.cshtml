@@ -1,10 +1,12 @@
 ﻿@model List<Models.Models.Cliente>
 @section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/ClienteScript.js" type="text/javascript"></script>
 }
 @{
     Layout = "_UsuarioLayout";
     ViewData["Title"] = "Clientes";
+    bool? ExcluirEliminados = (bool)ViewData["ExcluirEliminados"];
 }
 <div>
     <div class="volver mb-3 row">
@@ -24,18 +26,18 @@
             <h4 class="titulos-paginas">Lista de Clientes</h4>
             <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
             <div class="collapse" id="filtros">
-                <div class="mb-3">
-                    <select class="form-select" name="codigo">
-                        <option value="">Cliente</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <select class="form-select" name="descripcion">
-                        <option value="">Telefono</option>
-                    </select>
-                </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    @if (ExcluirEliminados == true)
+                    {
+
+
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    }
+
                     <p class="form-check-label" for="flexCheckChecked">
                         Excluir eliminados
                     </p>
@@ -43,7 +45,7 @@
 
             </div>
             <div class="table-responsive ">
-                <table id="" class="table table-striped" style="width:100%">
+                <table id="table_id" class="table table-striped display" style="width:100%">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th class="text-center">#</th>
@@ -118,7 +120,6 @@
                                     @if (@cliente.FechaBorrado == null)
                                     {
                                         <td class="text-center">
-
                                             <a href="/cliente/Borrarcliente?idCliente=@cliente.IdCliente" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cliente"> <i class="fas fa-times btn text-danger"></i></a>
                                         </td>
                                     }

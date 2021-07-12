@@ -3,6 +3,9 @@ using Models.Models;
 using Service;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System;
+using System.Text.RegularExpressions;
 
 namespace GestorPedidos.Controllers
 {
@@ -32,7 +35,18 @@ namespace GestorPedidos.Controllers
                 TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
                 return RedirectToAction("Index", "Home");
             }
-            List<Cliente> clientes = clienteServicio.ListarTodos();
+            List<Cliente> clientes = new List<Cliente>();
+            if (TempData["Eliminados"] != null)
+            {
+                clientes = clienteServicio.ListarNoEliminados();
+                ViewData["ExcluirEliminados"] = true;
+            }
+            else
+            {
+                clientes = clienteServicio.ListarTodos();
+                ViewData["ExcluirEliminados"] = false;
+            }
+                
             return View(clientes);
         }
 
@@ -61,6 +75,16 @@ namespace GestorPedidos.Controllers
                 return View(cliente);
             }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+
+            if (cliente.Email != null)
+            {
+                if (clienteServicio.emailExistente(cliente.Email))
+                {
+                    TempData["Error"] = "Ya existe un cliente con ese email.";
+                    return View(cliente);
+                }
+            }
+
             clienteServicio.Crear(cliente, idUsuario);
 
             if (guardar.ToLower().Equals("guardar"))
@@ -112,6 +136,13 @@ namespace GestorPedidos.Controllers
             clienteServicio.BorrarPorId(idCliente, idUsuario);
             Cliente cliente = this.clienteServicio.ObtenerPorId(idCliente);
             TempData["Success"] = "Cliente  '" + cliente.Nombre + "' borrado correctamente";
+            return RedirectToAction("Clientes");
+        }
+
+        [HttpGet]
+        public IActionResult ClientesNoEliminados()
+        {
+            TempData["Eliminados"] = true;
             return RedirectToAction("Clientes");
         }
 

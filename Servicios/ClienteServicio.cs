@@ -108,5 +108,16 @@ namespace Service
                 .Where(p => p.Nombre.Contains(Filtro))
                 .ToList();
         }
+
+        public bool emailExistente(string email)
+        {
+            Cliente clienteExistente = _dbContext.Clientes.Where(o => o.Email == email).FirstOrDefault();
+            if (clienteExistente == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

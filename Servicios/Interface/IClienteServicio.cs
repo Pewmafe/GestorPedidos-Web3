@@ -9,5 +9,7 @@ namespace Service
         List<Cliente> listarClientesSinPedidosActivos();
         List<ClienteDTO> mapearListaClienteAListaClienteDTO(List<Cliente> clientes);
         List<Cliente> ListarPorFiltro(string Filtro);
+
+        bool emailExistente(string email);
     }
 }
