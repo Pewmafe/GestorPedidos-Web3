@@ -41,7 +41,8 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Login", "Login");
             }
             ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
-            if (TempData["Entregados"] != null) ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosEntregados();
+            ViewData["ExcluirEliminados"] = false;
+            if (TempData["Entregados"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosEntregados(); ViewData["ExcluirEliminados"] = true; };
 
             return View();
         }
@@ -73,6 +74,7 @@ namespace GestorPedidos.Controllers
 
             return View();
         }
+
 
         [HttpPost]
         public IActionResult NuevoPedido(Pedido pedido, PedidoArticulo pedidoArticulo)

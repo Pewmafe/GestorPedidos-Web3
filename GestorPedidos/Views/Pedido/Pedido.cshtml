@@ -4,7 +4,7 @@
     Layout = "_UsuarioLayout";
     ViewData["Title"] = "Pedido";
     List<Pedido> pedidos = (List<Pedido>)ViewData["Pedidos"];
-
+    bool? ExcluirEliminados = (bool)ViewData["ExcluirEliminados"];
 }
 <div>
     <div class="volver mb-3 row">
@@ -29,17 +29,21 @@
                     </p>
                 </div>
                 <div class="form-check">
-                    <form asp-action="ListarEntregados" asp-controller="Pedido" method="get">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                        <p class="form-check-label" for="flexCheckChecked">
-                            Excluir eliminados
-                        </p>
-                        <button type="submit">asd</button>
-                    </form>
+                    @if (ExcluirEliminados == true)
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedido" checked>
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedido">
+                    }
+                    <p class="form-check-label" for="flexCheckChecked">
+                        Excluir eliminados
+                    </p>
                 </div>
             </div>
             <div class="table-responsive ">
-                <table id="" class="table table-striped" style="width:100%">
+                <table id="table_id_pedidos" class="table table-striped" style="width:100%">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th class="text-center">#</th>

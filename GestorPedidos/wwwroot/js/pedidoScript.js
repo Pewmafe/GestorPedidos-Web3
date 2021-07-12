@@ -85,6 +85,16 @@
         return false;
     }
 
+    $('#table_id_pedidos').dataTable({});
 
-
+    $(function () {
+        $("#flexCheckCheckedPedido").on('change', function () {
+            if ($(this).is(':checked')) {
+                location.href = "https://localhost:44322/Pedido/ListarEntregados";
+            }
+            else {
+                location.reload();
+            }
+        });
+    });
 });
