@@ -35,7 +35,18 @@ namespace GestorPedidos.Controllers
                 TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
                 return RedirectToAction("Index", "Home");
             }
-            List<Cliente> clientes = clienteServicio.ListarTodos();
+            List<Cliente> clientes = new List<Cliente>();
+            if (TempData["Eliminados"] != null)
+            {
+                clientes = clienteServicio.ListarNoEliminados();
+                ViewData["ExcluirEliminados"] = true;
+            }
+            else
+            {
+                clientes = clienteServicio.ListarTodos();
+                ViewData["ExcluirEliminados"] = false;
+            }
+                
             return View(clientes);
         }
 
@@ -128,43 +139,11 @@ namespace GestorPedidos.Controllers
             return RedirectToAction("Clientes");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult ClientesNoEliminados()
         {
-            var draw = Request.Form["draw"].FirstOrDefault();
-            var start = Request.Form["start"].FirstOrDefault();
-            var length = Request.Form["length"].FirstOrDefault();
-            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
-            var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
-            var searchValue = Request.Form["search[value]"].FirstOrDefault();
-
-
-            //Paging Size (10,20,50,100)    
-            int pageSize = length != null ? Convert.ToInt32(length) : 0;
-            int skip = start != null ? Convert.ToInt32(start) : 0;
-            int recordsTotal = 0;
-
-            // Getting all Customer data    
-            List<Cliente> clientesNoEliminados = clienteServicio.ListarNoEliminados();
-
-            //Sorting    
-            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
-            {
-                clientesNoEliminados = clientesNoEliminados.OrderBy(u => u.IdCliente).ToList();
-            }
-            //Search    
-            if (!string.IsNullOrEmpty(searchValue))
-            {
-
-                clientesNoEliminados = clientesNoEliminados.Where(u => Regex.IsMatch(u.IdCliente.ToString(), searchValue) || Regex.IsMatch(u.Nombre.ToLower(), searchValue.ToLower()) || Regex.IsMatch(u.Email.ToLower(), searchValue.ToLower())).ToList();
-            }
-
-            //total number of rows count     
-            recordsTotal = clientesNoEliminados.Count();
-            //Paging     
-            var data = clientesNoEliminados.Skip(skip).Take(pageSize).ToList();
-            //Returning Json Data    
-            return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+            TempData["Eliminados"] = true;
+            return RedirectToAction("Clientes");
         }
 
     }

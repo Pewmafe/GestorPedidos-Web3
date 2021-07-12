@@ -6,6 +6,7 @@
 @{
     Layout = "_UsuarioLayout";
     ViewData["Title"] = "Clientes";
+    bool? ExcluirEliminados = (bool)ViewData["ExcluirEliminados"];
 }
 <div>
     <div class="volver mb-3 row">
@@ -26,7 +27,17 @@
             <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
             <div class="collapse" id="filtros">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    @if (ExcluirEliminados == true)
+                    {
+
+
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    }
+
                     <p class="form-check-label" for="flexCheckChecked">
                         Excluir eliminados
                     </p>
