@@ -4,6 +4,7 @@
     Layout = "_UsuarioLayout";
     ViewData["Title"] = "Pedido";
     List<Pedido> pedidos = (List<Pedido>)ViewData["Pedidos"];
+
 }
 <div>
     <div class="volver mb-3 row">
@@ -28,10 +29,13 @@
                     </p>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                    <p class="form-check-label" for="flexCheckChecked">
-                        Excluir eliminados
-                    </p>
+                    <form asp-action="ListarEntregados" asp-controller="Pedido" method="get">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                        <p class="form-check-label" for="flexCheckChecked">
+                            Excluir eliminados
+                        </p>
+                        <button type="submit">asd</button>
+                    </form>
                 </div>
             </div>
             <div class="table-responsive ">
@@ -80,5 +84,5 @@
         </div>
 
     </div>
-  
+
 </div>

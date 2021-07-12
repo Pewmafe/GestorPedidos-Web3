@@ -174,5 +174,10 @@ namespace Service
             pedido.FechaBorrado = DateTime.Today;
             _dbContext.SaveChanges();
         }
+
+        public List<Pedido> ListarPedidosEntregados()
+        {
+            return _dbContext.Pedidos.Include(p => p.PedidoArticulos).Include(p => p.IdClienteNavigation).Include(p => p.IdEstadoNavigation).Where(p => p.IdEstado == (int)EstadoPedidoEnum.ENTREGADO).ToList();
+        }
     }
 }

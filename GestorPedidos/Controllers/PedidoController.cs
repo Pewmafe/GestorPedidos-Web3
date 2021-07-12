@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Models;
+using Newtonsoft.Json;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,16 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Login", "Login");
             }
             ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
+            if (TempData["Entregados"] != null) ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosEntregados();
+
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult ListarEntregados()
+        {
+            TempData["Entregados"] = true;
+            return RedirectToAction("Pedido");
         }
 
         [HttpGet]
