@@ -1,11 +1,8 @@
 ﻿using Models.Models;
-using Service;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Service
 {
@@ -18,7 +15,7 @@ namespace Service
             _context = context;
         }
 
-        public void Crear(Usuario usuario)
+        public void Crear(Usuario usuario, int idUsuario)
         {
 
             _context.Usuarios.Add(usuario);
@@ -26,17 +23,18 @@ namespace Service
             _context.SaveChanges();
         }
 
-        public void Borrar(Usuario entity)
+        public void Borrar(Usuario entity, int idUsuario)
         {
 
         }
 
-        public void BorrarPorId(int id)
+        public void BorrarPorId(int id, int idUsuario)
         {
             Usuario usuario = _context.Usuarios.Find(id);
 
             usuario.FechaModificacion = DateTime.Now;
             usuario.FechaBorrado = DateTime.Now;
+            usuario.BorradoPor = idUsuario;
 
             _context.SaveChanges();
         }
@@ -44,7 +42,7 @@ namespace Service
         public List<Usuario> ListarTodos()
         {
 
-            return _context.Usuarios.ToList();
+            return _context.Usuarios.OrderBy(u=> u.Nombre).ToList();
         }
 
         public Usuario ObtenerPorId(int id)
@@ -54,22 +52,16 @@ namespace Service
             return usuario;
         }
 
-        public void Modificar(Usuario usuario)
+        public void Modificar(Usuario usuario, int idUsuario)
         {
+            Usuario usuarioActualizado = ObtenerPorId(usuario.IdUsuario);
 
-        }
-
-        public void Modificar(int IdUsuario, String Email, String Password, bool EsAdmin, String Nombre, String Apellido, DateTime FechaNacimiento)
-        {
-            Usuario usuario = ObtenerPorId(IdUsuario);
-
-            usuario.Email = Email;
-            usuario.Password = Password;
-            usuario.EsAdmin = EsAdmin;
-            usuario.Nombre = Nombre;
-            usuario.Apellido = Apellido;
-            usuario.FechaNacimiento = FechaNacimiento;
-            usuario.FechaModificacion = DateTime.Today;
+            usuarioActualizado.Nombre = usuario.Nombre;
+            usuarioActualizado.Apellido = usuario.Apellido;
+            usuarioActualizado.Email = usuario.Email;
+            usuarioActualizado.Password = usuario.Password;
+            usuarioActualizado.FechaNacimiento = usuario.FechaNacimiento;
+            usuarioActualizado.FechaModificacion = DateTime.Today;
 
             _context.SaveChanges();
 
@@ -78,7 +70,12 @@ namespace Service
 
         public List<Usuario> ListarNoEliminados()
         {
-            throw new NotImplementedException();
+
+            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u=> u.FechaBorrado == null).OrderBy(u=> u.Nombre).ToList();
+
+
+            return usuariosNoEliminados;
+
         }
 
     }

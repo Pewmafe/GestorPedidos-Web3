@@ -1,6 +1,7 @@
 ﻿@model Models.Models.Usuario;
 
 @{
+    Layout = "_UsuarioLayout";
     Boolean readOnly = Model.FechaBorrado != null ? true : false;
 
     ViewData["Title"] = "EditarUsuario";
@@ -48,12 +49,12 @@
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="EsAdmin" class="form-label">Admin:</label>
-            <input type="checkbox" asp-for="EsAdmin" disabled="@readOnly" value="@Model.EsAdmin" class="form-check-input form-check " />
+            <input type="checkbox" asp-for="EsAdmin" disabled="@readOnly" value="true" class="form-check-input form-check " checked="@Model.EsAdmin" />
             <span asp-validation-for="EsAdmin" class="text-danger"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="FechaNacimiento" class="form-label">Fecha De Nacimiento:</label>
-            <input asp-format="{0:dd/MM/yyyy}" type="date" asp-for="FechaNacimiento" disabled="@readOnly" value="@Model.FechaNacimiento" class="form-control" />
+            <input type="date" asp-for="FechaNacimiento" disabled="@readOnly" value="@string.Format("{0:yyyy-MM-dd}", Model.FechaNacimiento)" class="form-control" />
             <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
         </div>
 

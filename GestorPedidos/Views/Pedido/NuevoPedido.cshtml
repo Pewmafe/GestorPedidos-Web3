@@ -1,119 +1,88 @@
 ﻿@using Models.Models
 @{
+    Layout = "_UsuarioLayout";
     ViewData["Title"] = "Nuevo Pedido";
     List<Cliente> clientes = (List<Cliente>)ViewData["Clientes"];
     List<Articulo> articulos = (List<Articulo>)ViewData["Articulos"];
-
 }
-<div>
-    <div class="volver mb-3 row">
-        <div class="col">
-            <a asp-controller="Pedido" asp-action="Pedido" class="mx-1">
-                <i class="fas fa-long-arrow-alt-left"></i> Volver
-            </a>
-        </div>
-    </div>
-    <div class="py-2 titulos-paginas">
-        <h3>Nuevo pedido</h3>
-    </div>
 
-    <div class="row nuevo-pedido">
-        <div class="col-12 col-md-6 mt-3">
-            <div class="mb-3">
-                <label class="form-label-group text-uppercase">Cliente</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>-</option>
-                    @foreach (var c in clientes)
-                    {
-                        <option value="@c.IdCliente"> @c.Nombre </option>
-                    }
-                </select>
-            </div>
-
-            <div class="mb-2">
-                <label class="form-label-group text-uppercase">Articulo</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>-</option>
-                    @foreach (var a in articulos)
-                    {
-                        <option value="@a.IdArticulo"> @a.Codigo - @a.Descripcion </option>
-                    }
-                </select>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-dark text-uppercase">Agregar al carrito</button>
+<form asp-controller="Pedido" asp-action="NuevoPedido" method="post">
+    <div>
+        <div class="volver mb-3 row">
+            <div class="col">
+                <a asp-controller="Pedido" asp-action="Pedido" class="mx-1">
+                    <i class="fas fa-long-arrow-alt-left"></i> Volver
+                </a>
             </div>
         </div>
-        <div class="hr-pedido">
-            <hr />
+        <div class="py-2 titulos-paginas">
+            <h3>Nuevo pedido</h3>
         </div>
-        <div class="col-12 col-md-6 mt-3">
-            <p class="text-uppercase">Carrito</p>
-            <div class="table-responsive ">
-                <table id="" class="table table-striped" style="width:100%">
-                    <thead class="bg-dark text-light">
-                        <tr>
-                            <th>Descripcion</th>
-                            <th>Codigo</th>
-                            <th>Cantidad</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Coca Cola</td>
-                            <td>A122</td>
-                            <td>1</td>
-                            <td>
-                                <span data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></span> |
-                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></span>
-                            </td>
 
-                        </tr>
-                        <tr>
-                            <td>Pepsi</td>
-                            <td>B2B1</td>
-                            <td>2</td>
-                            <td>
-                                <span data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></span> |
-                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="nuevo-pedido">
-                <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-            <div class="d-none row my-2 pedido-pc">
-                <div class="col-6">
-                    <div class="d-flex justify-content-start">
-                        <button class="btn btn-outline-success text-uppercase">Agregar</button>
-                    </div>
+        <div class="row nuevo-pedido">
+            <div class="col-12 mt-3">
+                <div class="mb-3">
+                    <label class="form-label-group text-uppercase">Cliente*</label>
+                    <select name="IdCliente" class="form-select" aria-label="Default select example" id="articulos-select2" required>
+                        <option selected>-</option>
+                        @foreach (var c in clientes)
+                        {
+                            <option value="@c.IdCliente"> @c.Nombre </option>
+                        }
+                    </select>
                 </div>
-                <div class="col-6">
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-outline-success text-uppercase">Agregar otro </button>
+
+                <div class="mb-2">
+                    <label class="form-label-group text-uppercase">Articulo*</label>
+                    <select class="form-select" aria-label="Default select example" name="IdArticulo" id="articulos-select" required>
+                        <option value="first" selected>-</option>
+                        @foreach (var a in articulos)
+                        {
+                            <option value="@a.IdArticulo"> @a.Codigo - @a.Descripcion </option>
+                        }
+                    </select>
+                </div>
+                <div class="mt-1 mb-2">
+                    <label class="form-label-group text-uppercase">Cantidad Articulo</label>
+                    <input type="number" name="Cantidad" class="form-control" />
+                </div>
+                <div class="nuevo-pedido">
+                    <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
+                    <textarea name="Comentarios" id="Comentarios" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div class="d-none row my-2 pedido-pc">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-start">
+                            <button type="submit" class="btn btn-outline-success text-uppercase">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-outline-success text-uppercase">Agregar otro </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-    </div>
-
-    <div class="row my-2 pedido-phone">
-        <div class="col-6 col-md-4">
-            <div class="d-flex justify-content-start">
-                <button class="btn btn-outline-success text-uppercase">Agregar</button>
+            <div class="hr-pedido">
+                <hr />
             </div>
         </div>
-        <div class="col-6 col-md-4">
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-success text-uppercase">Agregar otro </button>
+
+        <div class="row my-2 pedido-phone">
+            <div class="col-6 col-md-4">
+                <div class="d-flex justify-content-start">
+                    <button type="submit" class="btn btn-outline-success text-uppercase">Agregar</button>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-outline-success text-uppercase">Agregar otro </button>
+                </div>
             </div>
         </div>
     </div>
-
-
-</div>
+</form>
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/pedidoScript.js"></script>
+}

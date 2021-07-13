@@ -1,5 +1,10 @@
-﻿@{
+﻿@model EditarPedidoViewModel
+@{
+    Layout = "_UsuarioLayout";
     ViewData["Title"] = "Editar Pedido";
+
+    Boolean cerrado = Model.Pedido.IdEstado != 1 ? true : false;
+
 }
 <div>
     <div class="volver mb-3 row">
@@ -10,33 +15,42 @@
         </div>
     </div>
     <div class="py-2 titulos-paginas">
-        <h3>Editar pedido</h3>
+        <h3>Editar pedido nro: @Model.Pedido.NroPedido</h3>
     </div>
 
     <div class="row nuevo-pedido">
         <div class="col-12 col-md-6 mt-3">
             <div class="mb-3">
-                <label class="form-label-group text-uppercase">Cliente</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>-</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <h4 class="form-label-group text-uppercase">Estado : <span class="estado-@Model.Pedido.IdEstadoNavigation.Descripcion text-decoration-underline"> @Model.Pedido.IdEstadoNavigation.Descripcion </span> </h4>
+            </div>
+            <div class="mb-3">
+                <h5 class="form-label-group text-uppercase">Cliente : <span class="fst-italic"> @Model.Pedido.IdClienteNavigation.Nombre</span></h5>
             </div>
 
-            <div class="mb-2">
-                <label class="form-label-group text-uppercase">Articulo</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>-</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-dark text-uppercase">Agregar a la lista</button>
-            </div>
+            <form asp-controller="Pedido" asp-action="AgregarArticuloAUnPedido">
+                <div class="mb-2">
+                    <label class="form-label-group text-uppercase">Articulos</label>
+                    <select disabled="@cerrado" class="form-select" aria-label="Default select example" name="IdArticulo" id="articulos-select3">
+                        <option selected>-</option>
+                        @foreach (var ar in Model.ArticulosNoSeleccionados)
+                        {
+                            <option value="@ar.IdArticulo">@ar.Codigo - @ar.Descripcion</option>
+                        }
+                    </select>
+                </div>
+                <div class="mt-1 mb-2">
+                    <label class="form-label-group text-uppercase">Cantidad Articulo</label>
+                    <input disabled="@cerrado" type="number" name="Cantidad" class="form-control" />
+                </div>
+                <div class="d-flex justify-content-end">
+                    <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
+                    @if (!cerrado)
+                    {
+                        <button disabled="@cerrado" class="btn btn-outline-dark text-uppercase">Agregar a la lista</button>
+                    }
+
+                </div>
+            </form>
         </div>
         <div class="hr-pedido">
             <hr />
@@ -54,70 +68,64 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-center">Coca Cola</td>
-                            <td class="text-center">A122</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">
-                                <span data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></span> |
-                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></span>
-                            </td>
+                        @foreach (var articulo in Model.ArticulosYCantidadesDelPedido)
+                        {
+                            <tr>
+                                <td class="text-center">@articulo.Key.Descripcion</td>
+                                <td class="text-center">@articulo.Key.Codigo</td>
+                                <td class="text-center">@articulo.Value</td>
+                                <td class="text-center d-flex justify-content-center">
+                                    <a class="btn text-center" target="_blank" href="/Articulo/EditarArticulo?IdArticulo=@articulo.Key.IdArticulo" data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></a>
+                                    <span class="btn">|</span>
+                                    <form asp-controller="Pedido" asp-action="BorrarArticuloDePedido" method="POST">
+                                        <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
+                                        <input type="hidden" name="IdArticulo" id="IdPedido" value="@articulo.Key.IdArticulo" />
+                                        <button disabled="@cerrado" type="submit" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></button>
+                                    </form>
+                                </td>
 
-                        </tr>
-                        <tr>
-                            <td class="text-center">Pepsi</td>
-                            <td class="text-center">B2B1</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">
-                                <span data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></span> |
-                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar del carrito"> <i class="fas fa-times btn text-danger"></i></span>
-                            </td>
-                        </tr>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
-            <div>
-                <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-            <div class="d-none row my-2 pedido-pc">
-                <div class="col-4">
-                    <div class="d-flex justify-content-start">
-                        <button class="btn btn-outline-secondary text-uppercase">Cancelar</button>
+
+            <form asp-action="EditarPedido" asp-controller="Pedido" method="post">
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
+                    <textarea disabled="@cerrado" class="form-control" name="Comentarios" id="exampleFormControlTextarea1" rows="3">@Model.Pedido.Comentarios</textarea>
+                </div>
+
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
+                    <button disabled="@cerrado" class="col-12 btn btn-outline-success text-uppercase">Modificar</button>
+                </div>
+            </form>
+            <div class="row my-2 pedido-pc">
+                <div class="col-6 col-md-6 text-center">
+                    <div class="d-flex justify-content-center">
+                        <form asp-controller="Pedido" asp-action="MarcarPedidoComoEntregado" method="post">
+                            <input type="hidden" name="idPedido" id="dPedido" value="@Model.Pedido.IdPedido" />
+                            <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Entregar</button>
+                        </form>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-outline-danger text-uppercase">Borrar</button>
+                <div class="col-6 col-md-6 text-center">
+                    <div class="d-flex justify-content-center">
+                        <form asp-controller="Pedido" asp-action="MarcarPedidoComoCerrado" method="post">
+                            <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
+                            <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
+                        </form>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-outline-success text-uppercase">Modificar</button>
-                    </div>
-                </div>
+
             </div>
         </div>
 
     </div>
-
-    <div class="row my-2 pedido-phone">
-        <div class="col-4 col-md-4">
-            <div class="d-flex justify-content-start">
-                <button class="btn btn-outline-secondary text-uppercase">Cancelar</button>
-            </div>
-        </div>
-        <div class="col-4 col-md-4">
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-danger text-uppercase">Borrar</button>
-            </div>
-        </div>
-        <div class="col-4 col-md-4">
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-success text-uppercase">Modificar</button>
-            </div>
-        </div>
-    </div>
-
 
 </div>
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/pedidoScript.js"></script>
+}

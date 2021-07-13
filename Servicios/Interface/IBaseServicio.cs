@@ -7,9 +7,9 @@ namespace Service
         TEntity ObtenerPorId(int id);
         List<TEntity> ListarTodos();
         List<TEntity> ListarNoEliminados();
-        void Crear(TEntity entity);
-        void Modificar(TEntity entity);
-        void Borrar(TEntity entity);
-        void BorrarPorId(int id);
+        void Crear(TEntity entity, int idUsuario);
+        void Modificar(TEntity entity, int idUsuario);
+        void Borrar(TEntity entity, int idUsuario);
+        void BorrarPorId(int id, int idUsuario);
     }
 }

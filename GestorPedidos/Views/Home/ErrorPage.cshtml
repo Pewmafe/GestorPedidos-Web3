@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewData["Title"] = "404";
+    string error = ViewData["errorException"] != null ? (string)ViewData["errorException"] : "";
+}
+<div class="my-5">
+    <h1 class="text-danger text-center titulos-paginas mb-3"> ERROR 404 </h1>
+    <h2 class="titulos-paginas text-center mb-3">Ocurrio un error al procesar su peticion. </h2>
+    <h3 class="">ERROR: @error</h3>
+</div>

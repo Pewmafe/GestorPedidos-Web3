@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<Models.Models.Usuario>
 
 @{
+    Layout = "_UsuarioLayout";
     ViewData["Title"] = "Usuarios";
 
 }
+
+
 <div>
     <div class="volver mb-3 row">
         <div class="col">
@@ -22,26 +25,18 @@
             <h4 class="titulos-paginas">Lista de Usuarios</h4>
             <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
             <div class="collapse" id="filtros">
+
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                     <p class="form-check-label" for="flexCheckChecked">
                         Excluir eliminados
                     </p>
                 </div>
-                <div class="mb-3">
-                    <select class="form-select" name="codigo">
-                        <option>Nombre Usuario</option>
-                        <option>-</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <select class="form-select" name="codigo">
-                        <option>Email</option>
-                    </select>
-                </div>
             </div>
+
+
             <div class="table-responsive ">
-                <table id="" class="table table-striped" style="width:100%">
+                <table id="table_id" class="table table-striped display" style="width:100%">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th class="text-center">#</th>
@@ -50,6 +45,7 @@
                             <th class="text-center" scope="col">Fecha Nacimiento</th>
                             <th class="text-center" scope="col">Ver</th>
                             <th class="text-center" scope="col">Eliminados</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -88,9 +84,19 @@
                         }
                     </tbody>
                 </table>
+
             </div>
         </div>
 
     </div>
 
 </div>
+
+
+
+
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/UsuarioScript.js"></script>
+
+}
