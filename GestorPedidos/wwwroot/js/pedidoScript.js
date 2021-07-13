@@ -3,7 +3,7 @@
     $('#articulos-select2').select2();
     $('#articulos-select3').select2();
 
-    
+
 
     $(function () {
         $("#flexCheckCheckedPedido").on('change', function () {
