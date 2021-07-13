@@ -79,13 +79,17 @@ namespace Service
             List<Cliente> clientesSinPedidosActivos = new List<Cliente>();
             ListarNoEliminados().ForEach(a =>
             {
-                if (!this.pedidoServicio.validarSiExistePedidoAbiertoDeUnClientePorIdCliente(a.IdCliente)) clientesSinPedidosActivos.Add(a);
+                if (!validarSiExistePedidoAbiertoDeUnClientePorIdCliente(a.IdCliente)) clientesSinPedidosActivos.Add(a);
             });
 
             return clientesSinPedidosActivos;
 
         }
 
+        public bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente)
+        {
+            return _dbContext.Pedidos.Where(p => p.IdCliente == idCliente && p.IdEstado == 1 && p.FechaBorrado == null).Count() > 0;
+        }
         public List<ClienteDTO> mapearListaClienteAListaClienteDTO(List<Cliente> clientes)
         {
             List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
