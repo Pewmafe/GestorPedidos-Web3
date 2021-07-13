@@ -30,11 +30,32 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Usuarios()
         {
+
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
+                return RedirectToAction("Login", "Login");
+            }
+
+            if (admin != null & admin != "True")
+            {
+
+                TempData["Error"] = "Solo los usuarios admin pueden ingresar a esta sección.";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+
             return View("Usuarios", _usuarioServicio.ListarTodos());
         }
         [HttpPost]
         public IActionResult UsuariosNoEliminados()
         {
+
             var draw = Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
             var length = Request.Form["length"].FirstOrDefault();
@@ -54,7 +75,7 @@ namespace GestorPedidos.Controllers
             //Sorting    
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
             {
-                usuariosNoEliminados = usuariosNoEliminados.OrderBy(u=> u.IdUsuario).ToList();
+                //usuariosNoEliminados = usuariosNoEliminados.OrderBy(u=> u.IdUsuario).ToList();
             }
             //Search    
             if (!string.IsNullOrEmpty(searchValue))
@@ -76,7 +97,28 @@ namespace GestorPedidos.Controllers
         public IActionResult NuevoUsuario()
         {
 
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+           
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+          
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
+                
+                return RedirectToAction("Login", "Login");
+          
+           }
+
+            if (admin != null && admin != "True")
+            {
+                TempData["Error"] = "Solo los usuarios admin pueden ingresar a esta sección.";
+
+                return RedirectToAction("Index", "Home");
+            }
+
             return View("NuevoUsuario");
+
+          
         }
 
         [HttpPost]
@@ -86,8 +128,11 @@ namespace GestorPedidos.Controllers
             {
                 return View(usuario);
             }
+            
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             _usuarioServicio.Crear(usuario, idUsuario);
+
+            TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
 
             return RedirectToAction(nameof(Usuarios));
         }
@@ -95,6 +140,28 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult EditarUsuario(int id)
         {
+
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+           
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
+
+                return RedirectToAction("Login", "Login");
+            }
+
+            if(admin != null & admin != "True")
+            {
+
+                TempData["Error"] = "Solo los usuarios admines pueden ingresar a esta sección.";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+
+
             return View("EditarUsuario", _usuarioServicio.ObtenerPorId(id));
 
         }
@@ -102,17 +169,52 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult EditarUsuario(Usuario usuario)
         {
+
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+
             _usuarioServicio.Modificar(usuario,idUsuario);
+
+            TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha modificado correctamente";
+
             return RedirectToAction(nameof(Usuarios));
         }
-
-        public IActionResult BajaUsuario(int id)
+       
+       
+        public IActionResult BajaUsuario(int id, string guardar)
         {
-            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
-            _usuarioServicio.BorrarPorId(id,idUsuario);
+
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
+
+                return RedirectToAction("Login", "Login");
+            }
+
+            if (admin != null & admin != "True")
+            {
+
+                TempData["Error"] = "Solo los usuarios admines pueden ingresar a esta sección.";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+
+            //int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+
+            Usuario usuario = _usuarioServicio.ObtenerPorId(id);
+
+            _usuarioServicio.BorrarPorId(id, Convert.ToInt32(idUsuario));
+
+       
+            TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha borrado correctamente";
+
 
             return RedirectToAction(nameof(Usuarios));
+
         }
 
        
