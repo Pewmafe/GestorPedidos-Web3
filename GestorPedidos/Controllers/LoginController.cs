@@ -23,6 +23,11 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario2 != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -37,7 +42,7 @@ namespace GestorPedidos.Controllers
             }
             this.GuardarInformacionSesion(usuarioValidado);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Pedido", "Pedido");
         }
         [HttpGet]
         public IActionResult Logout()

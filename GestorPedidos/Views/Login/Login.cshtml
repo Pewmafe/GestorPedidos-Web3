@@ -21,6 +21,8 @@
                         </div>
                         <div class="form-label-group">
                             <input type="password" id="password" asp-for="Password" class="form-control p-1" placeholder="Contrasenia" />
+                            <span asp-validation-for="Password " class="text-danger"></span>
+
                         </div>
                         <div class="text-center">
                             <button class="btn btn-primary text-uppercase" type="submit">

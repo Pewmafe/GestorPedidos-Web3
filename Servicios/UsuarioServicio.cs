@@ -34,6 +34,7 @@ namespace Service
 
             usuario.FechaModificacion = DateTime.Now;
             usuario.FechaBorrado = DateTime.Now;
+            usuario.BorradoPor = idUsuario;
 
             _context.SaveChanges();
         }
@@ -41,7 +42,7 @@ namespace Service
         public List<Usuario> ListarTodos()
         {
 
-            return _context.Usuarios.ToList();
+            return _context.Usuarios.OrderBy(u=> u.Nombre).ToList();
         }
 
         public Usuario ObtenerPorId(int id)
@@ -69,13 +70,9 @@ namespace Service
 
         public List<Usuario> ListarNoEliminados()
         {
-            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u => u.FechaBorrado == null).ToList();
 
-            foreach (var item in usuariosNoEliminados)
-            {
-                String fecha = item.FechaNacimiento.Value.ToShortDateString();
-                item.FechaNacimiento = DateTime.ParseExact(fecha, "d/M/yyyy", null);
-            }
+            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u=> u.FechaBorrado == null).OrderBy(u=> u.Nombre).ToList();
+
 
             return usuariosNoEliminados;
 
