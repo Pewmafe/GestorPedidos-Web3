@@ -15,6 +15,7 @@
     "outputFileName": "wwwroot/js/siteJsBundle.min.js",
     "inputFiles": [
       "wwwroot/js/ClienteScript.js",
+      "wwwroot/js/ArticuloScript.js",
       "wwwroot/js/pedidoScript.js",
       "wwwroot/js/site.js",
       "wwwroot/js/UsuarioScript.js"

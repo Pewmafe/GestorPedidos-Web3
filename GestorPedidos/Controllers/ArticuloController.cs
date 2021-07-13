@@ -33,12 +33,39 @@ namespace GestorPedidos.Controllers
                 TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
                 return RedirectToAction("Index", "Home");
             }
+            List<Articulo> articulos= new List<Articulo>();
+            if (TempData["Eliminados"] != null)
+            {
+                articulos = articuloServicio.ListarNoEliminados();
+                ViewData["ExcluirEliminados"] = true;
+            }
+            else
+            {
+                articulos = articuloServicio.ListarTodos();
+                ViewData["ExcluirEliminados"] = false;
+            }
 
-            List<Articulo> articulos = articuloServicio.ListarTodos();
 
             return View(articulos);
         }
-
+        [HttpGet]
+        public IActionResult ArticulosNoEliminados()
+        {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null && admin != "True")
+            {
+                TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
+                return RedirectToAction("Index", "Home");
+            }
+            TempData["Eliminados"] = true;
+            return RedirectToAction(nameof(Articulos));
+        }
 
         [HttpGet]
         public IActionResult NuevoArticulo()
