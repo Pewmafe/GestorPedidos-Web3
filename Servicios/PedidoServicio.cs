@@ -50,6 +50,8 @@ namespace Service
                 .Include(p => p.PedidoArticulos)
                 .Include(p => p.IdClienteNavigation)
                 .Include(p => p.IdEstadoNavigation)
+                .Include(p => p.ModificadoPorNavigation)
+                .Include(p => p.BorradoPorNavigation)
                 .ToList();
         }
         public List<Pedido> ListarNoEliminados()
@@ -176,7 +178,13 @@ namespace Service
 
         public List<Pedido> ListarPedidosEntregados()
         {
-            return _dbContext.Pedidos.Include(p => p.PedidoArticulos).Include(p => p.IdClienteNavigation).Include(p => p.IdEstadoNavigation).Where(p => p.IdEstado == (int)EstadoPedidoEnum.ENTREGADO).ToList();
+            return _dbContext.Pedidos
+                .Include(p => p.PedidoArticulos)
+                .Include(p => p.IdClienteNavigation)
+                .Include(p => p.IdEstadoNavigation)
+                .Include(p => p.ModificadoPorNavigation)
+                .Include(p => p.BorradoPorNavigation)
+                .Where(p => p.IdEstado == (int)EstadoPedidoEnum.ENTREGADO).ToList();
         }
     }
 }
