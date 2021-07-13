@@ -180,9 +180,10 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Index", "Home");
             }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
-            articuloServicio.BorrarPorId(IdArticulo, idUsuario);
             Articulo articulo = this.articuloServicio.ObtenerPorId(IdArticulo);
-            //TempData["Success"] = "Articulo:  " + articulo.Codigo + " | " + articulo.Descripcion + " borrado correctamente";
+            TempData["Success"] = "Articulo:  " + articulo.Codigo + " | " + articulo.Descripcion + " borrado correctamente";
+            articuloServicio.BorrarPorId(IdArticulo, idUsuario);
+           
             return RedirectToAction(nameof(Articulos));
         }
 
