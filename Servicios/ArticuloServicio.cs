@@ -21,7 +21,11 @@ namespace Service
             if (entity != null)
             {
                 entity.FechaCreacion = DateTime.Now;
-                if (idUsuario != 0) entity.CreadoPor = idUsuario;
+                if (idUsuario != 0)
+                {
+                    entity.CreadoPor = idUsuario;
+                    entity.ModificadoPor = idUsuario;
+                }
                 dbContexto.Articulos.Add(entity);
                 dbContexto.SaveChanges();
             }
@@ -46,7 +50,11 @@ namespace Service
             if (entity != null)
             {
                 entity.FechaBorrado = fecha;
-                if (idUsuario != 0) entity.BorradoPor = idUsuario;
+                if (idUsuario != 0)
+                {
+                    entity.BorradoPor = idUsuario;
+                    entity.ModificadoPor = idUsuario;
+                }
                 dbContexto.SaveChanges();
             }
         }
@@ -60,7 +68,11 @@ namespace Service
             if (articulo != null)
             {
                 articulo.FechaBorrado = DateTime.Now;
-                if (idUsuario != 0) articulo.BorradoPor = idUsuario;
+                if (idUsuario != 0)
+                {
+                    articulo.BorradoPor = idUsuario;
+                    articulo.ModificadoPor = idUsuario;
+                }
                 dbContexto.SaveChanges();
             }
         }

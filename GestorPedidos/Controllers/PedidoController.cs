@@ -76,7 +76,7 @@ namespace GestorPedidos.Controllers
 
 
         [HttpPost]
-        public IActionResult NuevoPedido(Pedido pedido, PedidoArticulo pedidoArticulo)
+        public IActionResult NuevoPedido(Pedido pedido, PedidoArticulo pedidoArticulo, string guardar)
         {
 
             try
@@ -95,8 +95,14 @@ namespace GestorPedidos.Controllers
                 int idPedido = this.pedidoServicio.CrearPedido(pedido);
                 pedidoArticulo.IdPedido = idPedido;
                 this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
+                if (guardar != null && guardar.ToLower().Equals("guardar"))
+                {
+                    TempData["Success"] = "Pedido nro " + pedido.NroPedido + " agregado correctamente";
+                    return RedirectToAction("EditarPedido", new { id = idPedido });
+                }
                 TempData["Success"] = "Pedido nro " + pedido.NroPedido + " agregado correctamente";
-                return RedirectToAction("EditarPedido", new { id = idPedido });
+                return RedirectToAction("NuevoPedido");
+
             }
             catch (Exception e)
             {
