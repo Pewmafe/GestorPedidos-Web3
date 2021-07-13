@@ -32,23 +32,17 @@ namespace GestorPedidos.Controllers
         {
 
             string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
-
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
-
             if (idUsuario == null)
             {
                 TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
                 return RedirectToAction("Login", "Login");
             }
-
             if (admin != null & admin != "True")
             {
-
                 TempData["Error"] = "Solo los usuarios admin pueden ingresar a esta sección.";
-
                 return RedirectToAction("Index", "Home");
             }
-
 
             return View("Usuarios", _usuarioServicio.ListarTodos());
         }
@@ -80,8 +74,8 @@ namespace GestorPedidos.Controllers
             //Search    
             if (!string.IsNullOrEmpty(searchValue))
             {
-                
-                     usuariosNoEliminados = usuariosNoEliminados.Where(u => Regex.IsMatch(u.IdUsuario.ToString(), searchValue) || Regex.IsMatch(u.Nombre.ToLower(), searchValue.ToLower()) || Regex.IsMatch(u.Email.ToLower(), searchValue.ToLower())).ToList();
+
+                usuariosNoEliminados = usuariosNoEliminados.Where(u => Regex.IsMatch(u.IdUsuario.ToString(), searchValue) || Regex.IsMatch(u.Nombre.ToLower(), searchValue.ToLower()) || Regex.IsMatch(u.Email.ToLower(), searchValue.ToLower())).ToList();
             }
 
             //total number of rows count     
@@ -92,22 +86,22 @@ namespace GestorPedidos.Controllers
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
         }
 
- 
+
         [HttpGet]
         public IActionResult NuevoUsuario()
         {
 
             string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
-           
+
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
-          
+
             if (idUsuario == null)
             {
                 TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
-                
+
                 return RedirectToAction("Login", "Login");
-          
-           }
+
+            }
 
             if (admin != null && admin != "True")
             {
@@ -118,17 +112,29 @@ namespace GestorPedidos.Controllers
 
             return View("NuevoUsuario");
 
-          
+
         }
 
         [HttpPost]
         public IActionResult NuevoUsuario(Usuario usuario)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null & admin != "True")
+            {
+                TempData["Error"] = "Solo los usuarios admin pueden ingresar a esta sección.";
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(usuario);
             }
-            
+
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             _usuarioServicio.Crear(usuario, idUsuario);
 
@@ -142,9 +148,9 @@ namespace GestorPedidos.Controllers
         {
 
             string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
-           
+
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
-            
+
             if (idUsuario == null)
             {
                 TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
@@ -152,7 +158,7 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Login", "Login");
             }
 
-            if(admin != null & admin != "True")
+            if (admin != null & admin != "True")
             {
 
                 TempData["Error"] = "Solo los usuarios admines pueden ingresar a esta sección.";
@@ -169,17 +175,28 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult EditarUsuario(Usuario usuario)
         {
-
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
+                return RedirectToAction("Login", "Login");
+            }
+            if (admin != null & admin != "True")
+            {
+                TempData["Error"] = "Solo los usuarios admin pueden ingresar a esta sección.";
+                return RedirectToAction("Index", "Home");
+            }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
 
-            _usuarioServicio.Modificar(usuario,idUsuario);
+            _usuarioServicio.Modificar(usuario, idUsuario);
 
             TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha modificado correctamente";
 
             return RedirectToAction(nameof(Usuarios));
         }
-       
-       
+
+
         public IActionResult BajaUsuario(int id, string guardar)
         {
 
@@ -209,7 +226,7 @@ namespace GestorPedidos.Controllers
 
             _usuarioServicio.BorrarPorId(id, Convert.ToInt32(idUsuario));
 
-       
+
             TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha borrado correctamente";
 
 
@@ -217,6 +234,6 @@ namespace GestorPedidos.Controllers
 
         }
 
-       
+
     }
 }
