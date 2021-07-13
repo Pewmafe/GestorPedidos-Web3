@@ -152,8 +152,8 @@ namespace GestorPedidos.Controllers
             return RedirectToAction("Clientes");
         }
 
-        [HttpGet]
-        public IActionResult Borrarcliente(int idCliente)
+        [HttpPost]
+        public IActionResult Borrarcliente(Cliente Cliente)
         {
             string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
@@ -168,6 +168,7 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Index", "Home");
             }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            int idCliente = Cliente.IdCliente;
             clienteServicio.BorrarPorId(idCliente, idUsuario);
             Cliente cliente = this.clienteServicio.ObtenerPorId(idCliente);
             TempData["Success"] = "Cliente  '" + cliente.Nombre + "' borrado correctamente";
