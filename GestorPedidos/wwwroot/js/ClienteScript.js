@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('#table_id').dataTable({
+    $('#tableCliente_id').dataTable({
         "order": [[1, "asc"]]
     });
 
@@ -16,6 +16,11 @@
 
         });
 
+    });
+
+    $('.botonBorrar').click(function () {
+        var miElementoId = $(this).data('id');
+        $(".modal-footer #IdCliente").val(miElementoId);
     });
 
    
