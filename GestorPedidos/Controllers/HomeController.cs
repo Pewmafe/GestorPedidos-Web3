@@ -12,7 +12,7 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult ErrorPage()
         {
-            if (TempData["errorException"] != null) ViewData["errorException"] = TempData["errorException"];
+           
             return View();
         }
 
