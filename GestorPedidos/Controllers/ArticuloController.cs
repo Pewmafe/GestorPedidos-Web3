@@ -182,7 +182,7 @@ namespace GestorPedidos.Controllers
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             articuloServicio.BorrarPorId(IdArticulo, idUsuario);
             Articulo articulo = this.articuloServicio.ObtenerPorId(IdArticulo);
-            TempData["Success"] = "Articulo:  " + articulo.Codigo + " | " + articulo.Descripcion + " borrado correctamente";
+            //TempData["Success"] = "Articulo:  " + articulo.Codigo + " | " + articulo.Descripcion + " borrado correctamente";
             return RedirectToAction(nameof(Articulos));
         }
 

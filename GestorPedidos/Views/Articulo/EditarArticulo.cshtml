@@ -40,14 +40,39 @@
         {
             <div class="mb-3">
                 <input type="submit" class="btn btn-outline-success text-uppercase" value="Editar" />
-                <a class="btn btn-outline-danger text-uppercase" href="/Articulo/EliminarArticulo?IdArticulo=@Model.IdArticulo">Eliminar</a>
+                
+                <button type="button" class="btn btn-outline-danger text-uppercase" data-bs-toggle="modal" data-bs-target="#borrarArticulo" data-id="@Model.IdArticulo">ELIMINAR</button>
                 <a class="btn btn-outline-warning text-uppercase" asp-controller="Articulo" asp-action="Articulos">Cancelar</a>
             </div>
         }
     </form>
 
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="borrarArticulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar artículo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>“¿Esta seguro que desea eliminar el artículo @Model.Descripcion? Si lo elimina, se eliminara de los pedidos en los que se encuentre</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <form action="/Articulo/EliminarArticulo" method="get">
+                    <input type="hidden" id="IdArticulo" name="IdArticulo" value="@Model.IdArticulo" />
+                    <button type="submit" class="btn btn-danger" name="botonBorrar" id="botonBorrar">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts{
 
     <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/ArticuloScript.js" type="text/javascript"></script>
 }

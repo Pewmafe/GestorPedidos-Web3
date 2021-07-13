@@ -98,6 +98,7 @@ namespace Service
         {
             if (entity.Cantidad <= 0) entity.Cantidad = 0;
             _dbContext.Add(entity);
+            //_dbContext.PedidoArticulos.Add(entity);
             _dbContext.SaveChanges();
         }
 
