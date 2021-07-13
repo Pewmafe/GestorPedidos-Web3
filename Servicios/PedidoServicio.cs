@@ -75,6 +75,7 @@ namespace Service
 
         public int CrearPedido(Pedido pedido)
         {
+
             if (!validarSiExistePedidoAbiertoDeUnClientePorIdCliente(pedido.IdCliente))
             {
                 pedido.IdEstado = (int)EstadoPedidoEnum.ABIERTO;
@@ -85,7 +86,7 @@ namespace Service
                 _dbContext.SaveChanges();
                 return pedido.IdPedido;
             }
-            throw new Exception("Ya existe un pedido abierto para ese cliente");
+            throw new Exception("El cliente ya posee otro pedido abierto, modifique ese pedido");
         }
 
         public bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente)
