@@ -20,6 +20,7 @@ namespace Service
 
         public void Crear(Cliente entity, int idUsuario)
         {
+            entity.CreadoPor = idUsuario;
             _dbContext.Clientes.Add(entity);
             _dbContext.SaveChanges();
         }
@@ -33,6 +34,7 @@ namespace Service
         {
             Cliente objActual = ObtenerPorId(id);
             objActual.FechaBorrado = DateTime.Now;
+            objActual.BorradoPor = idUsuario;
             _dbContext.SaveChanges();
         }
 
@@ -58,6 +60,7 @@ namespace Service
             objActual.Email = entity.Email;
             objActual.Direccion = entity.Direccion;
             objActual.FechaModificacion = DateTime.Now;
+            objActual.ModificadoPor = idUsuario;
 
             _dbContext.SaveChanges();
         }

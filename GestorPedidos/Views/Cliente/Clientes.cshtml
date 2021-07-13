@@ -42,7 +42,7 @@
 
             </div>
             <div class="table-responsive ">
-                <table id="table_id" class="table table-striped display" style="width:100%">
+                <table id="tableCliente_id" class="table table-striped display" style="width:100%">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th class="text-center">#</th>
@@ -116,8 +116,13 @@
                                     <td class="text-center"> <a href="/cliente/Editarcliente?idCliente=@cliente.IdCliente" data-bs-toggle="tooltip" data-placement="top" title="Ver Cliente"><i class="fas fa-info btn"></i></a></td>
                                     @if (@cliente.FechaBorrado == null)
                                     {
-                                        <td class="text-center">
+                                        /*<td class="text-center">
                                             <a href="/cliente/Borrarcliente?idCliente=@cliente.IdCliente" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cliente"> <i class="fas fa-times btn text-danger"></i></a>
+                                        </td>*/
+                                        <td class="text-center">
+                                            <button type="button" class="btn botonBorrar" data-bs-toggle="modal" data-bs-target="#borrarCliente" data-id="@cliente.IdCliente">
+                                                <i class="fas fa-times btn text-danger"></i>
+                                            </button>
                                         </td>
                                     }
                                     else
@@ -139,6 +144,28 @@
 
         </div>
 
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="borrarCliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Borrar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Seguro que deseas borrar al cliente?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <form action="/Cliente/Borrarcliente" method="post">
+                        <input type="hidden" id="IdCliente" name="IdCliente" value=""/>
+                        <button type="submit" class="btn btn-danger" name="botonBorrar" id="botonBorrar">BORRAR</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
