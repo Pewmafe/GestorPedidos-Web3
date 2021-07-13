@@ -11,11 +11,13 @@ namespace Service
     {
         private _20211CTPContext _dbContext;
         private IArticuloServicio articuloServicio;
+        private IClienteServicio clienteServicio;
 
 
         public PedidoServicio(_20211CTPContext dbContext)
         {
             this.articuloServicio = new ArticuloServicio(dbContext);
+            this.clienteServicio = new ClienteServicio(dbContext);
             _dbContext = dbContext;
         }
         public void Crear(Pedido entity, int idUsuario)
@@ -76,7 +78,7 @@ namespace Service
         public int CrearPedido(Pedido pedido)
         {
 
-            if (!validarSiExistePedidoAbiertoDeUnClientePorIdCliente(pedido.IdCliente))
+            if (!this.clienteServicio.validarSiExistePedidoAbiertoDeUnClientePorIdCliente(pedido.IdCliente))
             {
                 pedido.IdEstado = (int)EstadoPedidoEnum.ABIERTO;
                 int ultimoIdPedido = ListarTodos().LastOrDefault().IdPedido + 1;
@@ -89,16 +91,12 @@ namespace Service
             throw new Exception("El cliente ya posee otro pedido abierto, modifique ese pedido");
         }
 
-        public bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente)
-        {
-            return _dbContext.Pedidos.Where(p => p.IdCliente == idCliente && p.IdEstado == 1 && p.FechaBorrado == null).Count() > 0;
-        }
+
 
         public void CrearPedidoArticulo(PedidoArticulo entity)
         {
             if (entity.Cantidad <= 0) entity.Cantidad = 0;
-            _dbContext.Add(entity);
-            //_dbContext.PedidoArticulos.Add(entity);
+            _dbContext.PedidoArticulos.Add(entity);
             _dbContext.SaveChanges();
         }
 
@@ -187,6 +185,18 @@ namespace Service
                 .Include(p => p.ModificadoPorNavigation)
                 .Include(p => p.BorradoPorNavigation)
                 .Where(p => p.IdEstado == (int)EstadoPedidoEnum.ENTREGADO).ToList();
+        }
+
+        public List<Pedido> ListarPedidosUltimosDosMeses()
+        {
+            return _dbContext.Pedidos
+                .Include(p => p.PedidoArticulos)
+                .Include(p => p.IdClienteNavigation)
+                .Include(p => p.IdEstadoNavigation)
+                .Include(p => p.ModificadoPorNavigation)
+                .Include(p => p.BorradoPorNavigation)
+                .Where(p => p.FechaModificacion >= new DateTime(DateTime.Now.Year, DateTime.Now.Month - 2, DateTime.Now.Day))
+                .ToList();
         }
     }
 }
