@@ -19,10 +19,15 @@ namespace GestorPedidos.Controllers
             this.loginServicio = new LoginService(dbContext);
         }
 
-      
+
         [HttpGet]
         public IActionResult Login()
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario2 != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -32,11 +37,12 @@ namespace GestorPedidos.Controllers
             Usuario usuarioValidado = loginServicio.LogIn(usuario);
             if (usuarioValidado == null)
             {
+                TempData["Error"] = "Email o contraseña incorrecto.";
                 return RedirectToAction("Login");
             }
             this.GuardarInformacionSesion(usuarioValidado);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Pedido", "Pedido");
         }
         [HttpGet]
         public IActionResult Logout()

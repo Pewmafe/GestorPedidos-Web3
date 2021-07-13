@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Models.DTO;
+﻿using Models.DTO;
 using Models.Models;
 using System;
 using System.Collections.Generic;
@@ -100,6 +99,24 @@ namespace Service
                 clientesDTO.Add(clienteDTO);
             }
             return clientesDTO;
+        }
+
+        public List<Cliente> ListarPorFiltro(string Filtro)
+        {
+            return _dbContext.Clientes
+                .Where(p => p.Nombre.Contains(Filtro))
+                .ToList();
+        }
+
+        public bool emailExistente(string email)
+        {
+            Cliente clienteExistente = _dbContext.Clientes.Where(o => o.Email == email).FirstOrDefault();
+            if (clienteExistente == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

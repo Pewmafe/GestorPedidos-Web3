@@ -13,6 +13,7 @@ namespace Service
         void EliminarArticuloAlPedido(PedidoArticulo pedidoArticulo);
         PedidoArticulo BuscarPedidoArticuloPorIdPedidoYIdArticulo(int idPedido, int idArticulo);
         List<Articulo> listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(int idPedido);
+        List<Pedido> ListarPedidosEntregados();
         void MarcarPedidoComoCerrado(int idPedido, int idUsuario);
         void MarcarPedidoComoEntregado(int idPedido, int idUsuario);
     }

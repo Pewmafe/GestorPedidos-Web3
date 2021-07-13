@@ -50,6 +50,8 @@ namespace Service
                 .Include(p => p.PedidoArticulos)
                 .Include(p => p.IdClienteNavigation)
                 .Include(p => p.IdEstadoNavigation)
+                .Include(p => p.ModificadoPorNavigation)
+                .Include(p => p.BorradoPorNavigation)
                 .ToList();
         }
         public List<Pedido> ListarNoEliminados()
@@ -64,7 +66,6 @@ namespace Service
         public void Modificar(Pedido entity, int idUsuario)
         {
             Pedido pedido = ObtenerPorId(entity.IdPedido);
-            pedido.IdEstado = entity.IdEstado;
             pedido.Comentarios = entity.Comentarios;
             pedido.ModificadoPor = idUsuario;
             pedido.FechaModificacion = DateTime.Today;
@@ -173,6 +174,17 @@ namespace Service
             pedido.FechaModificacion = DateTime.Today;
             pedido.FechaBorrado = DateTime.Today;
             _dbContext.SaveChanges();
+        }
+
+        public List<Pedido> ListarPedidosEntregados()
+        {
+            return _dbContext.Pedidos
+                .Include(p => p.PedidoArticulos)
+                .Include(p => p.IdClienteNavigation)
+                .Include(p => p.IdEstadoNavigation)
+                .Include(p => p.ModificadoPorNavigation)
+                .Include(p => p.BorradoPorNavigation)
+                .Where(p => p.IdEstado == (int)EstadoPedidoEnum.ENTREGADO).ToList();
         }
     }
 }

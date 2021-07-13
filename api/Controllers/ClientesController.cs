@@ -2,11 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Models.DTO;
 using Models.Models;
+using Models;
 using Service;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace api.Controllers
 {
@@ -39,6 +38,26 @@ namespace api.Controllers
             {
                 Count= clientesDTO.Count,
                 Items= clientesDTO
+            });
+        }
+
+        [HttpPost]
+        [Route("filtrar")]
+        [Authorize]
+        public ActionResult<object> GetAllByFilter([FromBody] BodyPost Filtro)
+        {
+            List<Cliente> clientes = clienteServicio.ListarPorFiltro(Filtro.Filtro);
+            List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
+            if (clientes.Count != 0)
+            {
+                clientesDTO = clienteServicio.mapearListaClienteAListaClienteDTO(clientes);
+            }
+
+
+            return Ok(new
+            {
+                Count = clientesDTO.Count,
+                Items = clientesDTO
             });
         }
     }
