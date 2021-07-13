@@ -17,4 +17,11 @@
         });
 
     });
+
+    $('.botonBorrar').click(function () {
+        var miElementoId = $(this).data('id');
+        $(".modal-footer #IdArticulo").val(miElementoId);
+    });
+
+
 });

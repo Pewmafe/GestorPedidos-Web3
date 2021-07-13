@@ -5,18 +5,6 @@
     ViewData["Title"] = "Articulos";
     bool? ExcluirEliminados = (bool)ViewData["ExcluirEliminados"];
 }
-<div>
-    @if (TempData["art"] != null)
-    {
-        <h4>
-            Artículo @(JsonConvert.DeserializeObject<Models.Models.Articulo>
-            (TempData["art"].ToString()).Codigo)
-            @(JsonConvert.DeserializeObject<Models.Models.Articulo>
-                (TempData["art"].ToString()).Descripcion)
-            creado con éxito
-        </h4>
-    }
-</div>
 
 
 <div>
@@ -46,14 +34,14 @@
                     }
                     else
                     {
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                     }
 
                     <p class="form-check-label" for="flexCheckChecked">
                         Excluir eliminados
                     </p>
                 </div>
-                
+
 
             </div>
             @if (Model.Count == 0)
@@ -86,13 +74,39 @@
                                     <td class="text-center"><a href="/Articulo/EditarArticulo?IdArticulo=@a.IdArticulo" data-bs-toggle="tooltip" data-placement="top" title="Ver articulo"><i class="fas fa-info btn"></i></a></td>
                                     @if (a.FechaBorrado == null)
                                     {
-                                        <td class="text-center"> <a data-bs-toggle="tooltip" data-placement="top" title="Eliminar" href="/Articulo/EliminarArticulo?IdArticulo=@a.IdArticulo"> <i class="fas fa-times btn text-danger"></i></a></td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn botonBorrar" data-bs-toggle="modal" data-bs-target="#borrarArticulo" data-id="@a.IdArticulo">
+                                                <i class="fas fa-times btn text-danger"></i>
+                                            </button>
+                                        </td>
                                     }
                                     else
                                     {
                                         <td class="text-center fst-italic"><p>Eliminado</p></td>
                                     }
                                 </tr>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="borrarArticulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Eliminar artículo</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>“¿Esta seguro que desea eliminar el artículo @a.Descripcion?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                <form action="/Articulo/EliminarArticulo" method="get">
+                                                    <input type="hidden" id="IdArticulo" name="IdArticulo" value="@a.IdArticulo" />
+                                                    <button type="submit" class="btn btn-danger" name="botonBorrar" id="botonBorrar">Eliminar</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                         </tbody>
                     </table>
@@ -101,6 +115,8 @@
         </div>
 
     </div>
+
+ 
 </div>
 @section Scripts{
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
