@@ -2,12 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Models.DTO;
 using Models.Models;
+using Models;
 using Service;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
+
 
 namespace api.Controllers
 {
