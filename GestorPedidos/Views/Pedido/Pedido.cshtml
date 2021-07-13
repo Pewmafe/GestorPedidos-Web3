@@ -6,6 +6,7 @@
     List<Pedido> pedidos = (List<Pedido>)ViewData["Pedidos"];
     bool? ExcluirEliminados = (bool)ViewData["ExcluirEliminados"];
 }
+
 <div>
     <div class="volver mb-3 row">
         <div class="col">
@@ -43,7 +44,7 @@
                 </div>
             </div>
             <div class="table-responsive ">
-                <table id="table_id_pedidos" class="table table-striped" style="width:100%">
+                <table id="table_id" class="table table-striped" style="width:100%">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th class="text-center">#</th>
@@ -51,6 +52,7 @@
                             <th class="text-center">Estado</th>
                             <th class="text-center">Nro Pedido</th>
                             <th class="text-center">Comentarios</th>
+                            <th class="text-center">Ult. Modificacion</th>
                             <th class="text-center">Ver</th>
                         </tr>
                     </thead>
@@ -63,6 +65,7 @@
                                 <td class="text-center">@p.IdEstadoNavigation.Descripcion</td>
                                 <td class="text-center">@p.NroPedido</td>
                                 <td class="text-center">@p.Comentarios</td>
+                                <td class="text-center">@p.FechaModificacion </td>
                                 <td class="text-center">
                                     <a href="/pedido/editarpedido/@p.IdPedido" data-bs-toggle="tooltip" data-placement="top" title="Ver pedido"><i class="fas fa-info btn"></i></a>
                                 </td>
@@ -76,3 +79,7 @@
     </div>
 
 </div>
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/pedidoScript.js"></script>
+}
