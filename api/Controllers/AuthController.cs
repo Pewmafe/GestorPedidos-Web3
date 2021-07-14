@@ -54,7 +54,8 @@ namespace api.Controllers
 
          [HttpPost]
          [Route("logout")]
-         public object Logout()
+        [Authorize]
+        public object Logout()
          {
                 
          return new
