@@ -3,7 +3,9 @@
     $('#articulos-select2').select2();
     $('#articulos-select3').select2();
 
-
+    $('#table_id_pedidos').dataTable({
+        "order": [[2, "asc"]]
+    });
 
     $(function () {
         $("#flexCheckCheckedPedido").on('change', function () {
