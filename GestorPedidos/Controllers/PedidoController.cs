@@ -26,8 +26,6 @@ namespace GestorPedidos.Controllers
             this.clienteServicio = new ClienteServicio(dbContext);
             this.usuarioServicio = new UsuarioServicio(dbContext);
             this.articuloServicio = new ArticuloServicio(dbContext);
-
-
         }
 
         [HttpGet]
@@ -41,7 +39,9 @@ namespace GestorPedidos.Controllers
             }
             ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
             ViewData["ExcluirEliminados"] = false;
+            ViewData["UltimosDosMeses"] = false;
             if (TempData["Entregados"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosEntregados(); ViewData["ExcluirEliminados"] = true; };
+            if (TempData["UltimosDosMeses"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosUltimosDosMeses(); ViewData["UltimosDosMeses"] = true; };
 
             return View();
         }
@@ -56,6 +56,18 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Login", "Login");
             }
             TempData["Entregados"] = true;
+            return RedirectToAction("Pedido");
+        }
+        [HttpGet]
+        public IActionResult ListarUltimosDosMeses()
+        {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            TempData["UltimosDosMeses"] = true;
             return RedirectToAction("Pedido");
         }
 
