@@ -1,4 +1,5 @@
-﻿using Models.Models;
+﻿using Models.DTO;
+using Models.Models;
 using System.Collections.Generic;
 
 namespace Service
@@ -14,6 +15,11 @@ namespace Service
         PedidoArticulo BuscarPedidoArticuloPorIdPedidoYIdArticulo(int idPedido, int idArticulo);
         List<Articulo> listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(int idPedido);
         List<Pedido> ListarPedidosEntregados();
+
+        List<Pedido> ListarPedidosDeUnCliente(int IdCliente, int IdEstado);
+
+        List<PedidoDTO> mapearListaPedidoAListaPedido(List<Pedido> pedidos);
+
         void MarcarPedidoComoCerrado(int idPedido, int idUsuario);
         void MarcarPedidoComoEntregado(int idPedido, int idUsuario);
     }
