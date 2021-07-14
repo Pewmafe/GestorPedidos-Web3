@@ -98,31 +98,31 @@
 
     </div>
 
+    <!-- Modal -->
 
-</div>
-<!-- Modal -->
-
-<div class="modal fade" id="borrarArticulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Eliminar artículo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>¿Esta seguro que desea eliminar este articulo?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <form action="/Articulo/EliminarArticulo" method="post">
-                    <input type="hidden" id="IdArticulo" name="IdArticulo" value="" />
-                    <button type="submit" class="btn btn-danger" name="botonBorrar" id="botonBorrar">Eliminar</button>
-                </form>
+    <div class="modal fade" id="borrarArticulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar artículo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Esta seguro que desea eliminar este articulo?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <form action="/Articulo/EliminarArticulo" method="post">
+                        <input type="hidden" id="IdArticulo" name="IdArticulo" value="" />
+                        <button type="submit" class="btn btn-danger" name="botonBorrar" id="botonBorrar">Eliminar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 @section Scripts{
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/ArticuloScript.js" type="text/javascript"></script>
+    <script src="~/js/ArticuloScript.js"></script>
 }
