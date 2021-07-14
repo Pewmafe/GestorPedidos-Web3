@@ -69,7 +69,7 @@ namespace GestorPedidos.Controllers
             //Sorting    
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
             {
-                //usuariosNoEliminados = usuariosNoEliminados.OrderBy(u=> u.IdUsuario).ToList();
+                usuariosNoEliminados = usuariosNoEliminados.OrderBy(u=> u.Nombre).ToList();
             }
             //Search    
             if (!string.IsNullOrEmpty(searchValue))
@@ -116,7 +116,7 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpPost]
-        public IActionResult NuevoUsuario(Usuario usuario)
+        public IActionResult NuevoUsuario(Usuario usuario, string guardar)
         {
             string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
@@ -138,9 +138,16 @@ namespace GestorPedidos.Controllers
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             _usuarioServicio.Crear(usuario, idUsuario);
 
+
+            if (guardar.ToLower().Equals("guardar"))
+            {
+                TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
+                return RedirectToAction(nameof(Usuarios));
+            }
             TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
 
-            return RedirectToAction(nameof(Usuarios));
+            return RedirectToAction(nameof(NuevoUsuario));
+
         }
 
         [HttpGet]
@@ -237,3 +244,4 @@ namespace GestorPedidos.Controllers
 
     }
 }
+

@@ -24,7 +24,6 @@ namespace Service
                 if (idUsuario != 0)
                 {
                     entity.CreadoPor = idUsuario;
-                    entity.ModificadoPor = idUsuario;
                 }
                 dbContexto.Articulos.Add(entity);
                 dbContexto.SaveChanges();
@@ -91,7 +90,7 @@ namespace Service
             }
             catch (Exception)
             {
-                throw new Exception("No existe un PedidoArticulo el idArticulo " + idArticulo);
+                throw new Exception("No existe un PedidoArticulo con el idArticulo " + idArticulo);
             }
 
         }

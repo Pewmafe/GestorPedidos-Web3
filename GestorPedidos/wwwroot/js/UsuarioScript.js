@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    $('.dropdown-toggle').dropdown()
+
+    $('#table_id').dataTable({});
 
 });
 

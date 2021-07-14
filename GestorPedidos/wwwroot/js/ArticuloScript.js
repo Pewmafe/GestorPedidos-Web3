@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('#table_id').dataTable({
+    $('articulo_table_id').dataTable({
         "order": [[1, "asc"]]
     });
 

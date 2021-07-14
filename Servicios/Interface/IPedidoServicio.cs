@@ -1,4 +1,5 @@
-﻿using Models.Models;
+﻿using Models.DTO;
+using Models.Models;
 using System.Collections.Generic;
 
 namespace Service
@@ -8,6 +9,7 @@ namespace Service
         int CrearPedido(Pedido pedido);
         void CrearPedidoArticulo(PedidoArticulo entity);
         void MarcarPedidoComoCerrado(int idPedido, int idUsuario);
+        void BorrarPedidosPorIdCliente(int idCliente, int idUsuario);
         void MarcarPedidoComoEntregado(int idPedido, int idUsuario);
         void EliminarArticuloAlPedido(PedidoArticulo pedidoArticulo);
         PedidoArticulo BuscarPedidoArticuloPorIdPedidoYIdArticulo(int idPedido, int idArticulo);
@@ -16,6 +18,8 @@ namespace Service
         List<Pedido> ListarPedidosEntregados();
         List<Pedido> ListarPedidosUltimosDosMeses();
         List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido);
+        List<Pedido> ListarPedidosDeUnCliente(int IdCliente, int IdEstado);
+        List<PedidoDTO> mapearListaPedidoAListaPedido(List<Pedido> pedidos);
 
     }
 }
