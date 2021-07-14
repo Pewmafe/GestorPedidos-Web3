@@ -68,7 +68,7 @@ namespace Service
         public List<Usuario> ListarTodos()
         {
 
-            return _context.Usuarios.OrderBy(u=>u.Nombre).ToList();
+            return _context.Usuarios.OrderBy(u => u.Nombre).ToList();
         }
 
         public Usuario ObtenerPorId(int id)
@@ -136,7 +136,7 @@ namespace Service
                 usuarioDTO.Nombre = usuario.Nombre;
                 usuarioDTO.Apellido = usuario.Apellido;
                 usuarioDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
-                
+
 
 
                 usuariosDTO.Add(usuarioDTO);
@@ -155,14 +155,19 @@ namespace Service
                 usuarioDatatableDTO.IdUsuario = usuario.IdUsuario;
                 usuarioDatatableDTO.Nombre = usuario.Nombre;
                 usuarioDatatableDTO.Email = usuario.Email;
-                usuarioDatatableDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
-                if(usuario.FechaBorrado == null)
+                if (usuario.FechaNacimiento != null)
+                {
+                    usuarioDatatableDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
+                }
+
+                if (usuario.FechaBorrado == null)
                 {
                     usuarioDatatableDTO.FechaBorrado = 0;
 
                 }
-                else {
-                usuarioDatatableDTO.FechaBorrado = 1;
+                else
+                {
+                    usuarioDatatableDTO.FechaBorrado = 1;
                 }
 
                 usuariosDatatableDTO.Add(usuarioDatatableDTO);

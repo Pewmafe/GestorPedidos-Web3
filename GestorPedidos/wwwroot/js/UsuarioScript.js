@@ -65,30 +65,34 @@
                         "title": "Eliminados", "render": function (data, type, full, meta) {
 
                             if (full.fechaBorrado == 1) {
-
                                 return '<i class="text-center fst-italic"><p>Eliminado</p></i>';
                             }
                             
-                            return '<div>' +
-                                '<button type="button" class="btn botonBorrar" data-bs-toggle="modal" data-bs-target="#borrarUsuario" data-id=' + full.idUsuario + '"><i class="fas fa-times btn text-danger"></i> </button>' +//
-                                '<div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
-                                '< div class="modal-dialog" >' +
+                            return  '<div>' +
+                                        '<button type="button" class="btn botonBorrar" data-bs-toggle="modal" data-bs-target="#borrarUsuario-' + full.idUsuario + '" data-id=' + full.idUsuario + '">' +
+                                            '<i class="fas fa-times btn text-danger"></i>' +
+                                        '</button>'+
+                                '<div class="modal fade" id="borrarUsuario-' + full.idUsuario + '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">'+
+                                '<div class="modal-dialog">' +
                                 '<div class="modal-content">' +
-                                '<div class="modal-header bg-dark text-light">' +
-                                '<h5 class="modal-title" id="exampleModalLabel">¡Atencion!</h5>' +
+                                '<div class="modal-header">' +
+                                '<h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>' +
                                 '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
                                 '</div>' +
                                 '<div class="modal-body">' +
-                                '<p>¿Esta seguro que desea modificar el pedido Nro° @Model.Pedido.NroPedido?</p>' +//aca va el mensaje 
+                                '<p>¿Esta seguro que desea eliminar este usuario? ' + full.nombre + '</p>' +
                                 '</div>' +
                                 '<div class="modal-footer">' +
-                                '<button type="button" class="btn btn-outline-secondary text-uppercase" data-bs-dismiss="modal">Cancelar</button>' +
-
+                                '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>' +
+                                '<form action="/Usuario/BajaUsuario" method="post">' +
+                                '<input type="hidden" id="id" name="id" value="' + full.idUsuario + '" />' +
+                                '<button type="submit" class="btn btn-danger">Eliminar</button>' +
+                                '</form>' +
                                 '</div>' +
                                 '</div>' +
-                                '</div >' +
-                                '</div >' +
-                            '</div >';
+                                '</div>' +
+                                '</div>' +
+                                    '</div >';
                         }
 
                             
@@ -101,10 +105,10 @@
 
     }
 
-    $('.botonBorrar').click(function () {
+    /*$('.botonBorrar').click(function () {
         var miElementoId = $(this).data('id');
         $(".modal-footer #IdUsuario").val(miElementoId);
-    });
+    });*/
 
 });
 
