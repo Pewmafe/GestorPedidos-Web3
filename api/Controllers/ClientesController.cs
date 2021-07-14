@@ -28,11 +28,15 @@ namespace api.Controllers
         {
             List<Cliente> clientes = clienteServicio.ListarTodos();
             List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
-            if (clientes.Count != 0)
+            if (clientes.Count == 0)
             {
-                clientesDTO = clienteServicio.mapearListaClienteAListaClienteDTO(clientes);
+                return Ok(new
+                {
+                    msg = "No hay clientes que mostrar."
+                });
             }
-             
+
+            clientesDTO = clienteServicio.mapearListaClienteAListaClienteDTO(clientes);
 
             return Ok(new
             {
@@ -48,11 +52,15 @@ namespace api.Controllers
         {
             List<Cliente> clientes = clienteServicio.ListarPorFiltro(Filtro.Filtro);
             List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
-            if (clientes.Count != 0)
+            if (clientes.Count == 0)
             {
-                clientesDTO = clienteServicio.mapearListaClienteAListaClienteDTO(clientes);
+                return Ok(new
+                {
+                    msg = "No hay clientes que mostrar."
+                });
             }
 
+            clientesDTO = clienteServicio.mapearListaClienteAListaClienteDTO(clientes);
 
             return Ok(new
             {

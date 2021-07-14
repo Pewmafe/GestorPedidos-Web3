@@ -9,6 +9,10 @@ namespace Service
        
         List<ArticuloDTO> mapearListaArticuloAListaArticuloDTO(List<Articulo> articulos);
         List<Articulo> ListarPorFiltro(string Filtro);
+        PedidoArticulo BuscarArticuloEnLosPedidosPorIdArticulo(int idArticulo);
+        void EliminarArticuloDeLosPedidos(PedidoArticulo pedidoArticulo);
+
+
     }
 }
        

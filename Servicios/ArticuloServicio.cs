@@ -24,7 +24,6 @@ namespace Service
                 if (idUsuario != 0)
                 {
                     entity.CreadoPor = idUsuario;
-                    entity.ModificadoPor = idUsuario;
                 }
                 dbContexto.Articulos.Add(entity);
                 dbContexto.SaveChanges();
@@ -46,6 +45,8 @@ namespace Service
         }
         public void Borrar(Articulo entity, int idUsuario)
         {
+            PedidoArticulo articuloPedido = BuscarArticuloEnLosPedidosPorIdArticulo(entity.IdArticulo);
+
             var fecha = DateTime.Now;
             if (entity != null)
             {
@@ -57,17 +58,20 @@ namespace Service
                 }
                 dbContexto.SaveChanges();
             }
+            EliminarArticuloDeLosPedidos(articuloPedido);
         }
         public void BorrarPorId(int idArticulo, int idUsuario)
         {
 
             var articulos = from a in dbContexto.Articulos where a.IdArticulo == idArticulo select a;
-
+           
             Articulo articulo = articulos.FirstOrDefault();
-
+            PedidoArticulo articuloPedido = BuscarArticuloEnLosPedidosPorIdArticulo(idArticulo);
+           
             if (articulo != null)
             {
                 articulo.FechaBorrado = DateTime.Now;
+
                 if (idUsuario != 0)
                 {
                     articulo.BorradoPor = idUsuario;
@@ -75,8 +79,28 @@ namespace Service
                 }
                 dbContexto.SaveChanges();
             }
+            EliminarArticuloDeLosPedidos(articuloPedido);
+            
         }
-      
+        public PedidoArticulo BuscarArticuloEnLosPedidosPorIdArticulo(int idArticulo)
+        {
+            try
+            {
+                return dbContexto.PedidoArticulos.Where(p => p.IdArticulo == idArticulo).FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                throw new Exception("No existe un PedidoArticulo con el idArticulo " + idArticulo);
+            }
+
+        }
+        public void EliminarArticuloDeLosPedidos(PedidoArticulo pedidoArticulo)
+        {
+            if (pedidoArticulo != null) { 
+            dbContexto.PedidoArticulos.Remove(pedidoArticulo);
+            dbContexto.SaveChanges();
+            }
+        }
 
         public Articulo ObtenerPorId(int id)
         {

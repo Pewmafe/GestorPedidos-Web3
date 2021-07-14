@@ -6,15 +6,16 @@ namespace Service
     public interface IPedidoServicio : IBaseServicio<Pedido>
     {
         int CrearPedido(Pedido pedido);
-        bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente);
         void CrearPedidoArticulo(PedidoArticulo entity);
-        List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido);
-        Dictionary<Articulo, int> listarArticulosConCantidadesDeUnPedidoPorPedidoId(int idPedido);
-        void EliminarArticuloAlPedido(PedidoArticulo pedidoArticulo);
-        PedidoArticulo BuscarPedidoArticuloPorIdPedidoYIdArticulo(int idPedido, int idArticulo);
-        List<Articulo> listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(int idPedido);
-        List<Pedido> ListarPedidosEntregados();
         void MarcarPedidoComoCerrado(int idPedido, int idUsuario);
         void MarcarPedidoComoEntregado(int idPedido, int idUsuario);
+        void EliminarArticuloAlPedido(PedidoArticulo pedidoArticulo);
+        PedidoArticulo BuscarPedidoArticuloPorIdPedidoYIdArticulo(int idPedido, int idArticulo);
+        Dictionary<Articulo, int> listarArticulosConCantidadesDeUnPedidoPorPedidoId(int idPedido);
+        List<Articulo> listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(int idPedido);
+        List<Pedido> ListarPedidosEntregados();
+        List<Pedido> ListarPedidosUltimosDosMeses();
+        List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido);
+
     }
 }

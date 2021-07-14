@@ -5,6 +5,7 @@
     ViewData["Title"] = "Pedido";
     List<Pedido> pedidos = (List<Pedido>)ViewData["Pedidos"];
     bool? ExcluirEliminados = (bool)ViewData["ExcluirEliminados"];
+    bool? UltimosDosMeses = (bool)ViewData["UltimosDosMeses"];
 }
 
 <div>
@@ -24,7 +25,15 @@
             <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
             <div class="collapse" id="filtros">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    @if (UltimosDosMeses == true)
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultDosMeses" checked>
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultDosMeses">
+                    }
+
                     <p class="form-check-label" for="flexCheckDefault">
                         Solo los ultimos dos meses
                     </p>
@@ -39,12 +48,12 @@
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedido">
                     }
                     <p class="form-check-label" for="flexCheckChecked">
-                        Excluir eliminados
+                       Listar entregados
                     </p>
                 </div>
             </div>
             <div class="table-responsive ">
-                <table id="table_id" class="table table-striped" style="width:100%">
+                <table id="table_id" class="table table-striped">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th class="text-center">#</th>
@@ -65,7 +74,7 @@
                                 <td class="text-center">@p.IdEstadoNavigation.Descripcion</td>
                                 <td class="text-center">@p.NroPedido</td>
                                 <td class="text-center">@p.Comentarios</td>
-                                <td class="text-center">@p.FechaModificacion </td>
+                                <td class="text-center">@string.Format("{0:yyyy-MM-dd}", p.FechaModificacion)</td>
                                 <td class="text-center">
                                     <a href="/pedido/editarpedido/@p.IdPedido" data-bs-toggle="tooltip" data-placement="top" title="Ver pedido"><i class="fas fa-info btn"></i></a>
                                 </td>

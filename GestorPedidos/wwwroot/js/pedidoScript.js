@@ -14,5 +14,14 @@
                 location.reload();
             }
         });
+
+        $("#flexCheckDefaultDosMeses").on('change', function () {
+            if ($(this).is(':checked')) {
+                location.href = "https://localhost:44322/Pedido/ListarUltimosDosMeses";
+            }
+            else {
+                location.reload();
+            }
+        });
     });
 });
