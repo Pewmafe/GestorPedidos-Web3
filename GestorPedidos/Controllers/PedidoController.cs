@@ -128,14 +128,15 @@ namespace GestorPedidos.Controllers
         [HttpGet]
         public IActionResult EditarPedido(int id)
         {
+
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             try
             {
-                string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
-                if (idUsuario == null)
-                {
-                    TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
-                    return RedirectToAction("Login", "Login");
-                }
                 Pedido pedido = this.pedidoServicio.ObtenerPorId(id);
                 EditarPedidoViewModel editarPedidoViewModel = new() { Pedido = pedido };
                 editarPedidoViewModel.ArticulosYCantidadesDelPedido = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(id);
@@ -153,14 +154,15 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult EditarPedido(Pedido pedido)
         {
+
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             try
             {
-                string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
-                if (idUsuario == null)
-                {
-                    TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
-                    return RedirectToAction("Login", "Login");
-                }
                 int idUsuario2 = (int)HttpContext.Session.GetInt32("IdUser");
                 this.pedidoServicio.Modificar(pedido, idUsuario2);
                 Pedido pedido2 = this.pedidoServicio.ObtenerPorId(pedido.IdPedido);
@@ -177,14 +179,15 @@ namespace GestorPedidos.Controllers
 
         public IActionResult BorrarArticuloDePedido(PedidoArticulo pedidoArticulo)
         {
+
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             try
             {
-                string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
-                if (idUsuario == null)
-                {
-                    TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
-                    return RedirectToAction("Login", "Login");
-                }
                 int idPedido2 = pedidoArticulo.IdPedido;
                 this.pedidoServicio.EliminarArticuloAlPedido(pedidoArticulo);
                 Dictionary<Articulo, int> carrito = this.pedidoServicio.listarArticulosConCantidadesDeUnPedidoPorPedidoId(idPedido2);
@@ -201,14 +204,15 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult AgregarArticuloAUnPedido(PedidoArticulo pedidoArticulo)
         {
+
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             try
             {
-                string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
-                if (idUsuario == null)
-                {
-                    TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
-                    return RedirectToAction("Login", "Login");
-                }
                 int idPedido2 = pedidoArticulo.IdPedido;
                 this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
                 return RedirectToAction("EditarPedido", new { id = idPedido2 });
@@ -224,14 +228,14 @@ namespace GestorPedidos.Controllers
         [HttpPost]
         public IActionResult MarcarPedidoComoCerrado(int idPedido)
         {
+            string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario2 == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
             try
             {
-                string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
-                if (idUsuario2 == null)
-                {
-                    TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
-                    return RedirectToAction("Login", "Login");
-                }
                 int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
                 this.pedidoServicio.MarcarPedidoComoCerrado(idPedido, idUsuario);
                 Pedido pedido = this.pedidoServicio.ObtenerPorId(idPedido);
