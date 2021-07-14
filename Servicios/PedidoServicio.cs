@@ -23,13 +23,14 @@ namespace Service
             this.usuarioServicio = new UsuarioServicio(dbContext);
             _dbContext = dbContext;
         }
+
         public void Crear(Pedido entity, int idUsuario)
         { }
 
         public void Borrar(Pedido entity, int idUsuario)
         {
             Pedido pedido = ObtenerPorId(entity.IdPedido);
-            pedido.IdEstadoNavigation.IdEstadoPedido = (int)EstadoPedidoEnum.CERRADO;
+            pedido.IdEstado = (int)EstadoPedidoEnum.CERRADO;
             pedido.BorradoPor = idUsuario;
             pedido.ModificadoPor = idUsuario;
             pedido.FechaModificacion = DateTime.Today;
@@ -189,6 +190,19 @@ namespace Service
         public List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido)
         {
             return _dbContext.PedidoArticulos.Include(a => a.IdArticuloNavigation).Include(a => a.IdPedidoNavigation).Where(pa => pa.IdPedido == idPedido).ToList();
+        }
+
+        public void BorrarPedidosPorIdCliente(int idCliente, int idUsuario)
+        {
+            List<Pedido> pedidos = _dbContext.Pedidos
+                .Where(p => p.IdCliente == idCliente && p.IdEstado != (int)EstadoPedidoEnum.CERRADO).ToList();
+
+            if (pedidos.Count != 0)
+            {
+                pedidos.ForEach(p => {
+                    this.Borrar(p, idUsuario);
+                });
+            }
         }
 
         public List<Pedido> ListarPedidosDeUnCliente(int IdCliente, int IdEstado)
