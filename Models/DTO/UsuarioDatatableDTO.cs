@@ -13,5 +13,7 @@ namespace Models.DTO
         public string Nombre { get; set; }
         public string Email { get; set; }
         public DateTime FechaNacimiento { get; set; }
+        public int FechaBorrado { get; set; }
+
     }
 }
