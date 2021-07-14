@@ -10,11 +10,9 @@ namespace Service
     {
 
         private _20211CTPContext _dbContext;
-        private IPedidoServicio pedidoServicio;
 
         public ClienteServicio(_20211CTPContext dbContext)
         {
-            this.pedidoServicio = new PedidoServicio(dbContext);
             _dbContext = dbContext;
         }
 
@@ -85,11 +83,6 @@ namespace Service
             return clientesSinPedidosActivos;
 
         }
-
-        public bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente)
-        {
-            return _dbContext.Pedidos.Where(p => p.IdCliente == idCliente && p.IdEstado == 1 && p.FechaBorrado == null).Count() > 0;
-        }
         public List<ClienteDTO> mapearListaClienteAListaClienteDTO(List<Cliente> clientes)
         {
             List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
@@ -114,7 +107,10 @@ namespace Service
                 .Where(p => p.Nombre.Contains(Filtro))
                 .ToList();
         }
-
+        public bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente)
+        {
+            return _dbContext.Pedidos.Where(p => p.IdCliente == idCliente && p.IdEstado == 1 && p.FechaBorrado == null).Count() > 0;
+        }
         public bool emailExistente(string email)
         {
             Cliente clienteExistente = _dbContext.Clientes.Where(o => o.Email == email).FirstOrDefault();
