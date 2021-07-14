@@ -68,7 +68,7 @@ namespace Service
         public List<Usuario> ListarTodos()
         {
 
-            return _context.Usuarios.OrderBy(u=>u.Nombre).ToList();
+            return _context.Usuarios.OrderBy(u => u.Nombre).ToList();
         }
 
         public Usuario ObtenerPorId(int id)
@@ -83,7 +83,23 @@ namespace Service
 
             return usuario;
         }
+        public Usuario ObtenerPorEmail(string email)
+        {
 
+            var usuarios = from a in _context.Usuarios where a.Email == email select a;
+
+           Usuario usuario = usuarios.FirstOrDefault();
+            if (usuario != null)
+            {
+                return usuario;
+
+            }
+            else
+            {
+                throw new Exception("Usuario Inexistente");
+
+            }
+        }
         public void Modificar(Usuario usuario, int idUsuario)
         {
             Usuario usuarioActualizado = ObtenerPorId(usuario.IdUsuario);
@@ -136,7 +152,7 @@ namespace Service
                 usuarioDTO.Nombre = usuario.Nombre;
                 usuarioDTO.Apellido = usuario.Apellido;
                 usuarioDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
-                
+
 
 
                 usuariosDTO.Add(usuarioDTO);
@@ -155,14 +171,19 @@ namespace Service
                 usuarioDatatableDTO.IdUsuario = usuario.IdUsuario;
                 usuarioDatatableDTO.Nombre = usuario.Nombre;
                 usuarioDatatableDTO.Email = usuario.Email;
-                usuarioDatatableDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
-                if(usuario.FechaBorrado == null)
+                if (usuario.FechaNacimiento != null)
+                {
+                    usuarioDatatableDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
+                }
+
+                if (usuario.FechaBorrado == null)
                 {
                     usuarioDatatableDTO.FechaBorrado = 0;
 
                 }
-                else {
-                usuarioDatatableDTO.FechaBorrado = 1;
+                else
+                {
+                    usuarioDatatableDTO.FechaBorrado = 1;
                 }
 
                 usuariosDatatableDTO.Add(usuarioDatatableDTO);

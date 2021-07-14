@@ -239,8 +239,8 @@ namespace GestorPedidos.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult BajaUsuario(int IdUsuario, string guardar)
+        [HttpPost]
+        public IActionResult BajaUsuario(int id)
         {
 
             string IdUsuarioDeLaBaja = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
@@ -265,9 +265,9 @@ namespace GestorPedidos.Controllers
             try
             {
 
-                Usuario usuario = _usuarioServicio.ObtenerPorId(IdUsuario);
+                Usuario usuario = _usuarioServicio.ObtenerPorId(id);
 
-                _usuarioServicio.BorrarPorId(IdUsuario, Convert.ToInt32(IdUsuarioDeLaBaja));
+                _usuarioServicio.BorrarPorId(id, Convert.ToInt32(IdUsuarioDeLaBaja));
 
 
                 TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha borrado correctamente";
