@@ -173,18 +173,19 @@ namespace Service
         }
         public List<Pedido> ListarPedidosUltimosDosMeses()
         {
+            DateTime date = DateTime.Now.AddMonths(-3);
             return _dbContext.Pedidos
                 .Include(p => p.PedidoArticulos)
                 .Include(p => p.IdClienteNavigation)
                 .Include(p => p.IdEstadoNavigation)
                 .Include(p => p.ModificadoPorNavigation)
                 .Include(p => p.BorradoPorNavigation)
-                .Where(p => p.FechaModificacion >= new DateTime(DateTime.Now.Year, DateTime.Now.Month - 2, DateTime.Now.Day))
+                .Where(p => p.FechaModificacion >= date)
                 .ToList();
         }
         public List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido)
         {
             return _dbContext.PedidoArticulos.Include(a => a.IdArticuloNavigation).Include(a => a.IdPedidoNavigation).Where(pa => pa.IdPedido == idPedido).ToList();
         }
-       }
+    }
 }
