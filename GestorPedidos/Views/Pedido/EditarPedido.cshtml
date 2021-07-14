@@ -92,6 +92,7 @@
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
                     <textarea disabled="@cerrado" class="form-control" name="Comentarios" id="exampleFormControlTextarea1" rows="3">@Model.Pedido.Comentarios</textarea>
+                    
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
@@ -168,7 +169,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -180,6 +181,7 @@
 
 </div>
 @section Scripts{
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/PedidoScript.js"></script>
 }

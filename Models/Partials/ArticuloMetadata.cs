@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Models.Constants;
 
-namespace Models.Models
+namespace Models.Partials
 {
-    class ArticuloMetadata
+   public class ArticuloMetadata
     {
         [Required(ErrorMessage = ValidationConstants.RequiredField)]
         [StringLength(50, ErrorMessage = ValidationConstants.TextMax50Characters)]

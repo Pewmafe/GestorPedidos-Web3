@@ -120,7 +120,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al crear el articulo, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrio un error al crear el articulo, por favor intente de nuevo! \n ";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
@@ -185,7 +185,7 @@ namespace GestorPedidos.Controllers
 
             }catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al editar el articulo, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrio un error al editar el articulo, por favor intente de nuevo! \n ";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
@@ -219,7 +219,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al eliminar el articulo, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrio un error al eliminar el articulo, por favor intente de nuevo! \n ";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
