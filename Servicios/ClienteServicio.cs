@@ -28,9 +28,10 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public void BorrarPorId(int id, int idUsuario)
+        public void BorrarPorId(int idCliente, int idUsuario)
         {
-            Cliente objActual = ObtenerPorId(id);
+
+            Cliente objActual = ObtenerPorId(idCliente);
             objActual.FechaBorrado = DateTime.Now;
             objActual.BorradoPor = idUsuario;
             _dbContext.SaveChanges();

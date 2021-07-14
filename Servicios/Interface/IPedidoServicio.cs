@@ -9,6 +9,7 @@ namespace Service
         int CrearPedido(Pedido pedido);
         void CrearPedidoArticulo(PedidoArticulo entity);
         void MarcarPedidoComoCerrado(int idPedido, int idUsuario);
+        void BorrarPedidosPorIdCliente(int idCliente, int idUsuario);
         void MarcarPedidoComoEntregado(int idPedido, int idUsuario);
         void EliminarArticuloAlPedido(PedidoArticulo pedidoArticulo);
         PedidoArticulo BuscarPedidoArticuloPorIdPedidoYIdArticulo(int idPedido, int idArticulo);
@@ -20,7 +21,5 @@ namespace Service
         List<Pedido> ListarPedidosDeUnCliente(int IdCliente, int IdEstado);
         List<PedidoDTO> mapearListaPedidoAListaPedido(List<Pedido> pedidos);
 
-      
-        
     }
 }
