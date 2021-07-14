@@ -1,4 +1,5 @@
-﻿using Models.Models;
+﻿using Models.DTO;
+using Models.Models;
 using System.Collections.Generic;
 
 namespace Service
@@ -17,6 +18,8 @@ namespace Service
         List<Pedido> ListarPedidosEntregados();
         List<Pedido> ListarPedidosUltimosDosMeses();
         List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido);
+        List<Pedido> ListarPedidosDeUnCliente(int IdCliente, int IdEstado);
+        List<PedidoDTO> mapearListaPedidoAListaPedido(List<Pedido> pedidos);
 
     }
 }

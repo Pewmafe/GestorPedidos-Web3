@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Models.DTO;
 using Models.Enum;
 using Models.Models;
 using System;
@@ -12,12 +13,14 @@ namespace Service
         private _20211CTPContext _dbContext;
         private IArticuloServicio articuloServicio;
         private IClienteServicio clienteServicio;
+        private IUsuarioServicio usuarioServicio;
 
 
         public PedidoServicio(_20211CTPContext dbContext)
         {
             this.articuloServicio = new ArticuloServicio(dbContext);
             this.clienteServicio = new ClienteServicio(dbContext);
+            this.usuarioServicio = new UsuarioServicio(dbContext);
             _dbContext = dbContext;
         }
 
@@ -200,7 +203,51 @@ namespace Service
                     this.Borrar(p, idUsuario);
                 });
             }
-            
+        }
+
+        public List<Pedido> ListarPedidosDeUnCliente(int IdCliente, int IdEstado)
+        {
+            return _dbContext.Pedidos.Where(p => p.IdCliente == IdCliente && p.IdEstado == IdEstado).ToList();
+        }
+
+        public List<PedidoDTO> mapearListaPedidoAListaPedido(List<Pedido> pedidos)
+        {
+            List<PedidoDTO> pedidosDTO = new List<PedidoDTO>();
+            foreach (Pedido pedido in pedidos)
+            {
+                PedidoDTO pedidoDTO = new PedidoDTO();
+
+                pedidoDTO.IdCliente = pedido.IdCliente;
+                pedidoDTO.IdPedido = pedido.IdPedido;
+                pedidoDTO.Estado = EstadoPedidoEnum.ABIERTO;
+                pedidoDTO.FechaModificacion = (DateTime)pedido.FechaModificacion;
+                foreach (UsuarioDTO item in usuarioServicio.mapearListaUsuariosAListaUsuariosDTO(usuarioServicio.ListarTodos()))
+                {
+                    if(item.IdUsuario == pedido.ModificadoPor) { 
+
+                    pedidoDTO.ModificadoPor = item;
+                    }
+                }
+
+                foreach (ArticuloDTO articuloDTO in articuloServicio.mapearListaArticuloAListaArticuloDTO(articuloServicio.ListarTodos()))
+                {
+                    foreach (PedidoArticulo articulo in listarPedidoArticuloPorIdPedido(pedido.IdPedido))
+                    {
+                        if(articuloDTO.IdArticulo == articulo.IdArticuloNavigation.IdArticulo) {
+
+                            pedidoDTO.Articulos = new List<ArticuloDTO>();
+
+                        pedidoDTO.Articulos.Add(articuloDTO);
+                        }
+                    }
+
+                    
+                }
+               
+           
+                pedidosDTO.Add(pedidoDTO);
+            }
+            return pedidosDTO;
         }
     }
 }
