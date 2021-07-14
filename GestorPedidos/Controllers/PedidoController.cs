@@ -104,7 +104,8 @@ namespace GestorPedidos.Controllers
                     TempData["Error"] = "Por favor complete el pedido con las validaciones correspondientes";
                     return RedirectToAction("NuevoPedido");
                 }
-                int idPedido = this.pedidoServicio.CrearPedido(pedido);
+                int idUsuario2 = (int)HttpContext.Session.GetInt32("IdUser");
+                int idPedido = this.pedidoServicio.CrearPedido(pedido, idUsuario2);
                 pedidoArticulo.IdPedido = idPedido;
                 this.pedidoServicio.CrearPedidoArticulo(pedidoArticulo);
                 if (guardar != null && guardar.ToLower().Equals("guardar"))
