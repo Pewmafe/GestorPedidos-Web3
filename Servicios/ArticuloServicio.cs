@@ -28,6 +28,10 @@ namespace Service
                 dbContexto.Articulos.Add(entity);
                 dbContexto.SaveChanges();
             }
+            else
+            {
+                throw new Exception("No se puede crear el articulo");
+            }
         }
 
         public void Modificar(Articulo entity, int idUsuario)
@@ -42,35 +46,23 @@ namespace Service
                 if (idUsuario != 0) articulo.ModificadoPor = idUsuario;
                 dbContexto.SaveChanges();
             }
+            else
+            {
+                throw new Exception("Articulo Inexistente");
+            }
         }
         public void Borrar(Articulo entity, int idUsuario)
         {
-            PedidoArticulo articuloPedido = BuscarArticuloEnLosPedidosPorIdArticulo(entity.IdArticulo);
+            var articulos = from a in dbContexto.Articulos where a.IdArticulo == entity.IdArticulo select a;
 
-            var fecha = DateTime.Now;
-            if (entity != null)
-            {
-                entity.FechaBorrado = fecha;
-                if (idUsuario != 0)
-                {
-                    entity.BorradoPor = idUsuario;
-                    entity.ModificadoPor = idUsuario;
-                }
-                dbContexto.SaveChanges();
-            }
-            EliminarArticuloDeLosPedidos(articuloPedido);
-        }
-        public void BorrarPorId(int idArticulo, int idUsuario)
-        {
-
-            var articulos = from a in dbContexto.Articulos where a.IdArticulo == idArticulo select a;
-           
             Articulo articulo = articulos.FirstOrDefault();
-            PedidoArticulo articuloPedido = BuscarArticuloEnLosPedidosPorIdArticulo(idArticulo);
-           
+
+
             if (articulo != null)
             {
                 articulo.FechaBorrado = DateTime.Now;
+                articulo.FechaModificacion = DateTime.Now;
+
 
                 if (idUsuario != 0)
                 {
@@ -79,27 +71,55 @@ namespace Service
                 }
                 dbContexto.SaveChanges();
             }
-            EliminarArticuloDeLosPedidos(articuloPedido);
-            
-        }
-        public PedidoArticulo BuscarArticuloEnLosPedidosPorIdArticulo(int idArticulo)
-        {
-            try
+            else
             {
-                return dbContexto.PedidoArticulos.Where(p => p.IdArticulo == idArticulo).FirstOrDefault();
-            }
-            catch (Exception)
-            {
-                throw new Exception("No existe un PedidoArticulo con el idArticulo " + idArticulo);
+                throw new Exception("No se puede eliminar el articulo. Articulo Inexistente");
             }
 
+            EliminarArticuloDeLosPedidos(entity.IdArticulo);
+
         }
-        public void EliminarArticuloDeLosPedidos(PedidoArticulo pedidoArticulo)
+        public void BorrarPorId(int idArticulo, int idUsuario)
         {
-            if (pedidoArticulo != null) { 
-            dbContexto.PedidoArticulos.Remove(pedidoArticulo);
-            dbContexto.SaveChanges();
+
+            var articulos = from a in dbContexto.Articulos where a.IdArticulo == idArticulo select a;
+
+            Articulo articulo = articulos.FirstOrDefault();
+
+
+            if (articulo != null)
+            {
+                articulo.FechaBorrado = DateTime.Now;
+                articulo.FechaModificacion = DateTime.Now;
+                  
+
+                if (idUsuario != 0)
+                {
+                    articulo.BorradoPor = idUsuario;
+                    articulo.ModificadoPor = idUsuario;
+                }
+                dbContexto.SaveChanges();
             }
+            else
+            {
+                throw new Exception("No se puede eliminar el articulo. Articulo Inexistente");
+            }
+            
+            EliminarArticuloDeLosPedidos(idArticulo);
+
+        }
+      
+        public void EliminarArticuloDeLosPedidos(int idArticulo)
+        {
+            var articulos = from a in dbContexto.PedidoArticulos where a.IdArticulo == idArticulo select a;
+
+            List<PedidoArticulo> articulosP = articulos.ToList();
+            if (articulosP != null || articulosP.Count>0)
+            {
+                dbContexto.PedidoArticulos.RemoveRange(articulosP);
+                dbContexto.SaveChanges();
+            }
+          
         }
 
         public Articulo ObtenerPorId(int id)
@@ -107,9 +127,18 @@ namespace Service
             var articulos = from a in dbContexto.Articulos where a.IdArticulo == id select a;
 
             Articulo articulo = articulos.FirstOrDefault();
-            if (articulo != null) return articulo;
+            if (articulo != null)
+            {
+                return articulo;
 
-            return null;
+            }
+            else
+            {
+                throw new Exception("Articulo Inexistente");
+
+            }
+
+
         }
 
         public List<Articulo> ListarTodos()
@@ -135,10 +164,10 @@ namespace Service
             {
                 ArticuloDTO articuloDTO = new ArticuloDTO();
 
-                articuloDTO.IdArticulo =articulo.IdArticulo;
-                articuloDTO.Codigo= articulo.Codigo;
+                articuloDTO.IdArticulo = articulo.IdArticulo;
+                articuloDTO.Codigo = articulo.Codigo;
                 articuloDTO.Descripcion = articulo.Descripcion;
-               
+
                 articulosDTO.Add(articuloDTO);
             }
             return articulosDTO;
