@@ -157,7 +157,7 @@ namespace GestorPedidos.Controllers
             catch (Exception e)
             {
 
-                TempData["Error"] = "Ocurrió un error al crear el usuario, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrió un error al crear el usuario, por favor intente de nuevo!";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
@@ -240,7 +240,7 @@ namespace GestorPedidos.Controllers
             catch (Exception e)
             {
 
-                TempData["Error"] = "Ocurrió un error al editar el usuario, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrió un error al editar el usuario, por favor intente de nuevo!";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
@@ -286,7 +286,7 @@ namespace GestorPedidos.Controllers
             catch (Exception e)
             {
 
-                TempData["Error"] = "Ocurrió un error al eliminar el usuario, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrió un error al eliminar el usuario, por favor intente de nuevo!";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
