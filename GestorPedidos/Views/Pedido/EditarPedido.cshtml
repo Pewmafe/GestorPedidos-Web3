@@ -48,7 +48,6 @@
                     {
                         <button disabled="@cerrado" class="btn btn-outline-dark text-uppercase">Agregar a la lista</button>
                     }
-
                 </div>
             </form>
         </div>
@@ -89,16 +88,34 @@
                     </tbody>
                 </table>
             </div>
-
             <form asp-action="EditarPedido" asp-controller="Pedido" method="post">
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label text-uppercase">Comentarios</label>
                     <textarea disabled="@cerrado" class="form-control" name="Comentarios" id="exampleFormControlTextarea1" rows="3">@Model.Pedido.Comentarios</textarea>
+                    
                 </div>
-
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
-                    <button disabled="@cerrado" class="col-12 btn btn-outline-success text-uppercase">Modificar</button>
+                    <button type="button" disabled="@cerrado" class="btn btn-outline-success text-uppercase" data-bs-toggle="modal" data-bs-target="#modificarModal">
+                        Modificar
+                    </button>
+                    <div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-dark text-light">
+                                    <h5 class="modal-title" id="exampleModalLabel">¡Atencion!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Esta seguro que desea modificar el pedido Nro° @Model.Pedido.NroPedido?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary text-uppercase" data-bs-dismiss="modal">Cancelar</button>
+                                    <button disabled="@cerrado" class="btn btn-outline-success text-uppercase">Confirmar cambios</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div class="row my-2 pedido-pc">
@@ -106,7 +123,26 @@
                     <div class="d-flex justify-content-center">
                         <form asp-controller="Pedido" asp-action="MarcarPedidoComoEntregado" method="post">
                             <input type="hidden" name="idPedido" id="dPedido" value="@Model.Pedido.IdPedido" />
-                            <button disabled="@cerrado" class="btn btn-outline-secondary text-uppercase">Entregar</button>
+                            <button type="button" disabled="@cerrado" class="btn btn-outline-secondary text-uppercase" data-bs-toggle="modal" data-bs-target="#entregarModal">
+                                Entregar
+                            </button>
+                            <div class="modal fade" id="entregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-dark text-light">
+                                            <h5 class="modal-title" id="exampleModalLabel">¡Atencion!</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>¿Esta seguro que desea marcar como entregado el pedido Nro° @Model.Pedido.NroPedido?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary text-uppercase" data-bs-dismiss="modal">Cancelar</button>
+                                            <button disabled="@cerrado" class="btn btn-outline-success text-uppercase">Confirmar Entrega</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -114,7 +150,26 @@
                     <div class="d-flex justify-content-center">
                         <form asp-controller="Pedido" asp-action="MarcarPedidoComoCerrado" method="post">
                             <input type="hidden" name="IdPedido" id="IdPedido" value="@Model.Pedido.IdPedido" />
-                            <button disabled="@cerrado" class="btn btn-outline-danger text-uppercase">Cerrar</button>
+                            <button type="button" disabled="@cerrado" class="btn btn-outline-danger text-uppercase" data-bs-toggle="modal" data-bs-target="#cerrarModal">
+                                Cerrar
+                            </button>
+                            <div class="modal fade" id="cerrarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-dark text-light">
+                                            <h5 class="modal-title" id="exampleModalLabel">¡Atencion!</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>¿Esta seguro que desea marcar como cerrado el pedido Nro° @Model.Pedido.NroPedido?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary text-uppercase" data-bs-dismiss="modal">Cancelar</button>
+                                            <button disabled="@cerrado" class="btn btn-outline-success text-uppercase">Confirmar Cierre</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -126,6 +181,7 @@
 
 </div>
 @section Scripts{
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/pedidoScript.js"></script>
+    <script src="~/js/PedidoScript.js"></script>
 }

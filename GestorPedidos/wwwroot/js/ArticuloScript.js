@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('#tableCliente_id').dataTable({
+    $('#articulo_table_id').dataTable({
         "order": [[1, "asc"]]
     });
 
@@ -8,7 +8,7 @@
         $("#flexCheckChecked").on('change', function () {
 
             if ($(this).is(':checked')) {
-                location.href = "https://localhost:44322/Cliente/ClientesNoEliminados";
+                location.href = "https://localhost:44322/Articulo/ArticulosNoEliminados";
             }
             else {
                 location.reload();
@@ -18,10 +18,10 @@
 
     });
 
-    $('.botonBorrar').click(function () {
+    /*$('.botonBorrar').click(function () {
         var miElementoId = $(this).data('id');
-        $(".modal-footer #IdCliente").val(miElementoId);
-    });
+        $(".modal-footer #IdArticulo").val(miElementoId);
+    });*/
 
 
 });

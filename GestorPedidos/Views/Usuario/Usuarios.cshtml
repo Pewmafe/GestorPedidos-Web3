@@ -25,18 +25,15 @@
             <h4 class="titulos-paginas">Lista de Usuarios</h4>
             <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
             <div class="collapse" id="filtros">
-
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
                     <p class="form-check-label" for="flexCheckChecked">
                         Excluir eliminados
                     </p>
                 </div>
             </div>
-
-
-            <div class="table-responsive ">
-                <table id="table_id" class="table table-striped display" style="width:100%">
+            <div class="table-responsive">
+                <table id="table_id" class="table table-striped display">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th class="text-center">#</th>
@@ -49,8 +46,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
-
                         @foreach (var usuario in @Model)
                         {
                             <tr>
@@ -65,38 +60,53 @@
                                 {
                                     <td class="text-center">-</td>
                                 }
-
                                 <td class="text-center">
                                     <a asp-action="EditarUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-placement="top" title="Ver Usuario"><i class="fas fa-info btn"></i></a>
                                 </td>
                                 @if (usuario.FechaBorrado == null)
                                 {
                                     <td class="text-center">
-                                        <a asp-action="BajaUsuario" asp-controller="Usuario" asp-route-id="@usuario.IdUsuario" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario"> <i class="fas fa-times btn text-danger"></i></a>
+                                        <div>
+                                            <button type="button" class="btn botonBorrar" data-bs-toggle="modal" data-bs-target="#borrarUsuario-@usuario.IdUsuario" data-id="@usuario.IdUsuario">
+                                                <i class="fas fa-times btn text-danger"></i>
+                                            </button>
+                                            <div class="modal fade" id="borrarUsuario-@usuario.IdUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>¿Esta seguro que desea eliminar este usuario? @usuario.Nombre</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                            <form asp-controller="Usuario" asp-action="BajaUsuario" method="post">
+                                                                <input type="hidden" id="id" name="id" value="@usuario.IdUsuario" />
+                                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 }
                                 else
                                 {
                                     <td class="text-center fst-italic"><p>Eliminado</p></td>
                                 }
-
                             </tr>
                         }
                     </tbody>
                 </table>
-
             </div>
         </div>
-
     </div>
-
 </div>
-
-
-
 
 @section Scripts{
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/UsuarioScript.js"></script>
-
 }

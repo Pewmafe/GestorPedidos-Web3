@@ -35,11 +35,5 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 })
 
 
-$(document).ready(function () {
-    $('.dropdown-toggle').dropdown()
-
-    $('#table_id').dataTable({});
-
-});
 
 

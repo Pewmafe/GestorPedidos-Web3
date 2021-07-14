@@ -46,7 +46,7 @@
                                 <span class="nav__name">Clientes</span>
                             </a>
 
-                            <a asp-controller="Articulo" asp-action="Articulos" class="nav__link">
+                            <a asp-controller="Articulo" asp-action="ArticulosNoEliminados" class="nav__link">
                                 <i class="fas fa-tags"></i>
                                 <span class="nav__name">Artículos</span>
                             </a>
@@ -84,5 +84,6 @@
         @RenderBody()
     </div>
 </main>
+
 @await RenderSectionAsync("Scripts", required: false)
 @{await Html.RenderPartialAsync("~/Views/Shared/scriptsSweetAlert.cshtml");}

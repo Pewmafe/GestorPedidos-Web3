@@ -7,7 +7,7 @@ using Models.Models;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
-
+using Models.DTO;
 
 namespace GestorPedidos.Controllers
 {
@@ -44,10 +44,11 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View("Usuarios", _usuarioServicio.ListarTodos());
+            return View("Usuarios", _usuarioServicio.ListarNoEliminados());
         }
+
         [HttpPost]
-        public IActionResult UsuariosNoEliminados()
+        public IActionResult TodosLosUsuarios()
         {
 
             var draw = Request.Form["draw"].FirstOrDefault();
@@ -58,31 +59,24 @@ namespace GestorPedidos.Controllers
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
 
-            //Paging Size (10,20,50,100)    
+
             int pageSize = length != null ? Convert.ToInt32(length) : 0;
             int skip = start != null ? Convert.ToInt32(start) : 0;
             int recordsTotal = 0;
 
-            // Getting all Customer data    
-            List<Usuario> usuariosNoEliminados = _usuarioServicio.ListarNoEliminados();
 
-            //Sorting    
-            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
-            {
-                //usuariosNoEliminados = usuariosNoEliminados.OrderBy(u=> u.IdUsuario).ToList();
-            }
-            //Search    
+            List<UsuarioDatatableDTO> usuarios = _usuarioServicio.mapearListaUsuariosAListaUsuariosDatatableDTO(_usuarioServicio.ListarTodos());
+
             if (!string.IsNullOrEmpty(searchValue))
             {
 
-                usuariosNoEliminados = usuariosNoEliminados.Where(u => Regex.IsMatch(u.IdUsuario.ToString(), searchValue) || Regex.IsMatch(u.Nombre.ToLower(), searchValue.ToLower()) || Regex.IsMatch(u.Email.ToLower(), searchValue.ToLower())).ToList();
+                usuarios = usuarios.Where(u => Regex.IsMatch(u.IdUsuario.ToString(), searchValue) || Regex.IsMatch(u.Nombre.ToLower(), searchValue.ToLower()) || Regex.IsMatch(u.Email.ToLower(), searchValue.ToLower())).ToList();
             }
 
-            //total number of rows count     
-            recordsTotal = usuariosNoEliminados.Count();
-            //Paging     
-            var data = usuariosNoEliminados.Skip(skip).Take(pageSize).ToList();
-            //Returning Json Data    
+            recordsTotal = usuarios.Count();
+
+            var data = usuarios.Skip(skip).Take(pageSize).ToList();
+
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
         }
 
@@ -116,7 +110,7 @@ namespace GestorPedidos.Controllers
         }
 
         [HttpPost]
-        public IActionResult NuevoUsuario(Usuario usuario)
+        public IActionResult NuevoUsuario(Usuario usuario, string guardar)
         {
             string idUsuario2 = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
@@ -132,15 +126,35 @@ namespace GestorPedidos.Controllers
             }
             if (!ModelState.IsValid)
             {
+                TempData["Error"] = "Por favor complete el usuario con las validaciones correspondientes";
                 return View(usuario);
             }
+            try
+            {
 
-            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
-            _usuarioServicio.Crear(usuario, idUsuario);
+                int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+                _usuarioServicio.Crear(usuario, idUsuario);
 
-            TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
 
-            return RedirectToAction(nameof(Usuarios));
+                if (guardar.ToLower().Equals("guardar"))
+                {
+                    TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
+                    return RedirectToAction(nameof(Usuarios));
+                }
+                TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
+
+                return RedirectToAction(nameof(NuevoUsuario));
+
+            }
+
+            catch (Exception e)
+            {
+
+                TempData["Error"] = "Ocurrió un error al crear el usuario, por favor intente de nuevo!";
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
+
         }
 
         [HttpGet]
@@ -166,9 +180,20 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            try
+            {
+                Usuario usuario = _usuarioServicio.ObtenerPorId(id);
 
+                return View(usuario);
 
-            return View("EditarUsuario", _usuarioServicio.ObtenerPorId(id));
+            }
+            catch (Exception e)
+            {
+
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
+
 
         }
 
@@ -187,24 +212,42 @@ namespace GestorPedidos.Controllers
                 TempData["Error"] = "Solo los usuarios admin pueden ingresar a esta sección.";
                 return RedirectToAction("Index", "Home");
             }
-            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Por favor complete el usuario con las validaciones correspondientes";
+                return View(usuario);
+            }
+            try
+            {
 
-            _usuarioServicio.Modificar(usuario, idUsuario);
+                int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
 
-            TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha modificado correctamente";
+                _usuarioServicio.Modificar(usuario, idUsuario);
 
-            return RedirectToAction(nameof(Usuarios));
+                TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha modificado correctamente";
+
+                return RedirectToAction(nameof(Usuarios));
+
+            }
+
+            catch (Exception e)
+            {
+
+                TempData["Error"] = "Ocurrió un error al editar el usuario, por favor intente de nuevo!";
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
         }
 
-
-        public IActionResult BajaUsuario(int id, string guardar)
+        [HttpPost]
+        public IActionResult BajaUsuario(int id)
         {
 
-            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string IdUsuarioDeLaBaja = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
 
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
 
-            if (idUsuario == null)
+            if (IdUsuarioDeLaBaja == null)
             {
                 TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
 
@@ -219,21 +262,31 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            try
+            {
 
-            //int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+                Usuario usuario = _usuarioServicio.ObtenerPorId(id);
 
-            Usuario usuario = _usuarioServicio.ObtenerPorId(id);
-
-            _usuarioServicio.BorrarPorId(id, Convert.ToInt32(idUsuario));
-
-
-            TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha borrado correctamente";
+                _usuarioServicio.BorrarPorId(id, Convert.ToInt32(IdUsuarioDeLaBaja));
 
 
-            return RedirectToAction(nameof(Usuarios));
+                TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha borrado correctamente";
+
+
+                return RedirectToAction(nameof(Usuarios));
+            }
+
+            catch (Exception e)
+            {
+
+                TempData["Error"] = "Ocurrió un error al eliminar el usuario, por favor intente de nuevo!";
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
 
         }
 
 
     }
 }
+

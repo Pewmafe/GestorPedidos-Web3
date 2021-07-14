@@ -1,14 +1,10 @@
-﻿using api.Helper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Models.Models;
 using Service;
-using System;
-using Service.Interface;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Models.DTO;
+using Models;
 
 namespace api.Controllers
 {
@@ -18,34 +14,46 @@ namespace api.Controllers
     {
         private _20211CTPContext _context;
         private IPedidoServicio _servicioPedido;
-        IClienteServicio _servicioCliente;
-
 
         public PedidoController(_20211CTPContext context)
         {
             _context = context;
             _servicioPedido = new PedidoServicio(_context);
-            _servicioCliente = new ClienteServicio(_context);
+
 
         }
 
         [HttpPost]
         [Route("buscar")]
-        //[Authorize]
-        public ActionResult<object> Buscar(Pedido pedido)
+        [Authorize]
+        public ActionResult<object> Buscar([FromBody] BodyPostPedido pedido)
         {
 
-            pedido = _servicioPedido.ObtenerPorId(pedido.IdPedido);
+            List<Pedido> pedidosDeUnCliente = _servicioPedido.ListarPedidosDeUnCliente(pedido.IdCliente, pedido.IdEstado);
+
+            List<PedidoDTO> pedidosDTO = new List<PedidoDTO>();
+
+
+
+            if (pedidosDeUnCliente.Count != 0)
+            {
+                pedidosDTO = _servicioPedido.mapearListaPedidoAListaPedido(pedidosDeUnCliente);
+            }
+
+            if (pedidosDeUnCliente.Count == 0)
+            {
+                return Ok(new
+                {
+                    msg = "No hay pedidos que mostrar."
+                });
+
+            }
 
 
             return Ok(new
             {
-                IdPedido = pedido.IdPedido,
-                IdCliente = pedido.IdCliente,
-                Estado = pedido.IdEstado,
-                FechaModificacion = pedido.FechaModificacion,
-                ModificadoPor = pedido.ModificadoPor,
-
+                Count = pedidosDTO.Count,
+                Items = pedidosDTO
 
             });
 
@@ -54,21 +62,30 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("guardar")]
-        //[Authorize]
-        public ActionResult<object> Guardar(PedidoArticulo pedidoArticulo)
+        [Authorize]
+        public ActionResult<object> Guardar([FromBody] BodyPostGuardarPedido pedido)
         {
+            Pedido pedidoAPI = new Pedido();
 
-            _servicioPedido.CrearPedidoArticulo(pedidoArticulo);
-            
+            pedidoAPI.IdCliente = pedido.IdCliente;
 
-            return Ok(new
+            int IdPedido = _servicioPedido.CrearPedidoApi(pedidoAPI);
+
+            pedido.pedidosArticulos.ForEach(a =>
             {
-                Mensaje = "Pedido " + pedidoArticulo.IdPedido + " guardado con éxito"
+                a.IdPedido = IdPedido;
 
+                _servicioPedido.CrearPedidoArticulo(a);
 
             });
 
 
+            return Ok(new
+            {
+                Mensaje = "Pedido " + IdPedido + " guardado con éxito"
+
+
+            });
 
         }
     }

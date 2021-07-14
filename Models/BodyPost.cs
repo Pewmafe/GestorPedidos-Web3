@@ -9,5 +9,7 @@ namespace Models.Models
     public class BodyPost
     {
         public string Filtro { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

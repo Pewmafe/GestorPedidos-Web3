@@ -15,7 +15,7 @@ namespace api.Controllers
     public class AuthController : Controller
     {
 
-
+        private IUsuarioServicio usuarioServicio;
         private ILoginServicio loginServicio;
         private _20211CTPContext dbContext;
         private readonly IConfiguration conf;
@@ -24,14 +24,16 @@ namespace api.Controllers
         {
             this.dbContext = _dbContext;
             this.loginServicio = new LoginService(dbContext);
+            this.usuarioServicio = new UsuarioServicio(dbContext);
             this.conf = config;
         }
 
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public ActionResult<object> Login(Usuario usuario)
+        public ActionResult<object> Login([FromBody] BodyPost user)
         {
+            Usuario usuario = usuarioServicio.ObtenerPorEmail(user.Email);
             Usuario usuarioValidado = loginServicio.LogIn(usuario);
             if (usuarioValidado == null)
             {
@@ -47,21 +49,22 @@ namespace api.Controllers
                 IdUsuario = usuarioValidado.IdUsuario,
                 Nombre = usuarioValidado.Nombre,
                 Apellido = usuarioValidado.Apellido,
-                FechaNacimiento= usuarioValidado.FechaNacimiento,
+                FechaNacimiento = usuarioValidado.FechaNacimiento,
                 token
             });
         }
 
-         [HttpPost]
-         [Route("logout")]
-         public object Logout()
-         {
-                
-         return new
-         {
-            mensaje = "Ha cerrado sesión exitosamente"
-         };
-            
-        }   
+        [HttpPost]
+        [Route("logout")]
+        [Authorize]
+        public object Logout()
+        {
+
+            return new
+            {
+                mensaje = "Ha cerrado sesión exitosamente"
+            };
+
+        }
     }
 }

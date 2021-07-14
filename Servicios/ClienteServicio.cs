@@ -10,19 +10,23 @@ namespace Service
     {
 
         private _20211CTPContext _dbContext;
-        private IPedidoServicio pedidoServicio;
 
         public ClienteServicio(_20211CTPContext dbContext)
         {
-            this.pedidoServicio = new PedidoServicio(dbContext);
             _dbContext = dbContext;
         }
 
         public void Crear(Cliente entity, int idUsuario)
         {
+            if (entity != null) { 
             entity.CreadoPor = idUsuario;
             _dbContext.Clientes.Add(entity);
             _dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("No se puede crear el cliente");
+            }
         }
 
         public void Borrar(Cliente entity, int idUsuario)
@@ -30,12 +34,19 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public void BorrarPorId(int id, int idUsuario)
+        public void BorrarPorId(int idCliente, int idUsuario)
         {
-            Cliente objActual = ObtenerPorId(id);
+
+            Cliente objActual = ObtenerPorId(idCliente);
+            if (objActual != null) { 
             objActual.FechaBorrado = DateTime.Now;
             objActual.BorradoPor = idUsuario;
             _dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("No se puede eliminar el cliente. Cliente Inexistente");
+            }
         }
 
         public List<Cliente> ListarTodos()
@@ -45,14 +56,23 @@ namespace Service
 
         public Cliente ObtenerPorId(int id)
         {
-            return _dbContext.Clientes
+            Cliente cliente=  _dbContext.Clientes
                 .FirstOrDefault(o => o.IdCliente == id);
+            if (cliente != null)
+            {
+                return cliente;
+            }
+            else
+            {
+                throw new Exception("Cliente Inexistente");
+            }
         }
 
         public void Modificar(Cliente entity, int idUsuario)
         {
             Cliente objActual = ObtenerPorId(entity.IdCliente);
 
+            if (objActual != null) { 
             objActual.Nombre = entity.Nombre;
             objActual.Numero = entity.Numero;
             objActual.Telefono = entity.Telefono;
@@ -63,6 +83,11 @@ namespace Service
             objActual.ModificadoPor = idUsuario;
 
             _dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("No es posible modificar el cliente. Cliente Inexistente");
+            }
         }
 
         public List<Cliente> ListarNoEliminados()
@@ -79,13 +104,12 @@ namespace Service
             List<Cliente> clientesSinPedidosActivos = new List<Cliente>();
             ListarNoEliminados().ForEach(a =>
             {
-                if (!this.pedidoServicio.validarSiExistePedidoAbiertoDeUnClientePorIdCliente(a.IdCliente)) clientesSinPedidosActivos.Add(a);
+                if (!validarSiExistePedidoAbiertoDeUnClientePorIdCliente(a.IdCliente)) clientesSinPedidosActivos.Add(a);
             });
 
             return clientesSinPedidosActivos;
 
         }
-
         public List<ClienteDTO> mapearListaClienteAListaClienteDTO(List<Cliente> clientes)
         {
             List<ClienteDTO> clientesDTO = new List<ClienteDTO>();
@@ -110,7 +134,10 @@ namespace Service
                 .Where(p => p.Nombre.Contains(Filtro))
                 .ToList();
         }
-
+        public bool validarSiExistePedidoAbiertoDeUnClientePorIdCliente(int idCliente)
+        {
+            return _dbContext.Pedidos.Where(p => p.IdCliente == idCliente && p.IdEstado == 1 && p.FechaBorrado == null).Count() > 0;
+        }
         public bool emailExistente(string email)
         {
             Cliente clienteExistente = _dbContext.Clientes.Where(o => o.Email == email).FirstOrDefault();

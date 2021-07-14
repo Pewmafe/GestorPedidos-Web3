@@ -6,14 +6,7 @@ body {
     font-family: "Poppins", sans-serif;
 }
 /*******Layout*******/
-/*
-.bg-header {
-    background-color: rgb(208 59 0 / 0,99) !important;
-}
 
-header {
-    border-bottom: 5px #ccc solid;
-}*/
 .titulos-paginas {
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
@@ -31,7 +24,9 @@ header {
 .filtros:hover {
     text-decoration: underline;
 }
-
+.table .table-striped{
+    width: 100%;
+}
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
