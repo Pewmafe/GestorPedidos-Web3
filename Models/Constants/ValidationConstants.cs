@@ -11,6 +11,7 @@
         public const string InvalidDate = "La fecha no debe ser mayor al dia de hoy";
         public const string TextMax300Characters = "Este campo no puede exceder los 300 caracteres";
         public const string TextMax200Characters = "Este campo no puede exceder los 200 caracteres";
+        public const string TextMax100Characters = "Este campo no puede exceder los 100 caracteres";
         public const string TextMax50Characters = "Este campo no puede exceder los 50 caracteres";
     }
 }

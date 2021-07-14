@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('table_id').dataTable({
+    $('#table_id').dataTable({
         "order": [[1, "asc"]]
     });
 
@@ -62,7 +62,7 @@
                         "title": "Ver", "render": function (data, type, full, meta) { return '<a href="EditarUsuario/' + full.idUsuario + '" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Usuario"><i class="fas fa-info btn"></i></a>'; }
                     },
                     {
-                        "title": "Eliminados", "render": function (data, type, full, meta) { return '<a href="BajaUsuario/' + full.idUsuario + '" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario"><i class="fas fa-times btn text-danger"></i></a>'; }
+                        "title": "Eliminados", "render": function (data, type, full, meta) { return '<button type="button" class="btn botonBorrar" data-bs-toggle="modal" data-bs-target="#borrarUsuario" data-id='+ full.idUsuario +'"><i class="fas fa-times btn text-danger"></i> </button>'; }
                     },
 
                 ]

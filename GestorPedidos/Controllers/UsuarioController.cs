@@ -135,19 +135,31 @@ namespace GestorPedidos.Controllers
             {
                 return View(usuario);
             }
-
-            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
-            _usuarioServicio.Crear(usuario, idUsuario);
-
-
-            if (guardar.ToLower().Equals("guardar"))
+            try
             {
-                TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
-                return RedirectToAction(nameof(Usuarios));
-            }
-            TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
 
-            return RedirectToAction(nameof(NuevoUsuario));
+                int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+                _usuarioServicio.Crear(usuario, idUsuario);
+
+
+                if (guardar.ToLower().Equals("guardar"))
+                {
+                    TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
+                    return RedirectToAction(nameof(Usuarios));
+                }
+                TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha creado correctamente";
+
+                return RedirectToAction(nameof(NuevoUsuario));
+
+            }
+
+            catch (Exception e)
+            {
+
+                TempData["Error"] = "Ocurrió un error al crear el usuario, por favor intente de nuevo! \n " + e;
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
 
         }
 
@@ -195,24 +207,38 @@ namespace GestorPedidos.Controllers
                 TempData["Error"] = "Solo los usuarios admin pueden ingresar a esta sección.";
                 return RedirectToAction("Index", "Home");
             }
-            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
 
-            _usuarioServicio.Modificar(usuario, idUsuario);
+            try
+            {
 
-            TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha modificado correctamente";
+                int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
 
-            return RedirectToAction(nameof(Usuarios));
+                _usuarioServicio.Modificar(usuario, idUsuario);
+
+                TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha modificado correctamente";
+
+                return RedirectToAction(nameof(Usuarios));
+
+            }
+
+            catch (Exception e)
+            {
+
+                TempData["Error"] = "Ocurrió un error al editar el usuario, por favor intente de nuevo! \n " + e;
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
         }
 
-
-        public IActionResult BajaUsuario(int id, string guardar)
+        [HttpGet]
+        public IActionResult BajaUsuario(int IdUsuario, string guardar)
         {
 
-            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            string IdUsuarioDeLaBaja = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
 
             string admin = HttpContext.Session.GetString("usuarioAdmin") != null ? HttpContext.Session.GetString("usuarioAdmin") : null;
 
-            if (idUsuario == null)
+            if (IdUsuarioDeLaBaja == null)
             {
                 TempData["Error"] = "Por favor, inicie sesión para poder ingresar a esta sección.";
 
@@ -227,18 +253,27 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            try
+            {
 
-            //int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+                Usuario usuario = _usuarioServicio.ObtenerPorId(IdUsuario);
 
-            Usuario usuario = _usuarioServicio.ObtenerPorId(id);
-
-            _usuarioServicio.BorrarPorId(id, Convert.ToInt32(idUsuario));
-
-
-            TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha borrado correctamente";
+                _usuarioServicio.BorrarPorId(IdUsuario, Convert.ToInt32(IdUsuarioDeLaBaja));
 
 
-            return RedirectToAction(nameof(Usuarios));
+                TempData["Success"] = "El usuario:  " + usuario.Nombre + " " + usuario.Apellido + " se ha borrado correctamente";
+
+
+                return RedirectToAction(nameof(Usuarios));
+            }
+
+            catch (Exception e)
+            {
+
+                TempData["Error"] = "Ocurrió un error al eliminar el usuario, por favor intente de nuevo! \n " + e;
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
 
         }
 

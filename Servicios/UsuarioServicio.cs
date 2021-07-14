@@ -19,13 +19,23 @@ namespace Service
         public void Crear(Usuario usuario, int idUsuario)
         {
 
-            usuario.CreadoPor = idUsuario;
+            if (usuario == null)
+            {
 
-            usuario.ModificadoPor = idUsuario;
+                throw new Exception("Error al crear usuario");
+            }
 
-            _context.Usuarios.Add(usuario);
+            else
+            {
 
-            _context.SaveChanges();
+                usuario.CreadoPor = idUsuario;
+
+                usuario.ModificadoPor = idUsuario;
+
+                _context.Usuarios.Add(usuario);
+
+                _context.SaveChanges();
+            }
         }
 
         public void Borrar(Usuario entity, int idUsuario)
@@ -33,15 +43,26 @@ namespace Service
 
         }
 
-        public void BorrarPorId(int id, int idUsuario)
+        public void BorrarPorId(int IdUsuario, int IdUsuarioDeLaBaja)
         {
-            Usuario usuario = _context.Usuarios.Find(id);
 
-            usuario.FechaModificacion = DateTime.Now;
-            usuario.FechaBorrado = DateTime.Now;
-            usuario.BorradoPor = idUsuario;
+            Usuario usuario = _context.Usuarios.Find(IdUsuario);
 
-            _context.SaveChanges();
+            if (usuario == null)
+            {
+
+                throw new Exception("No se pudo borrar al usuario. Usuario inexistente");
+            }
+
+            else
+            {
+                usuario.FechaModificacion = DateTime.Now;
+                usuario.FechaBorrado = DateTime.Now;
+                usuario.BorradoPor = IdUsuarioDeLaBaja;
+
+                _context.SaveChanges();
+
+            }
         }
 
         public List<Usuario> ListarTodos()
@@ -54,6 +75,12 @@ namespace Service
         {
             Usuario usuario = _context.Usuarios.Find(id);
 
+            if (usuario == null)
+            {
+
+                throw new Exception("Usuario Inexistente");
+            }
+
             return usuario;
         }
 
@@ -61,16 +88,29 @@ namespace Service
         {
             Usuario usuarioActualizado = ObtenerPorId(usuario.IdUsuario);
 
-            usuarioActualizado.Nombre = usuario.Nombre;
-            usuarioActualizado.Apellido = usuario.Apellido;
-            usuarioActualizado.Email = usuario.Email;
-            usuarioActualizado.Password = usuario.Password;
-            usuarioActualizado.EsAdmin = usuario.EsAdmin;
-            usuarioActualizado.FechaNacimiento = usuario.FechaNacimiento;
-            usuarioActualizado.FechaModificacion = DateTime.Now;
-            usuarioActualizado.ModificadoPor = idUsuario;
+            if (usuarioActualizado == null)
+            {
 
-            _context.SaveChanges();
+                throw new Exception("No se encontró usuario");
+            }
+
+            else
+            {
+
+                usuarioActualizado.Nombre = usuario.Nombre;
+                usuarioActualizado.Apellido = usuario.Apellido;
+                usuarioActualizado.Email = usuario.Email;
+                usuarioActualizado.Password = usuario.Password;
+                usuarioActualizado.EsAdmin = usuario.EsAdmin;
+                usuarioActualizado.FechaNacimiento = usuario.FechaNacimiento;
+                usuarioActualizado.FechaModificacion = DateTime.Now;
+                usuarioActualizado.ModificadoPor = idUsuario;
+
+
+
+                _context.SaveChanges();
+
+            }
 
 
         }
@@ -78,8 +118,7 @@ namespace Service
         public List<Usuario> ListarNoEliminados()
         {
 
-            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u => u.FechaBorrado == null).OrderBy(u=> u.Nombre).ToList();
-
+            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u => u.FechaBorrado == null).OrderBy(u => u.Nombre).ToList();
 
             return usuariosNoEliminados;
 
@@ -111,7 +150,7 @@ namespace Service
             {
                 UsuarioDatatableDTO usuarioDatatableDTO = new UsuarioDatatableDTO();
 
-               
+
                 usuarioDatatableDTO.IdUsuario = usuario.IdUsuario;
                 usuarioDatatableDTO.Nombre = usuario.Nombre;
                 usuarioDatatableDTO.Email = usuario.Email;
@@ -123,5 +162,5 @@ namespace Service
             return usuariosDatatableDTO;
         }
     }
-    }
+}
 

@@ -72,7 +72,7 @@
                                 @if (usuario.FechaBorrado == null)
                                 {
                                     <td class="text-center">
-                                        <button type="button" class="btn botonBorrar" data-bs-toggle="modal" data-bs-target="#borrarUsuario" data-id="@usuario.IdUsuario">
+                                        <button type="button" class="btn botonBorrar" data-bs-toggle="modal" data-bs-target="#borrarUsuario" data-id="@usuario.IdUsuario" >
                                             <i class="fas fa-times btn text-danger"></i>
                                         </button>
                                     </td>
@@ -96,7 +96,7 @@
 
 <!-- Modal -->
 
-<div class="modal fade" id="borrarArticulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="borrarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -108,7 +108,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <form asp-action="BajaUsuario" asp-controller="Usuario" method="get">
+                <form asp-controller="Usuario" asp-action="BajaUsuario"  method="get">
                     <input type="hidden" id="IdUsuario" name="IdUsuario" value="" />
                     <button type="submit" class="btn btn-danger" name="botonBorrar" id="botonBorrar">Eliminar</button>
                 </form>
