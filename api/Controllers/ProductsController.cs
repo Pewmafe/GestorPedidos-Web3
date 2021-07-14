@@ -27,18 +27,24 @@ namespace api.Controllers
         {
             List<Articulo> productos = articuloServicio.ListarTodos();
             List<ArticuloDTO> productosDTO = new List<ArticuloDTO>();
-            if (productos.Count != 0)
+
+            if (productos.Count == 0)
             {
-               productosDTO = articuloServicio.mapearListaArticuloAListaArticuloDTO(productos);
+                return Ok(new
+                {
+                    msg = "No hay articulos que mostrar."
+                });
             }
 
-
+            productosDTO = articuloServicio.mapearListaArticuloAListaArticuloDTO(productos);
+            
             return Ok(new
             {
                 Count = productosDTO.Count,
                 Items = productosDTO
             });
         }
+
         [HttpPost]
         [Route("filtrar")]
         [Authorize]
@@ -46,10 +52,15 @@ namespace api.Controllers
         {
             List<Articulo> productos = articuloServicio.ListarPorFiltro(Filtro.Filtro);
             List<ArticuloDTO> productosDTO = new List<ArticuloDTO>();
-            if (productos.Count != 0)
+            if (productos.Count == 0)
             {
-                productosDTO = articuloServicio.mapearListaArticuloAListaArticuloDTO(productos);
+                return Ok(new
+                {
+                    msg = "No hay articulos que mostrar."
+                });
             }
+
+            productosDTO = articuloServicio.mapearListaArticuloAListaArticuloDTO(productos);
 
             return Ok(new
             {
