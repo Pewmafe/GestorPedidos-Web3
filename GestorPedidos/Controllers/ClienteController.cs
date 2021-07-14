@@ -3,8 +3,7 @@ using Models.Models;
 using Service;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-
-
+using System;
 
 namespace GestorPedidos.Controllers
 {
@@ -97,7 +96,7 @@ namespace GestorPedidos.Controllers
                     return View(cliente);
                 }
             }
-
+            try { 
             clienteServicio.Crear(cliente, idUsuario);
 
             if (guardar.ToLower().Equals("guardar"))
@@ -107,6 +106,12 @@ namespace GestorPedidos.Controllers
             }
             TempData["Success"] = "Cliente  '" + cliente.Nombre + "' agregado correctamente";
             return RedirectToAction("NuevoCliente");
+            }catch (Exception e)
+            {
+                TempData["Error"] = "Ocurrio un error al crear el cliente, por favor intente de nuevo!";
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
         }
 
         [HttpGet]
@@ -124,8 +129,17 @@ namespace GestorPedidos.Controllers
                 TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
                 return RedirectToAction("Index", "Home");
             }
-            Cliente cliente = clienteServicio.ObtenerPorId(idCliente);
-            return View(cliente);
+            try
+            {
+                Cliente cliente = clienteServicio.ObtenerPorId(idCliente);
+                return View(cliente);
+            }
+            catch (Exception e)
+            {
+                
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
         }
 
         [HttpPost]
@@ -147,11 +161,21 @@ namespace GestorPedidos.Controllers
             {
                 return View(Cliente);
             }
-            int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
-            clienteServicio.Modificar(Cliente, idUsuario);
 
-            TempData["Success"] = "Cliente  '" + Cliente.Nombre + "' modificado correctamente";
-            return RedirectToAction("Clientes");
+            try
+            {
+                int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
+                clienteServicio.Modificar(Cliente, idUsuario);
+
+                TempData["Success"] = "Cliente  '" + Cliente.Nombre + "' modificado correctamente";
+                return RedirectToAction("Clientes");
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = "Ocurrio un error al editar el cliente, por favor intente de nuevo!";
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
         }
 
         [HttpPost]
@@ -169,6 +193,7 @@ namespace GestorPedidos.Controllers
                 TempData["warning"] = "Usted no se encuentra habilitado para ingresar en esta seccion.";
                 return RedirectToAction("Index", "Home");
             }
+            try { 
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             int idCliente = Cliente.IdCliente;
             Cliente cliente = this.clienteServicio.ObtenerPorId(idCliente);
@@ -178,6 +203,14 @@ namespace GestorPedidos.Controllers
 
             TempData["Success"] = "Cliente  '" + cliente.Nombre + "' borrado correctamente";
             return RedirectToAction("Clientes");
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = "Ocurrio un error al eliminar el cliente, por favor intente de nuevo!";
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
+        
         }
 
         [HttpGet]

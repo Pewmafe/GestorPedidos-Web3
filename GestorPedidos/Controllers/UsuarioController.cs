@@ -196,7 +196,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = e.ToString();
+               
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
