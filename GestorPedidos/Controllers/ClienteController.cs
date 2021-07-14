@@ -11,12 +11,14 @@ namespace GestorPedidos.Controllers
     public class ClienteController : Controller
     {
         private IClienteServicio clienteServicio;
+        private IPedidoServicio pedidoServicio;
         private _20211CTPContext dbContext;
 
         public ClienteController(_20211CTPContext _dbContext)
         {
             this.dbContext = _dbContext;
             this.clienteServicio = new ClienteServicio(dbContext);
+            this.pedidoServicio = new PedidoServicio(dbContext);
         }
 
         [HttpGet]
@@ -169,8 +171,11 @@ namespace GestorPedidos.Controllers
             }
             int idUsuario = (int)HttpContext.Session.GetInt32("IdUser");
             int idCliente = Cliente.IdCliente;
-            clienteServicio.BorrarPorId(idCliente, idUsuario);
             Cliente cliente = this.clienteServicio.ObtenerPorId(idCliente);
+
+            pedidoServicio.BorrarPedidosPorIdCliente(idCliente, idUsuario);
+            clienteServicio.BorrarPorId(idCliente, idUsuario);
+
             TempData["Success"] = "Cliente  '" + cliente.Nombre + "' borrado correctamente";
             return RedirectToAction("Clientes");
         }
