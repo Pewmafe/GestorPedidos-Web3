@@ -25,7 +25,7 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("buscar")]
-        [Authorize]
+      //  [Authorize]
         public ActionResult<object> Buscar([FromBody] BodyPostPedido pedido)
         {
 

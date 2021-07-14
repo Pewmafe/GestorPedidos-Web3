@@ -8,5 +8,6 @@ namespace Service
     {
         public List<UsuarioDTO> mapearListaUsuariosAListaUsuariosDTO(List<Usuario> usuarios);
         public List<UsuarioDatatableDTO> mapearListaUsuariosAListaUsuariosDatatableDTO(List<Usuario> usuarios);
+        public Usuario ObtenerPorEmail(string email);
     }
 }

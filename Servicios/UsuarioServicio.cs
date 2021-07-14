@@ -83,7 +83,23 @@ namespace Service
 
             return usuario;
         }
+        public Usuario ObtenerPorEmail(string email)
+        {
 
+            var usuarios = from a in _context.Usuarios where a.Email == email select a;
+
+           Usuario usuario = usuarios.FirstOrDefault();
+            if (usuario != null)
+            {
+                return usuario;
+
+            }
+            else
+            {
+                throw new Exception("Usuario Inexistente");
+
+            }
+        }
         public void Modificar(Usuario usuario, int idUsuario)
         {
             Usuario usuarioActualizado = ObtenerPorId(usuario.IdUsuario);
