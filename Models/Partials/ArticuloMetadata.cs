@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Models.Constants;
 
-namespace Models.Models
+namespace Models.Partials
 {
     class ArticuloMetadata
     {

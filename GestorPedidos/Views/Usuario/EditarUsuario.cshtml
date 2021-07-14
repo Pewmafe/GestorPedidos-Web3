@@ -21,7 +21,7 @@
         }
         else
         {
-    <h3>Usuario</h3>
+            <h3>Usuario</h3>
         }
     </div>
     <form class="nuevo-articulo row" asp-action="EditarUsuario" asp-controller="Usuario" method="post">
@@ -29,33 +29,33 @@
         <div class="mb-3 col-12 col-md-6">
             <label for="Email" class="form-label">Email:</label>
             <input type="email" asp-for="Email" disabled="@readOnly" value="@Model.Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <span asp-validation-for="Email"class="text-danger fst-italic text-uppercase"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="Password" class="form-label">Password:</label>
             <input type="password" asp-for="Password" disabled="@readOnly" value="@Model.Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
+            <span asp-validation-for="Password" class="text-danger fst-italic text-uppercase"></span>
         </div>
 
         <div class="mb-3 col-12 col-md-6">
             <label for="Nombre" class="form-label">Nombre:</label>
             <input type="text" asp-for="Nombre" disabled="@readOnly" value="@Model.Nombre" class="form-control" />
-            <span asp-validation-for="Nombre" class="text-danger"></span>
+            <span asp-validation-for="Nombre" class="text-danger fst-italic text-uppercase"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="Apellido" class="form-label">Apellido:</label>
             <input type="text" asp-for="Apellido" disabled="@readOnly" value="@Model.Apellido" class="form-control" />
-            <span asp-validation-for="Apellido" class="text-danger"></span>
+            <span asp-validation-for="Apellido" class="text-danger fst-italic text-uppercase"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="EsAdmin" class="form-label">Admin:</label>
             <input type="checkbox" asp-for="EsAdmin" disabled="@readOnly" value="true" class="form-check-input form-check " checked="@Model.EsAdmin" />
-            <span asp-validation-for="EsAdmin" class="text-danger"></span>
+            <span asp-validation-for="EsAdmin" class="text-danger fst-italic text-uppercase"></span>
         </div>
         <div class="mb-3 col-12 col-md-6">
             <label for="FechaNacimiento" class="form-label">Fecha De Nacimiento:</label>
             <input type="date" asp-for="FechaNacimiento" disabled="@readOnly" value="@string.Format("{0:yyyy-MM-dd}", Model.FechaNacimiento)" class="form-control" />
-            <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            <span asp-validation-for="FechaNacimiento" class="text-danger fst-italic text-uppercase"></span>
         </div>
 
         @if (!readOnly)
@@ -69,3 +69,7 @@
     </form>
 
 </div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

@@ -91,7 +91,7 @@ namespace Service
             {
                 articulo.FechaBorrado = DateTime.Now;
                 articulo.FechaModificacion = DateTime.Now;
-                  
+
 
                 if (idUsuario != 0)
                 {
@@ -104,22 +104,22 @@ namespace Service
             {
                 throw new Exception("No se puede eliminar el articulo. Articulo Inexistente");
             }
-            
+
             EliminarArticuloDeLosPedidos(idArticulo);
 
         }
-      
+
         public void EliminarArticuloDeLosPedidos(int idArticulo)
         {
             var articulos = from a in dbContexto.PedidoArticulos where a.IdArticulo == idArticulo select a;
 
             List<PedidoArticulo> articulosP = articulos.ToList();
-            if (articulosP != null || articulosP.Count>0)
+            if (articulosP != null || articulosP.Count > 0)
             {
                 dbContexto.PedidoArticulos.RemoveRange(articulosP);
                 dbContexto.SaveChanges();
             }
-          
+
         }
 
         public Articulo ObtenerPorId(int id)

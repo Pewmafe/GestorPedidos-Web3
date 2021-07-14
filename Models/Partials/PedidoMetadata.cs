@@ -1,7 +1,7 @@
 ﻿using Models.Constants;
 using System.ComponentModel.DataAnnotations;
 
-namespace Models.Models
+namespace Models.Partials
 {
     public class PedidoMetadata
     {

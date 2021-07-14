@@ -133,6 +133,7 @@ namespace GestorPedidos.Controllers
             }
             if (!ModelState.IsValid)
             {
+                TempData["Error"] = "Por favor complete el usuario con las validaciones correspondientes";
                 return View(usuario);
             }
             try
@@ -186,10 +187,21 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            try
+            {
+               Usuario usuario = _usuarioServicio.ObtenerPorId(id);
 
+                return View(usuario);
 
-            return View("EditarUsuario", _usuarioServicio.ObtenerPorId(id));
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.ToString();
+                TempData["errorException"] = e.ToString();
+                return RedirectToAction("ErrorPage", "Home");
+            }
 
+            
         }
 
         [HttpPost]
@@ -207,7 +219,11 @@ namespace GestorPedidos.Controllers
                 TempData["Error"] = "Solo los usuarios admin pueden ingresar a esta sección.";
                 return RedirectToAction("Index", "Home");
             }
-
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Por favor complete el usuario con las validaciones correspondientes";
+                return View(usuario);
+            }
             try
             {
 
