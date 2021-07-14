@@ -78,7 +78,7 @@ namespace Service
         public List<Usuario> ListarNoEliminados()
         {
 
-            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u => u.FechaBorrado == null).ToList();
+            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u => u.FechaBorrado == null).OrderBy(u=> u.Nombre).ToList();
 
 
             return usuariosNoEliminados;
@@ -102,6 +102,25 @@ namespace Service
                 usuariosDTO.Add(usuarioDTO);
             }
             return usuariosDTO;
+        }
+
+        public List<UsuarioDatatableDTO> mapearListaUsuariosAListaUsuariosDatatableDTO(List<Usuario> usuarios)
+        {
+            List<UsuarioDatatableDTO> usuariosDatatableDTO = new List<UsuarioDatatableDTO>();
+            foreach (Usuario usuario in usuarios)
+            {
+                UsuarioDatatableDTO usuarioDatatableDTO = new UsuarioDatatableDTO();
+
+               
+                usuarioDatatableDTO.IdUsuario = usuario.IdUsuario;
+                usuarioDatatableDTO.Nombre = usuario.Nombre;
+                usuarioDatatableDTO.Email = usuario.Email;
+                usuarioDatatableDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
+
+
+                usuariosDatatableDTO.Add(usuarioDatatableDTO);
+            }
+            return usuariosDatatableDTO;
         }
     }
     }

@@ -1,14 +1,8 @@
-﻿using api.Helper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Models.Models;
 using Service;
-using System;
-using Service.Interface;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Models.DTO;
 using Models;
 
@@ -20,32 +14,39 @@ namespace api.Controllers
     {
         private _20211CTPContext _context;
         private IPedidoServicio _servicioPedido;
-      
-
 
         public PedidoController(_20211CTPContext context)
         {
             _context = context;
             _servicioPedido = new PedidoServicio(_context);
-            
+
 
         }
 
         [HttpPost]
         [Route("buscar")]
-        //[Authorize]
+        [Authorize]
         public ActionResult<object> Buscar([FromBody] BodyPostPedido pedido)
         {
 
             List<Pedido> pedidosDeUnCliente = _servicioPedido.ListarPedidosDeUnCliente(pedido.IdCliente, pedido.IdEstado);
-            
+
             List<PedidoDTO> pedidosDTO = new List<PedidoDTO>();
 
-            
+
 
             if (pedidosDeUnCliente.Count != 0)
             {
                 pedidosDTO = _servicioPedido.mapearListaPedidoAListaPedido(pedidosDeUnCliente);
+            }
+
+            if (pedidosDeUnCliente.Count == 0)
+            {
+                return Ok(new
+                {
+                    msg = "No hay pedidos que mostrar."
+                });
+
             }
 
 
@@ -61,12 +62,12 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("guardar")]
-        //[Authorize]
+        [Authorize]
         public ActionResult<object> Guardar([FromBody] BodyPostGuardarPedido pedido)
         {
             Pedido pedidoAPI = new Pedido();
 
-            pedidoAPI.IdCliente = pedido.IdCliente; 
+            pedidoAPI.IdCliente = pedido.IdCliente;
 
             int IdPedido = _servicioPedido.CrearPedido(pedidoAPI);
 
@@ -78,24 +79,13 @@ namespace api.Controllers
 
             });
 
-         
 
-            //foreach (PedidoArticulo item in pedido.PedidoArticulos)
-            //{
-            //    if(item.IdPedido == pedido.IdPedido)
-
-            //    _servicioPedido.CrearPedidoArticulo(item);
-            //}
-
-  
             return Ok(new
             {
                 Mensaje = "Pedido " + IdPedido + " guardado con éxito"
 
 
             });
-
-
 
         }
     }

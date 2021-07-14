@@ -7,7 +7,7 @@ using Models.Models;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
-
+using Models.DTO;
 
 namespace GestorPedidos.Controllers
 {
@@ -46,6 +46,7 @@ namespace GestorPedidos.Controllers
 
             return View("Usuarios", _usuarioServicio.ListarTodos());
         }
+
         [HttpPost]
         public IActionResult UsuariosNoEliminados()
         {
@@ -64,12 +65,12 @@ namespace GestorPedidos.Controllers
             int recordsTotal = 0;
 
             // Getting all Customer data    
-            List<Usuario> usuariosNoEliminados = _usuarioServicio.ListarNoEliminados();
+            List<UsuarioDatatableDTO> usuariosNoEliminados = _usuarioServicio.mapearListaUsuariosAListaUsuariosDatatableDTO(_usuarioServicio.ListarNoEliminados());
 
             //Sorting    
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
             {
-                usuariosNoEliminados = usuariosNoEliminados.OrderBy(u=> u.Nombre).ToList();
+                //usuariosNoEliminados = usuariosNoEliminados.OrderBy(u=> u.Nombre).ToList();
             }
             //Search    
             if (!string.IsNullOrEmpty(searchValue))

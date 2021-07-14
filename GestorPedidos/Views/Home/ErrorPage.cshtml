@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "404";
     string error =TempData["errorException"] != null ? (string)TempData["errorException"] : "";
+    Layout = "_UsuarioLayout";
 }
 <div class="my-5">
     <h1 class="text-danger text-center titulos-paginas mb-3"> ERROR 404 </h1>
