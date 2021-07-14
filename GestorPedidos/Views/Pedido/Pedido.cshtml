@@ -5,6 +5,7 @@
     ViewData["Title"] = "Pedido";
     List<Pedido> pedidos = (List<Pedido>)ViewData["Pedidos"];
     bool? ExcluirEliminados = (bool)ViewData["ExcluirEliminados"];
+    bool? UltimosDosMeses = (bool)ViewData["UltimosDosMeses"];
 }
 
 <div>
@@ -24,7 +25,15 @@
             <p class="filtros" data-bs-toggle="collapse" href="#filtros" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-caret-right"></i> Filtros</p>
             <div class="collapse" id="filtros">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    @if (UltimosDosMeses == true)
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultDosMeses" checked>
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultDosMeses">
+                    }
+
                     <p class="form-check-label" for="flexCheckDefault">
                         Solo los ultimos dos meses
                     </p>
@@ -39,7 +48,7 @@
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedido">
                     }
                     <p class="form-check-label" for="flexCheckChecked">
-                        Excluir eliminados
+                       Listar entregados
                     </p>
                 </div>
             </div>

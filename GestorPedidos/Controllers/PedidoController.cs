@@ -39,8 +39,9 @@ namespace GestorPedidos.Controllers
             }
             ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
             ViewData["ExcluirEliminados"] = false;
+            ViewData["UltimosDosMeses"] = false;
             if (TempData["Entregados"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosEntregados(); ViewData["ExcluirEliminados"] = true; };
-            if (TempData["UltimosDosMeses"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosEntregados(); ViewData["UltimosDosMeses"] = true; };
+            if (TempData["UltimosDosMeses"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosUltimosDosMeses(); ViewData["UltimosDosMeses"] = true; };
 
             return View();
         }
