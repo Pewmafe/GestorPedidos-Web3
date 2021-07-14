@@ -97,6 +97,24 @@ namespace Service
             }
             throw new Exception("El cliente ya posee otro pedido abierto, modifique ese pedido");
         }
+        public int CrearPedido(Pedido pedido)
+        {
+
+            if (!this.clienteServicio.validarSiExistePedidoAbiertoDeUnClientePorIdCliente(pedido.IdCliente))
+            {
+                pedido.IdEstado = (int)EstadoPedidoEnum.ABIERTO;
+                int ultimoIdPedido = ListarTodos().LastOrDefault().IdPedido + 1;
+                pedido.NroPedido = ultimoIdPedido * 10;
+
+                pedido.FechaCreacion = DateTime.Now;
+                pedido.FechaModificacion = DateTime.Now;
+
+                _dbContext.Pedidos.Add(pedido);
+                _dbContext.SaveChanges();
+                return pedido.IdPedido;
+            }
+            throw new Exception("El cliente ya posee otro pedido abierto, modifique ese pedido");
+        }
         public void CrearPedidoArticulo(PedidoArticulo entity)
         {
             if (entity.Cantidad <= 0) entity.Cantidad = 0;

@@ -7,6 +7,7 @@ namespace Service
     public interface IPedidoServicio : IBaseServicio<Pedido>
     {
         int CrearPedido(Pedido pedido, int idUsuario);
+        int CrearPedido(Pedido pedido);
         void CrearPedidoArticulo(PedidoArticulo entity);
         void MarcarPedidoComoCerrado(int idPedido, int idUsuario);
         void BorrarPedidosPorIdCliente(int idCliente, int idUsuario);
