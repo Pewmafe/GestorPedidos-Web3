@@ -77,6 +77,26 @@ namespace Service
             _dbContext.SaveChanges();
         }
 
+        public int CrearPedido(Pedido pedido, int idUsuario)
+        {
+
+            if (!this.clienteServicio.validarSiExistePedidoAbiertoDeUnClientePorIdCliente(pedido.IdCliente))
+            {
+                pedido.IdEstado = (int)EstadoPedidoEnum.ABIERTO;
+                int ultimoIdPedido = ListarTodos().LastOrDefault().IdPedido + 1;
+                pedido.NroPedido = ultimoIdPedido * 10;
+
+                pedido.FechaCreacion = DateTime.Now;
+                pedido.FechaModificacion = DateTime.Now;
+                pedido.ModificadoPor = idUsuario;
+                pedido.CreadoPor = idUsuario;
+
+                _dbContext.Pedidos.Add(pedido);
+                _dbContext.SaveChanges();
+                return pedido.IdPedido;
+            }
+            throw new Exception("El cliente ya posee otro pedido abierto, modifique ese pedido");
+        }
         public int CrearPedido(Pedido pedido)
         {
 
@@ -85,6 +105,9 @@ namespace Service
                 pedido.IdEstado = (int)EstadoPedidoEnum.ABIERTO;
                 int ultimoIdPedido = ListarTodos().LastOrDefault().IdPedido + 1;
                 pedido.NroPedido = ultimoIdPedido * 10;
+
+                pedido.FechaCreacion = DateTime.Now;
+                pedido.FechaModificacion = DateTime.Now;
 
                 _dbContext.Pedidos.Add(pedido);
                 _dbContext.SaveChanges();
@@ -175,6 +198,26 @@ namespace Service
                 .Include(p => p.BorradoPorNavigation)
                 .Where(p => p.IdEstado == (int)EstadoPedidoEnum.ENTREGADO).ToList();
         }
+        public List<Pedido> ListarPedidosCerrados()
+        {
+            return _dbContext.Pedidos
+                .Include(p => p.PedidoArticulos)
+                .Include(p => p.IdClienteNavigation)
+                .Include(p => p.IdEstadoNavigation)
+                .Include(p => p.ModificadoPorNavigation)
+                .Include(p => p.BorradoPorNavigation)
+                .Where(p => p.IdEstado == (int)EstadoPedidoEnum.CERRADO).ToList();
+        }
+        public List<Pedido> ListarPedidosAbiertos()
+        {
+            return _dbContext.Pedidos
+                .Include(p => p.PedidoArticulos)
+                .Include(p => p.IdClienteNavigation)
+                .Include(p => p.IdEstadoNavigation)
+                .Include(p => p.ModificadoPorNavigation)
+                .Include(p => p.BorradoPorNavigation)
+                .Where(p => p.IdEstado == (int)EstadoPedidoEnum.ABIERTO).ToList();
+        }
         public List<Pedido> ListarPedidosUltimosDosMeses()
         {
             DateTime date = DateTime.Now.AddMonths(-3);
@@ -199,7 +242,8 @@ namespace Service
 
             if (pedidos.Count != 0)
             {
-                pedidos.ForEach(p => {
+                pedidos.ForEach(p =>
+                {
                     this.Borrar(p, idUsuario);
                 });
             }
@@ -223,9 +267,10 @@ namespace Service
                 pedidoDTO.FechaModificacion = (DateTime)pedido.FechaModificacion;
                 foreach (UsuarioDTO item in usuarioServicio.mapearListaUsuariosAListaUsuariosDTO(usuarioServicio.ListarTodos()))
                 {
-                    if(item.IdUsuario == pedido.ModificadoPor) { 
+                    if (item.IdUsuario == pedido.ModificadoPor)
+                    {
 
-                    pedidoDTO.ModificadoPor = item;
+                        pedidoDTO.ModificadoPor = item;
                     }
                 }
 
@@ -233,18 +278,19 @@ namespace Service
                 {
                     foreach (PedidoArticulo articulo in listarPedidoArticuloPorIdPedido(pedido.IdPedido))
                     {
-                        if(articuloDTO.IdArticulo == articulo.IdArticuloNavigation.IdArticulo) {
+                        if (articuloDTO.IdArticulo == articulo.IdArticuloNavigation.IdArticulo)
+                        {
 
                             pedidoDTO.Articulos = new List<ArticuloDTO>();
 
-                        pedidoDTO.Articulos.Add(articuloDTO);
+                            pedidoDTO.Articulos.Add(articuloDTO);
                         }
                     }
 
-                    
+
                 }
-               
-           
+
+
                 pedidosDTO.Add(pedidoDTO);
             }
             return pedidosDTO;

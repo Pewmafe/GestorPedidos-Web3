@@ -147,18 +147,19 @@
     <div class="modal fade" id="borrarCliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header  bg-dark text-light">
                     <h5 class="modal-title" id="exampleModalLabel">Borrar Cliente</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>¿Seguro que deseas borrar al cliente?</p>
+                    <p>Al borrarlo, se cerraran todos sus pedidos activos.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">CANCELAR</button>
                     <form action="/Cliente/Borrarcliente" method="post">
                         <input type="hidden" id="IdCliente" name="IdCliente" value=""/>
-                        <button type="submit" class="btn btn-danger" name="botonBorrar" id="botonBorrar">BORRAR</button>
+                        <button type="submit" class="btn btn-outline-danger" name="botonBorrar" id="botonBorrar">BORRAR</button>
                     </form>
                 </div>
             </div>
