@@ -18,9 +18,15 @@ namespace Service
 
         public void Crear(Cliente entity, int idUsuario)
         {
+            if (entity != null) { 
             entity.CreadoPor = idUsuario;
             _dbContext.Clientes.Add(entity);
             _dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("No se puede crear el cliente");
+            }
         }
 
         public void Borrar(Cliente entity, int idUsuario)
@@ -32,9 +38,15 @@ namespace Service
         {
 
             Cliente objActual = ObtenerPorId(idCliente);
+            if (objActual != null) { 
             objActual.FechaBorrado = DateTime.Now;
             objActual.BorradoPor = idUsuario;
             _dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("No se puede eliminar el cliente. Cliente Inexistente");
+            }
         }
 
         public List<Cliente> ListarTodos()
@@ -44,14 +56,23 @@ namespace Service
 
         public Cliente ObtenerPorId(int id)
         {
-            return _dbContext.Clientes
+            Cliente cliente=  _dbContext.Clientes
                 .FirstOrDefault(o => o.IdCliente == id);
+            if (cliente != null)
+            {
+                return cliente;
+            }
+            else
+            {
+                throw new Exception("Cliente Inexistente");
+            }
         }
 
         public void Modificar(Cliente entity, int idUsuario)
         {
             Cliente objActual = ObtenerPorId(entity.IdCliente);
 
+            if (objActual != null) { 
             objActual.Nombre = entity.Nombre;
             objActual.Numero = entity.Numero;
             objActual.Telefono = entity.Telefono;
@@ -62,6 +83,11 @@ namespace Service
             objActual.ModificadoPor = idUsuario;
 
             _dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("No es posible modificar el cliente. Cliente Inexistente");
+            }
         }
 
         public List<Cliente> ListarNoEliminados()
