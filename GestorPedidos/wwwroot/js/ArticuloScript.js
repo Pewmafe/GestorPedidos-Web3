@@ -8,7 +8,7 @@
         $("#flexCheckChecked").on('change', function () {
 
             if ($(this).is(':checked')) {
-                location.href = "https://localhost:5001/Articulo/ArticulosNoEliminados";
+                location.href = "https://localhost:44322/Articulo/ArticulosNoEliminados";
             }
             else {
                 location.reload();
@@ -18,10 +18,10 @@
 
     });
 
-    $('.botonBorrar').click(function () {
+    /*$('.botonBorrar').click(function () {
         var miElementoId = $(this).data('id');
         $(".modal-footer #IdArticulo").val(miElementoId);
-    });
+    });*/
 
 
 });

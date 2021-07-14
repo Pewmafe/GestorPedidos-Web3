@@ -49,22 +49,22 @@ namespace api.Controllers
                 IdUsuario = usuarioValidado.IdUsuario,
                 Nombre = usuarioValidado.Nombre,
                 Apellido = usuarioValidado.Apellido,
-                FechaNacimiento= usuarioValidado.FechaNacimiento,
+                FechaNacimiento = usuarioValidado.FechaNacimiento,
                 token
             });
         }
 
-         [HttpPost]
-         [Route("logout")]
+        [HttpPost]
+        [Route("logout")]
         [Authorize]
         public object Logout()
-         {
-                
-         return new
-         {
-            mensaje = "Ha cerrado sesión exitosamente"
-         };
-            
-        }   
+        {
+
+            return new
+            {
+                mensaje = "Ha cerrado sesión exitosamente"
+            };
+
+        }
     }
 }

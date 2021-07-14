@@ -83,6 +83,7 @@ namespace Service
             if (!this.clienteServicio.validarSiExistePedidoAbiertoDeUnClientePorIdCliente(pedido.IdCliente))
             {
                 pedido.IdEstado = (int)EstadoPedidoEnum.ABIERTO;
+
                 int ultimoIdPedido = ListarTodos().LastOrDefault().IdPedido + 1;
                 pedido.NroPedido = ultimoIdPedido * 10;
 
@@ -97,7 +98,7 @@ namespace Service
             }
             throw new Exception("El cliente ya posee otro pedido abierto, modifique ese pedido");
         }
-        public int CrearPedido(Pedido pedido)
+        public int CrearPedidoApi(Pedido pedido)
         {
 
             if (!this.clienteServicio.validarSiExistePedidoAbiertoDeUnClientePorIdCliente(pedido.IdCliente))

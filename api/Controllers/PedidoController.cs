@@ -69,7 +69,7 @@ namespace api.Controllers
 
             pedidoAPI.IdCliente = pedido.IdCliente;
 
-            int IdPedido = _servicioPedido.CrearPedido(pedidoAPI);
+            int IdPedido = _servicioPedido.CrearPedidoApi(pedidoAPI);
 
             pedido.pedidosArticulos.ForEach(a =>
             {
