@@ -13,7 +13,7 @@ namespace Models.DTO
 
         public int IdPedido { get; set; }
         public int IdCliente { get; set; }
-        public EstadoPedidoEnum Estado { get; set; }
+        public String Estado { get; set; }
         public DateTime FechaModificacion { get; set; }
         public UsuarioDTO ModificadoPor { get; set; }
         public List<ArticuloDTO> Articulos { get; set; }

@@ -149,7 +149,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al generar el pedido, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrio un error al generar el pedido, por favor intente de nuevo!";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
@@ -202,7 +202,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al editar el pedido, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrio un error al editar el pedido, por favor intente de nuevo!";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
@@ -226,7 +226,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al borrar un articulo del pedido, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrio un error al borrar un articulo del pedido, por favor intente de nuevo!";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
@@ -250,7 +250,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al agregar un articulo al pedido, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrio un error al agregar un articulo al pedido, por favor intente de nuevo!";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
@@ -275,7 +275,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al intentar marcar como cerrado el pedido, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrio un error al intentar marcar como cerrado el pedido, por favor intente de nuevo!";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }
@@ -300,7 +300,7 @@ namespace GestorPedidos.Controllers
             }
             catch (Exception e)
             {
-                TempData["Error"] = "Ocurrio un error al intentar marcar como entregado el pedido, por favor intente de nuevo! \n " + e;
+                TempData["Error"] = "Ocurrio un error al intentar marcar como entregado el pedido, por favor intente de nuevo!";
                 TempData["errorException"] = e.ToString();
                 return RedirectToAction("ErrorPage", "Home");
             }

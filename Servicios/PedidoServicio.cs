@@ -263,7 +263,24 @@ namespace Service
 
                 pedidoDTO.IdCliente = pedido.IdCliente;
                 pedidoDTO.IdPedido = pedido.IdPedido;
-                pedidoDTO.Estado = EstadoPedidoEnum.ABIERTO;
+                if (pedido.IdEstado == 1)
+                {
+                    pedidoDTO.Estado = "Abierto";
+
+                }
+
+                else if (pedido.IdEstado == 2)
+                {
+                    pedidoDTO.Estado = "Cerrado";
+
+                }
+
+                else
+                {
+
+                    pedidoDTO.Estado = "Entregado";
+                }
+
                 pedidoDTO.FechaModificacion = (DateTime)pedido.FechaModificacion;
                 foreach (UsuarioDTO item in usuarioServicio.mapearListaUsuariosAListaUsuariosDTO(usuarioServicio.ListarTodos()))
                 {

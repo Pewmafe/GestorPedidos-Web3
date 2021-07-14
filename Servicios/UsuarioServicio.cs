@@ -40,7 +40,7 @@ namespace Service
 
         public void Borrar(Usuario entity, int idUsuario)
         {
-
+            throw new NotImplementedException();
         }
 
         public void BorrarPorId(int IdUsuario, int IdUsuarioDeLaBaja)
@@ -68,7 +68,7 @@ namespace Service
         public List<Usuario> ListarTodos()
         {
 
-            return _context.Usuarios.ToList();
+            return _context.Usuarios.OrderBy(u => u.Nombre).ToList();
         }
 
         public Usuario ObtenerPorId(int id)
@@ -134,7 +134,7 @@ namespace Service
         public List<Usuario> ListarNoEliminados()
         {
 
-            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u => u.FechaBorrado == null).OrderBy(u => u.Nombre).ToList();
+            List<Usuario> usuariosNoEliminados = _context.Usuarios.Where(u => u.FechaBorrado == null).ToList();
 
             return usuariosNoEliminados;
 
@@ -154,6 +154,7 @@ namespace Service
                 usuarioDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
 
 
+
                 usuariosDTO.Add(usuarioDTO);
             }
             return usuariosDTO;
@@ -170,8 +171,20 @@ namespace Service
                 usuarioDatatableDTO.IdUsuario = usuario.IdUsuario;
                 usuarioDatatableDTO.Nombre = usuario.Nombre;
                 usuarioDatatableDTO.Email = usuario.Email;
-                usuarioDatatableDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
+                if (usuario.FechaNacimiento != null)
+                {
+                    usuarioDatatableDTO.FechaNacimiento = (DateTime)usuario.FechaNacimiento;
+                }
 
+                if (usuario.FechaBorrado == null)
+                {
+                    usuarioDatatableDTO.FechaBorrado = 0;
+
+                }
+                else
+                {
+                    usuarioDatatableDTO.FechaBorrado = 1;
+                }
 
                 usuariosDatatableDTO.Add(usuarioDatatableDTO);
             }
