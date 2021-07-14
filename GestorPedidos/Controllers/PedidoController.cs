@@ -38,9 +38,13 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Login", "Login");
             }
             ViewData["Pedidos"] = this.pedidoServicio.ListarTodos();
-            ViewData["ExcluirEliminados"] = false;
+            ViewData["ListarCerrados"] = false;
+            ViewData["ListarEntregados"] = false;
+            ViewData["ListarAbiertos"] = false;
             ViewData["UltimosDosMeses"] = false;
-            if (TempData["Entregados"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosEntregados(); ViewData["ExcluirEliminados"] = true; };
+            if (TempData["Entregados"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosEntregados(); ViewData["ListarEntregados"] = true; };
+            if (TempData["Cerrados"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosCerrados(); ViewData["ListarCerrados"] = true; };
+            if (TempData["Abiertos"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosAbiertos(); ViewData["ListarAbiertos"] = true; };
             if (TempData["UltimosDosMeses"] != null) { ViewData["Pedidos"] = this.pedidoServicio.ListarPedidosUltimosDosMeses(); ViewData["UltimosDosMeses"] = true; };
 
             return View();
@@ -56,6 +60,32 @@ namespace GestorPedidos.Controllers
                 return RedirectToAction("Login", "Login");
             }
             TempData["Entregados"] = true;
+            return RedirectToAction("Pedido");
+        }
+
+        [HttpGet]
+        public IActionResult ListarCerrados()
+        {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            TempData["Cerrados"] = true;
+            return RedirectToAction("Pedido");
+        }
+
+        [HttpGet]
+        public IActionResult ListarAbiertos()
+        {
+            string idUsuario = HttpContext.Session.GetString("IdUsuario") != null ? HttpContext.Session.GetString("IdUsuario") : null;
+            if (idUsuario == null)
+            {
+                TempData["Error"] = "Por favor, Inicie Sesion para poder ingresar a esta seccion.";
+                return RedirectToAction("Login", "Login");
+            }
+            TempData["Abiertos"] = true;
             return RedirectToAction("Pedido");
         }
         [HttpGet]

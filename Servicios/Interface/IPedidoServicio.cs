@@ -17,6 +17,8 @@ namespace Service
         Dictionary<Articulo, int> listarArticulosConCantidadesDeUnPedidoPorPedidoId(int idPedido);
         List<Articulo> listarArticulosNoSeleccionadosDeUnPedidoPorIdPedido(int idPedido);
         List<Pedido> ListarPedidosEntregados();
+        List<Pedido> ListarPedidosCerrados();
+        List<Pedido> ListarPedidosAbiertos();
         List<Pedido> ListarPedidosUltimosDosMeses();
         List<PedidoArticulo> listarPedidoArticuloPorIdPedido(int idPedido);
         List<Pedido> ListarPedidosDeUnCliente(int IdCliente, int IdEstado);

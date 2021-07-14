@@ -198,6 +198,26 @@ namespace Service
                 .Include(p => p.BorradoPorNavigation)
                 .Where(p => p.IdEstado == (int)EstadoPedidoEnum.ENTREGADO).ToList();
         }
+        public List<Pedido> ListarPedidosCerrados()
+        {
+            return _dbContext.Pedidos
+                .Include(p => p.PedidoArticulos)
+                .Include(p => p.IdClienteNavigation)
+                .Include(p => p.IdEstadoNavigation)
+                .Include(p => p.ModificadoPorNavigation)
+                .Include(p => p.BorradoPorNavigation)
+                .Where(p => p.IdEstado == (int)EstadoPedidoEnum.CERRADO).ToList();
+        }
+        public List<Pedido> ListarPedidosAbiertos()
+        {
+            return _dbContext.Pedidos
+                .Include(p => p.PedidoArticulos)
+                .Include(p => p.IdClienteNavigation)
+                .Include(p => p.IdEstadoNavigation)
+                .Include(p => p.ModificadoPorNavigation)
+                .Include(p => p.BorradoPorNavigation)
+                .Where(p => p.IdEstado == (int)EstadoPedidoEnum.ABIERTO).ToList();
+        }
         public List<Pedido> ListarPedidosUltimosDosMeses()
         {
             DateTime date = DateTime.Now.AddMonths(-3);

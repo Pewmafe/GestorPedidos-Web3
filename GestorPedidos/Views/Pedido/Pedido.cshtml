@@ -4,7 +4,9 @@
     Layout = "_UsuarioLayout";
     ViewData["Title"] = "Pedido";
     List<Pedido> pedidos = (List<Pedido>)ViewData["Pedidos"];
-    bool? ExcluirEliminados = (bool)ViewData["ExcluirEliminados"];
+    bool? ListarEntregados = (bool)ViewData["ListarEntregados"];
+    bool? ListarCerrados = (bool)ViewData["ListarCerrados"];
+    bool? ListarAbiertos = (bool)ViewData["ListarAbiertos"];
     bool? UltimosDosMeses = (bool)ViewData["UltimosDosMeses"];
 }
 
@@ -39,16 +41,42 @@
                     </p>
                 </div>
                 <div class="form-check">
-                    @if (ExcluirEliminados == true)
+                    @if (ListarEntregados == true)
                     {
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedido" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedidoEntregado" checked>
                     }
                     else
                     {
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedido">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedidoEntregado">
                     }
                     <p class="form-check-label" for="flexCheckChecked">
-                       Listar entregados
+                        Listar entregados
+                    </p>
+                </div>
+                <div class="form-check">
+                    @if (ListarAbiertos == true)
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedidoAbierto" checked>
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedidoAbierto">
+                    }
+                    <p class="form-check-label" for="flexCheckChecked">
+                        Listar Abiertos
+                    </p>
+                </div>
+                <div class="form-check">
+                    @if (ListarCerrados == true)
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedidoCerrado" checked>
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedPedidoCerrado">
+                    }
+                    <p class="form-check-label" for="flexCheckChecked">
+                        Listar Cerrados
                     </p>
                 </div>
             </div>

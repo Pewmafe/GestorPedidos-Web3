@@ -8,9 +8,25 @@
     });
 
     $(function () {
-        $("#flexCheckCheckedPedido").on('change', function () {
+        $("#flexCheckCheckedPedidoEntregado").on('change', function () {
             if ($(this).is(':checked')) {
                 location.href = "https://localhost:44322/Pedido/ListarEntregados";
+            }
+            else {
+                location.reload();
+            }
+        });
+        $("#flexCheckCheckedPedidoCerrado").on('change', function () {
+            if ($(this).is(':checked')) {
+                location.href = "https://localhost:44322/Pedido/ListarCerrados";
+            }
+            else {
+                location.reload();
+            }
+        });
+        $("#flexCheckCheckedPedidoAbierto").on('change', function () {
+            if ($(this).is(':checked')) {
+                location.href = "https://localhost:44322/Pedido/ListarAbiertos";
             }
             else {
                 location.reload();
