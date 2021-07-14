@@ -59,31 +59,24 @@ namespace GestorPedidos.Controllers
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
 
-            //Paging Size (10,20,50,100)    
+
             int pageSize = length != null ? Convert.ToInt32(length) : 0;
             int skip = start != null ? Convert.ToInt32(start) : 0;
             int recordsTotal = 0;
 
-            // Getting all Customer data    
+
             List<UsuarioDatatableDTO> usuarios = _usuarioServicio.mapearListaUsuariosAListaUsuariosDatatableDTO(_usuarioServicio.ListarTodos());
 
-            //Sorting    
-            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
-            {
-                //usuariosNoEliminados = usuariosNoEliminados.OrderBy(u=> u.Nombre).ToList();
-            }
-            //Search    
             if (!string.IsNullOrEmpty(searchValue))
             {
 
                 usuarios = usuarios.Where(u => Regex.IsMatch(u.IdUsuario.ToString(), searchValue) || Regex.IsMatch(u.Nombre.ToLower(), searchValue.ToLower()) || Regex.IsMatch(u.Email.ToLower(), searchValue.ToLower())).ToList();
             }
 
-            //total number of rows count     
             recordsTotal = usuarios.Count();
-            //Paging     
+
             var data = usuarios.Skip(skip).Take(pageSize).ToList();
-            //Returning Json Data    
+
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
         }
 
