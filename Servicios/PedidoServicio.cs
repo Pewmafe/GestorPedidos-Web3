@@ -261,24 +261,18 @@ namespace Service
             foreach (Pedido pedido in pedidos)
             {
                 PedidoDTO pedidoDTO = new PedidoDTO();
-
                 pedidoDTO.IdCliente = pedido.IdCliente;
                 pedidoDTO.IdPedido = pedido.IdPedido;
                 if (pedido.IdEstado == 1)
                 {
                     pedidoDTO.Estado = "Abierto";
-
                 }
-
-                else if (pedido.IdEstado == 2)
+                if (pedido.IdEstado == 2)
                 {
                     pedidoDTO.Estado = "Cerrado";
-
                 }
-
-                else
+                if (pedido.IdEstado == 3)
                 {
-
                     pedidoDTO.Estado = "Entregado";
                 }
 
@@ -287,11 +281,10 @@ namespace Service
                 {
                     if (item.IdUsuario == pedido.ModificadoPor)
                     {
-
                         pedidoDTO.ModificadoPor = item;
                     }
                 }
-
+                pedidoDTO.Articulos = new List<ArticuloDTO>();
                 foreach (ArticuloDTO articuloDTO in articuloServicio.mapearListaArticuloAListaArticuloDTO(articuloServicio.ListarTodos()))
                 {
                     foreach (PedidoArticulo articulo in listarPedidoArticuloPorIdPedido(pedido.IdPedido))
@@ -299,16 +292,10 @@ namespace Service
                         if (articuloDTO.IdArticulo == articulo.IdArticuloNavigation.IdArticulo)
                         {
 
-                            pedidoDTO.Articulos = new List<ArticuloDTO>();
-
                             pedidoDTO.Articulos.Add(articuloDTO);
                         }
                     }
-
-
                 }
-
-
                 pedidosDTO.Add(pedidoDTO);
             }
             return pedidosDTO;
